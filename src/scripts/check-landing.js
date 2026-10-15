@@ -5,6 +5,18 @@
     if (!condition) throw new Error(message);
   };
   const settle = () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  await document.fonts.ready;
+  assert(getComputedStyle(document.body).backgroundColor === "rgb(255, 255, 255)" && getComputedStyle(document.body).color === "rgba(15, 23, 39, 0.65)", "Brand stylesheet did not load");
+  const heading = document.getElementById("hero-title");
+  const hero = heading.closest("section");
+  const heroStyle = getComputedStyle(hero);
+  assert(heroStyle.backgroundColor === "rgb(57, 67, 66)" && getComputedStyle(heading).color === "rgb(255, 255, 255)", "Tailwind theme colors missing from hero");
+  assert(heroStyle.borderRadius === (matchMedia("(width < 600px)").matches ? "13px" : "15px"), "Tailwind theme radius or responsive variant missing");
+  assert(getComputedStyle(heading).fontFamily.includes("Lexend"), "Display font did not load");
+  assert(getComputedStyle(hero.querySelector("a")).boxShadow !== "none", "Tailwind theme action shadow missing");
+  const grid = getComputedStyle(document.getElementById("property-results"));
+  const columns = matchMedia("(width < 600px)").matches ? 1 : matchMedia("(width < 850px)").matches ? 2 : 3;
+  assert(grid.display === "grid" && grid.gridTemplateColumns.split(" ").length === columns, "Responsive property grid did not load");
   const cards = () => [...document.querySelectorAll("#property-results article")];
   const filters = [...document.querySelectorAll('[role="group"][aria-label="Filter properties by category"] button')];
   const selectFilter = async (label) => {
@@ -90,7 +102,6 @@
   }
   await Promise.all([...document.images].map((image) => image.decode()));
   assert([...document.images].every((image) => image.naturalWidth > 0 && image.alt), "Image missing or without alternative text");
-  assert(getComputedStyle(document.body).backgroundColor === "rgb(255, 255, 255)" && getComputedStyle(document.body).color === "rgba(15, 23, 39, 0.65)", "Brand stylesheet did not load");
   assert(document.documentElement.scrollWidth <= document.documentElement.clientWidth, "Horizontal overflow");
   window.scrollTo({ top: 0, behavior: "instant" });
   return { passed: true, viewport: document.documentElement.clientWidth, properties: cards().length, images: document.images.length, checks: "filters, reviews, wraparound, mobile menu, keyboard, anchors, images, CSS, overflow" };
