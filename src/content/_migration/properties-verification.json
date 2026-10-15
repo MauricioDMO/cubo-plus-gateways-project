@@ -1,0 +1,282 @@
+{
+  "captured_at": "2026-10-15T05:24:54.210607+00:00",
+  "scope": "assignment=properties",
+  "records": [
+    {
+      "url": "https://getawayselsalvador.com/listing-category/apartments/",
+      "markdown_file": "alojamientos/catalogos/listing-category/apartments.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 0,
+      "markdown_images": 0,
+      "source_links": 8,
+      "catalog_listings": [
+        "https://getawayselsalvador.com/listing/good-waves/",
+        "https://getawayselsalvador.com/listing/salty-soul/",
+        "https://getawayselsalvador.com/listing/solaris-3b-3ba-oceanfront-escape-in-surfcity/",
+        "https://getawayselsalvador.com/listing/sun-salt-getaway/",
+        "https://getawayselsalvador.com/listing/sunset-surf-getaway/",
+        "https://getawayselsalvador.com/listing/zonte-surfside-getaway/"
+      ],
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/listing-category/apartments/page/2/",
+      "markdown_file": "alojamientos/catalogos/listing-category/apartments/page/2.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 0,
+      "markdown_images": 0,
+      "source_links": 5,
+      "catalog_listings": [
+        "https://getawayselsalvador.com/listing/golden-hour-getaway/",
+        "https://getawayselsalvador.com/listing/the-nomad-getaway/",
+        "https://getawayselsalvador.com/listing/the-zonte-sol-getaway/"
+      ],
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/listing-category/villas-for-rent-in-surf-city/",
+      "markdown_file": "alojamientos/catalogos/listing-category/villas-for-rent-in-surf-city.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 0,
+      "markdown_images": 0,
+      "source_links": 1,
+      "catalog_listings": [
+        "https://getawayselsalvador.com/listing/casa-jungla-getaway/"
+      ],
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/listing/casa-jungla-getaway/",
+      "markdown_file": "alojamientos/villas/casa-jungla-getaway.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 10,
+      "markdown_images": 10,
+      "source_links": 1,
+      "catalog_listings": null,
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [
+        "Availability and booking totals may be dynamic; no reservation was made."
+      ],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/listing/golden-hour-getaway/",
+      "markdown_file": "alojamientos/apartamentos/golden-hour-getaway.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 10,
+      "markdown_images": 10,
+      "source_links": 1,
+      "catalog_listings": null,
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [
+        "Availability and booking totals may be dynamic; no reservation was made."
+      ],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/listing/good-waves/",
+      "markdown_file": "alojamientos/apartamentos/good-waves.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 10,
+      "markdown_images": 10,
+      "source_links": 1,
+      "catalog_listings": null,
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [
+        "Availability and booking totals may be dynamic; no reservation was made."
+      ],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/listing/salty-soul/",
+      "markdown_file": "alojamientos/apartamentos/salty-soul.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 10,
+      "markdown_images": 10,
+      "source_links": 1,
+      "catalog_listings": null,
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [
+        "Availability and booking totals may be dynamic; no reservation was made."
+      ],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/listing/solaris-3b-3ba-oceanfront-escape-in-surfcity/",
+      "markdown_file": "alojamientos/apartamentos/solaris-3b-3ba-oceanfront-escape-in-surfcity.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 10,
+      "markdown_images": 10,
+      "source_links": 1,
+      "catalog_listings": null,
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [
+        "Availability and booking totals may be dynamic; no reservation was made."
+      ],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/listing/sun-salt-getaway/",
+      "markdown_file": "alojamientos/apartamentos/sun-salt-getaway.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 10,
+      "markdown_images": 10,
+      "source_links": 1,
+      "catalog_listings": null,
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [
+        "Availability and booking totals may be dynamic; no reservation was made."
+      ],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/listing/sunset-surf-getaway/",
+      "markdown_file": "alojamientos/apartamentos/sunset-surf-getaway.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 10,
+      "markdown_images": 10,
+      "source_links": 1,
+      "catalog_listings": null,
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [
+        "Availability and booking totals may be dynamic; no reservation was made."
+      ],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/listing/the-nomad-getaway/",
+      "markdown_file": "alojamientos/apartamentos/the-nomad-getaway.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 10,
+      "markdown_images": 10,
+      "source_links": 1,
+      "catalog_listings": null,
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [
+        "Availability and booking totals may be dynamic; no reservation was made."
+      ],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/listing/the-zonte-sol-getaway/",
+      "markdown_file": "alojamientos/apartamentos/the-zonte-sol-getaway.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 10,
+      "markdown_images": 10,
+      "source_links": 1,
+      "catalog_listings": null,
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [
+        "Availability and booking totals may be dynamic; no reservation was made."
+      ],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/listing/zonte-surfside-getaway/",
+      "markdown_file": "alojamientos/apartamentos/zonte-surfside-getaway.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 10,
+      "markdown_images": 10,
+      "source_links": 1,
+      "catalog_listings": null,
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [
+        "Availability and booking totals may be dynamic; no reservation was made."
+      ],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/properties/",
+      "markdown_file": "alojamientos/catalogos/properties.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 0,
+      "markdown_images": 0,
+      "source_links": 8,
+      "catalog_listings": [
+        "https://getawayselsalvador.com/listing/good-waves/",
+        "https://getawayselsalvador.com/listing/salty-soul/",
+        "https://getawayselsalvador.com/listing/solaris-3b-3ba-oceanfront-escape-in-surfcity/",
+        "https://getawayselsalvador.com/listing/sun-salt-getaway/",
+        "https://getawayselsalvador.com/listing/sunset-surf-getaway/",
+        "https://getawayselsalvador.com/listing/zonte-surfside-getaway/"
+      ],
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [],
+      "canonical_note": null
+    },
+    {
+      "url": "https://getawayselsalvador.com/properties/page/2/",
+      "markdown_file": "alojamientos/catalogos/properties/page/2.md",
+      "source_sha256_matches": true,
+      "status": "reviewed",
+      "source_images": 0,
+      "markdown_images": 0,
+      "source_links": 6,
+      "catalog_listings": [
+        "https://getawayselsalvador.com/listing/casa-jungla-getaway/",
+        "https://getawayselsalvador.com/listing/golden-hour-getaway/",
+        "https://getawayselsalvador.com/listing/the-nomad-getaway/",
+        "https://getawayselsalvador.com/listing/the-zonte-sol-getaway/"
+      ],
+      "checks": [],
+      "omissions_corrected": [],
+      "limits": [],
+      "canonical_note": "Canonical points to page 1; page 2 content retained separately."
+    }
+  ],
+  "verified_count": 15,
+  "live_checks": [
+    {
+      "url": "https://getawayselsalvador.com/properties/",
+      "status": 200,
+      "live_sha256": "efcae16075884b759b70e84651b230d879ff3c2c1c65443d4f89a382fc1c959a",
+      "archived_sha256": "efcae16075884b759b70e84651b230d879ff3c2c1c65443d4f89a382fc1c959a",
+      "matches_archived_capture": true,
+      "comparison": "HTTP GET only; matching digest confirms exact captured HTML."
+    },
+    {
+      "url": "https://getawayselsalvador.com/listing/good-waves/",
+      "status": 200,
+      "live_sha256": "c4c2cf80cb2ce54ec9e66a3619cea77cf118382607d61af82a422472e114161d",
+      "archived_sha256": "c4c2cf80cb2ce54ec9e66a3619cea77cf118382607d61af82a422472e114161d",
+      "matches_archived_capture": true,
+      "comparison": "HTTP GET only; matching digest confirms exact captured HTML."
+    }
+  ],
+  "status": "initial conversion report; superseded by final source-content review",
+  "superseded_by": "cross-verification-catalogs-archives.json"
+}

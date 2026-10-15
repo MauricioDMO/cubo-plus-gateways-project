@@ -1,0 +1,67 @@
+{
+  "scope": "inventory pages with assignment=general only",
+  "captured_at": "2026-10-15T05:24:54.210607+00:00",
+  "documents_expected": 14,
+  "documents_written": 14,
+  "counts": {
+    "page_documents": 4,
+    "redirect_documents": 10,
+    "shared_component_documents": 2
+  },
+  "source_integrity": {
+    "check": "SHA-256 of each local HTML source_file compared with inventory.source_sha256",
+    "passed": 14,
+    "failed": 0
+  },
+  "content_checks": {
+    "page_markdown_derived_from_main_content": [
+      "paginas/inicio.md uses .page__text and the separate hero block",
+      "paginas/about.md and paginas/contact-us.md use .site-content",
+      "paginas/account/login.md documents visible public field labels and account links only"
+    ],
+    "redirects": "All 10 redirect records include source_url, final_url, canonical_url and a relative Markdown destination link; no destination body was copied.",
+    "redirect_destinations_exist": 10,
+    "contact_email": "getaways@goodlifeelsalvador.com preserved",
+    "homepage_testimonials": 3,
+    "homepage_property_cards": 6,
+    "page_content_links": "All distinct non-modal anchors inside the four page-content regions are represented in Markdown; shared header/footer and account-modal links are recorded once in their component document.",
+    "paragraphs": "All main body paragraphs from the homepage, About, and Contact source regions are represented; the contact form's generated captcha glyph is not reproduced.",
+    "images": "Source image URLs and alt attributes retained where present in the page content; blank alt values remain blank.",
+    "shared_components": [
+      "content/compartido/navegacion-y-pie.md",
+      "content/compartido/integraciones-y-formularios.md"
+    ]
+  },
+  "live_recheck": {
+    "method": "urllib GET with Mozilla/5.0 user agent; no forms submitted",
+    "results": [
+      {
+        "url": "https://getawayselsalvador.com/",
+        "status": 200,
+        "final_url": "https://getawayselsalvador.com/"
+      },
+      {
+        "url": "https://getawayselsalvador.com/about/",
+        "status": 200,
+        "final_url": "https://getawayselsalvador.com/about/"
+      },
+      {
+        "url": "https://getawayselsalvador.com/account/login/?redirect=https%3A%2F%2Fgetawayselsalvador.com%2Fsubmit-listing%2F",
+        "status": 200,
+        "final_url": "https://getawayselsalvador.com/account/login/?redirect=https%3A%2F%2Fgetawayselsalvador.com%2Fsubmit-listing%2F"
+      },
+      {
+        "url": "https://getawayselsalvador.com/contact-us/",
+        "status": 200,
+        "final_url": "https://getawayselsalvador.com/contact-us/"
+      }
+    ]
+  },
+  "limitations": [
+    "The inventory's status is the final response observed after urllib followed redirects; it does not establish original redirect HTTP status codes. No 301/302 behavior is asserted.",
+    "Live recheck covered only the homepage and About page; other page content was checked against the captured local HTML sources.",
+    "Hostfully assets were observed, but the snapshot exposed no stable public widget configuration or dynamic availability/pricing values."
+  ],
+  "status": "initial conversion report; superseded by final source-content review",
+  "superseded_by": "cross-verification-articles-pages.json"
+}

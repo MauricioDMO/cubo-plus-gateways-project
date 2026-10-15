@@ -1,0 +1,209 @@
+{
+  "checked_at": "2026-10-15T05:27:35.335185+00:00",
+  "collections": {
+    "posts": {
+      "endpoint": "https://getawayselsalvador.com/wp-json/wp/v2/posts?per_page=100&_fields=id,link,status,title",
+      "total": 18,
+      "missing_from_inventory": [],
+      "items": [
+        {
+          "id": 1567,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/10/14/tamanique-by-atv-the-waterfalls-without-the-long-hike/",
+          "title": {
+            "rendered": "Tamanique by ATV: The Waterfalls, Without the Long Hike"
+          }
+        },
+        {
+          "id": 1545,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/10/05/why-surfers-love-rainy-season-in-el-zonte/",
+          "title": {
+            "rendered": "Why Surfers Love Rainy Season in El Zonte"
+          }
+        },
+        {
+          "id": 1516,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/09/26/best-surf-schools-in-surf-city-el-salvador-part-ii/",
+          "title": {
+            "rendered": "Best Surf Schools in Surf City, El Salvador — Part II"
+          }
+        },
+        {
+          "id": 1486,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/09/14/sun-salt-gateway/",
+          "title": {
+            "rendered": "Sun &amp; Salt Gateway"
+          }
+        },
+        {
+          "id": 1460,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/09/08/sunset-surf-getaway/",
+          "title": {
+            "rendered": "Sunset Surf Getaway"
+          }
+        },
+        {
+          "id": 1431,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/09/02/how-to-spend-6-days-in-el-zonte/",
+          "title": {
+            "rendered": "How to Spend 6 Days in El Zonte"
+          }
+        },
+        {
+          "id": 1408,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/08/25/why-your-accommodation-can-change-your-entire-trip-to-el-salvador/",
+          "title": {
+            "rendered": "Why Your Accommodation Can Change Your Entire Trip to        El Salvador"
+          }
+        },
+        {
+          "id": 1382,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/08/17/top-cafes-you-must-visit-in-el-zonte/",
+          "title": {
+            "rendered": "Top Cafés You Must Visit in El Zonte"
+          }
+        },
+        {
+          "id": 1349,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/08/10/best-beaches-in-el-salvador-for-every-type-of-traveler/",
+          "title": {
+            "rendered": "Best Beaches in El Salvador for Every Type of Traveler"
+          }
+        },
+        {
+          "id": 1303,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/08/03/covana-kitchen-where-to-eat-in-el-zonte-el-salvador/",
+          "title": {
+            "rendered": "Covana Kitchen: Where to Eat in El Zonte, El Salvador"
+          }
+        },
+        {
+          "id": 1261,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/07/28/why-el-salvador-should-be-your-next-beach-destination/",
+          "title": {
+            "rendered": "Why El Salvador Should Be Your Next Beach Destination"
+          }
+        },
+        {
+          "id": 1210,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/07/22/best-surf-schools-in-surf-city-el-salvador/",
+          "title": {
+            "rendered": "Best Surf Schools in Surf City, El Salvador"
+          }
+        },
+        {
+          "id": 1150,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/07/15/7-mistakes-to-avoid-when-booking-a-vacation-rental/",
+          "title": {
+            "rendered": "7 Mistakes to Avoid When Booking a Vacation Rental"
+          }
+        },
+        {
+          "id": 1065,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/07/08/el-salvador-everything-you-need-to-know-before-visiting/",
+          "title": {
+            "rendered": "El Salvador: Everything You Need to Know Before Visiting"
+          }
+        },
+        {
+          "id": 1024,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/07/04/canegue-cafe-the-best-spot-for-brunch-in-el-zonte/",
+          "title": {
+            "rendered": "Canegue Cafe: The Best Spot for Brunch in El Zonte"
+          }
+        },
+        {
+          "id": 988,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/06/25/best-co-working-spots-and-cafes-with-wifi-in-el-tunco/",
+          "title": {
+            "rendered": "Best Co-Working Spots and Cafés with WiFi in El Tunco"
+          }
+        },
+        {
+          "id": 930,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2026/06/22/solo-female-travel-in-el-salvador-your-ultimate-guide/",
+          "title": {
+            "rendered": "Solo Female Travel in El Salvador: Your Ultimate Guide"
+          }
+        },
+        {
+          "id": 77,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/2021/09/20/secret-interior-design-tips-and-tricks-you-should-know/",
+          "title": {
+            "rendered": "Getaways Guides: El Zonte"
+          }
+        }
+      ]
+    },
+    "pages": {
+      "endpoint": "https://getawayselsalvador.com/wp-json/wp/v2/pages?per_page=100&_fields=id,link,status,title",
+      "total": 5,
+      "missing_from_inventory": [],
+      "items": [
+        {
+          "id": 709,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/contact-us/",
+          "title": {
+            "rendered": "Contact Us"
+          }
+        },
+        {
+          "id": 1,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/about/",
+          "title": {
+            "rendered": "About Us"
+          }
+        },
+        {
+          "id": 15,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/properties/",
+          "title": {
+            "rendered": "Properties"
+          }
+        },
+        {
+          "id": 10,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/blog/",
+          "title": {
+            "rendered": "Blog"
+          }
+        },
+        {
+          "id": 317,
+          "status": "publish",
+          "link": "https://getawayselsalvador.com/",
+          "title": {
+            "rendered": "Home"
+          }
+        }
+      ]
+    }
+  },
+  "limitations": "Public WordPress posts/pages only. HivePress listings are checked against their sitemap, not REST (type not exposed there). No private/draft pages, authenticated areas or external sites.",
+  "button_and_carousel_destinations": {
+    "attribute": "data-url",
+    "unique_destinations": 11,
+    "missing_from_inventory_ignoring_trailing_slash": []
+  }
+}

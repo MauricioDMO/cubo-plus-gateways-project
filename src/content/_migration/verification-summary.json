@@ -1,0 +1,29 @@
+{
+  "site": "https://getawayselsalvador.com/",
+  "captured_at": "2026-10-15T05:24:54.210607+00:00",
+  "verified_at": "2026-10-15T05:35:06.297621+00:00",
+  "urls_discovered": 112,
+  "html_routes": 71,
+  "non_redirect_html_routes": 61,
+  "html_redirects": 10,
+  "media_redirects": 41,
+  "blog_articles": 18,
+  "apartments": 9,
+  "villas": 1,
+  "shared_components": 2,
+  "total_markdown_files_including_index_and_readme": 75,
+  "source_content_checks": {
+    "reviewed_documents": 71,
+    "text_elements_checked": 1950,
+    "text_nodes_checked": 3579,
+    "links_checked": 463,
+    "images_checked": 372
+  },
+  "unresolved_content_differences": [],
+  "result": "passed",
+  "limits": [
+    "Fidelity to captured public HTML, not independent fact checking.",
+    "External images referenced, not downloaded.",
+    "Live widget availability/quotes, form functionality, private pages and external sites not migrated."
+  ]
+}
