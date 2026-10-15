@@ -14,7 +14,7 @@ export function PropertyCard({ property }: { property: Property }) {
       <div className="px-[21px] pt-[21px] max-[1150px]:px-4 max-[1150px]:pt-[18px] max-[600px]:px-[23px] max-[600px]:pt-[23px]">
         <p className="mb-2 flex items-center gap-[5px] text-[10px] text-ink-muted"><Icon name="pin" className="size-3" />{property.location}</p>
         <h3 className="font-display text-lg leading-[1.4] font-medium tracking-[-.6px] text-ink-strong max-[1150px]:text-base max-[600px]:text-[21px]"><a href={property.href}>{property.name}</a></h3>
-        <p className="mt-1.5 text-[11px] text-ink-body max-[600px]:text-xs">{property.subtitle}</p>
+        <p className="mt-1.5 text-[11px] leading-[1.65] text-ink-body max-[600px]:text-xs">{property.subtitle}</p>
         <div className="mt-[19px] flex items-center gap-5 pb-[19px] text-[10px] text-ink-body max-[1150px]:gap-2.5 max-[1150px]:text-[9px] max-[600px]:gap-[25px] max-[600px]:text-[11px]">
           <span className="flex items-center gap-1.5"><Icon name="bed" className="size-4 text-icon-muted" />{property.bedrooms} bedrooms</span>
           <span className="flex items-center gap-1.5"><Icon name="bath" className="size-4 text-icon-muted" />{property.bathrooms} bathrooms</span>
