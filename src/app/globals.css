@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: var(--white);
-  --color-foreground: var(--ink);
   --font-sans: var(--font-inter), sans-serif;
   --font-display: var(--font-lexend), sans-serif;
   --color-coastal: #394342;
