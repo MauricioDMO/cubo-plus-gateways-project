@@ -9,7 +9,7 @@ const variants = {
 
 export function ButtonLink({ children, className = "", variant = "primary", ...props }: ComponentProps<"a"> & { variant?: "primary" | "light" | "outline" }) {
   return (
-    <a className={`inline-flex min-h-[49px] items-center justify-center gap-[26px] rounded-full border px-[23px] py-[13px] text-xs leading-normal font-medium whitespace-nowrap transition-[background,transform] duration-200 hover:-translate-y-0.5 ${variants[variant]} ${className}`} {...props}>
+    <a className={`inline-flex min-h-[49px] items-center justify-center gap-[26px] rounded-full border px-[23px] py-[13px] text-xs leading-normal font-medium whitespace-nowrap transition-[background,transform] motion-reduce:transition-none duration-200 hover:-translate-y-0.5 ${variants[variant]} ${className}`} {...props}>
       {children}<Icon name="arrow" className="size-[17px]" />
     </a>
   );

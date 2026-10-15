@@ -34,7 +34,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-[25px] max-[1150px]:gap-4 max-[600px]:gap-2.5">
           <a className="flex items-center gap-[7px] text-[12px] max-[1150px]:hidden" href={`${SITE_URL}/account/login/`}><Icon name="user" className="size-[15px]" />Sign in</a>
           <ButtonLink className="min-h-[43px]! gap-[19px]! px-[19px]! py-[11px]! text-[11px]! max-[600px]:min-h-11! max-[600px]:gap-2.5! max-[600px]:px-[13px]! max-[600px]:py-[9px]! max-[600px]:text-[10px]! max-[600px]:[&_svg]:hidden max-[360px]:hidden" href={`${SITE_URL}/submit-listing/`}>List a property</ButtonLink>
-          <button ref={toggleRef} className="hidden size-11 items-center justify-center rounded-full border border-divider bg-transparent text-ink-strong transition-colors duration-200 hover:bg-coastal/10 max-[850px]:inline-flex" aria-expanded={open} aria-controls="main-navigation" aria-label={open ? "Close navigation" : "Open navigation"} onClick={() => setOpen(!open)}><Icon name={open ? "close" : "menu"} /></button>
+          <button ref={toggleRef} className="cursor-pointer hidden size-11 items-center justify-center rounded-full border border-divider bg-transparent text-ink-strong transition-colors motion-reduce:transition-none duration-200 hover:bg-coastal/10 max-[850px]:inline-flex" aria-expanded={open} aria-controls="main-navigation" aria-label={open ? "Close navigation" : "Open navigation"} onClick={() => setOpen(!open)}><Icon name={open ? "close" : "menu"} /></button>
         </div>
       </div>
     </header>

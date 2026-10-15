@@ -5,9 +5,9 @@ import { ImageBadge } from "../atoms/image-badge";
 
 export function PropertyCard({ property }: { property: Property }) {
   return (
-    <article className="group min-w-0 overflow-hidden rounded-card border border-divider bg-surface-white transition-[box-shadow,transform] duration-250 hover:-translate-y-1 hover:shadow-card">
+    <article className="group min-w-0 overflow-hidden rounded-card border border-divider bg-surface-white transition-[box-shadow,transform] motion-reduce:transition-none duration-250 hover:-translate-y-1 hover:shadow-card">
       <a className="relative block aspect-[1.36] overflow-hidden max-[600px]:aspect-[1.35]" href={property.href} aria-label={`Explore ${property.name}`}>
-        <Image className="transition-transform duration-500 group-hover:scale-[1.035]" src={property.image} alt={property.alt} fill sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" />
+        <Image className="object-cover transition-transform motion-reduce:transition-none duration-500 group-hover:scale-[1.035]" src={property.image} alt={property.alt} fill sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" />
         <ImageBadge className="top-4 left-4 px-[11px] py-1 text-[9px]">{property.category}</ImageBadge>
         <span className="absolute top-[15px] right-[15px] grid size-[30px] place-items-center rounded-full bg-surface-white/85 text-ink-strong"><Icon name="diagonal" className="size-[15px]" /></span>
       </a>
