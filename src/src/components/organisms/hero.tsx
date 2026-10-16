@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { SITE_URL } from "@/content/landing";
 import { Icon } from "../atoms/icon";
 import { ButtonLink } from "../atoms/button-link";
 import { PageContainer } from "../atoms/page-container";
@@ -14,7 +13,7 @@ export function Hero() {
         <h1 className="mt-[23px] mb-[21px] font-display text-[clamp(64px,6.8vw,98px)] leading-[1.07] font-medium tracking-[-5px] max-[1150px]:text-[80px] max-[850px]:text-[74px] max-[850px]:tracking-[-4px] max-[600px]:mt-7 max-[600px]:mb-[22px] max-[600px]:text-[clamp(47px,12vw,70px)] max-[600px]:leading-[1.13] max-[600px]:tracking-[-2.8px]" id="hero-title">Getaways<br />Concierge<span className="text-inverse/85">.</span></h1>
         <p className="w-[365px] max-w-full text-base leading-[1.8] text-inverse/90 max-[600px]:w-[280px] max-[600px]:text-sm max-[600px]:leading-[1.85]">Book a complimentary call, and we’ll build your stay in El Salvador.</p>
         <div className="mt-[30px] flex items-center gap-[30px] max-[600px]:mt-7 max-[600px]:flex-wrap max-[600px]:gap-[18px]">
-          <ButtonLink variant="light" href={`${SITE_URL}/contact-us/`}>Plan your getaway</ButtonLink>
+          <ButtonLink variant="light" href="/contact-us">Plan your getaway</ButtonLink>
           <a className="inline-flex items-center gap-2.5 border-b border-inverse/40 py-[9px] text-[12px] max-[600px]:gap-1.5 max-[600px]:text-[10px]" href="#properties">Explore our stays<Icon name="diagonal" className="size-3.5" /></a>
         </div>
       </PageContainer>

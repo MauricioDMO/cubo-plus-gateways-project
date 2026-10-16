@@ -89,7 +89,7 @@
     await settle();
     assert(menu.getAttribute("aria-expanded") === "false" && document.activeElement === menu, "Escape should close navigation and return focus");
     await click(menu);
-    await click(navigation.querySelector('a[href="#properties"]'));
+    await click(navigation.querySelector('a[href="/#properties"]'));
     assert(menu.getAttribute("aria-expanded") === "false", "Navigation should close after selecting a link");
   }
 
