@@ -1,0 +1,13 @@
+[
+  {
+    "code": "GETAWAYS10",
+    "kind": "percent",
+    "value": 10,
+    "listing_id": null,
+    "expires_at": null,
+    "max_uses": null,
+    "use_count": 0,
+    "active": true,
+    "note": "Sample code for the class. 10% off any stay."
+  }
+]

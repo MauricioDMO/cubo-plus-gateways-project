@@ -1,88 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Getaways El Salvador: student repo (mock Bitcoin checkout)
 
-## Docker Compose
+This is the public website of Getaways El Salvador, a vacation-rental business, prepared as a class project. The site, the property pages, the photos and the blog run locally. The booking flow runs up to the payment step. The payment step is a **starter stub**: your job is to build the mock Bitcoin payment. See [TASK.md](./TASK.md).
 
-Requisitos: Docker Engine y Docker Compose v2 o superior. Ejecuta los comandos desde `src/`.
-Los archivos son independientes: no combines desarrollo y producción con varios `-f`.
+Resumen en español: este repositorio es la versión pública de la web de Getaways El Salvador. Todo corre en local, sin claves ni cuentas. El pago con Bitcoin es un "stub" que ustedes deben completar. Las instrucciones completas están en [TASK.md](./TASK.md) (sección en español al final).
 
-### Desarrollo
+## Requirements
 
-```bash
-docker compose -f compose.dev.yaml up --build
-```
+- Node.js 20 or newer
+- npm
 
-- Aplicación con recarga automática: http://localhost:3000.
-- PostgreSQL 18: `localhost:5432`, base y usuario `gateways`, contraseña `gateways_dev`.
-- Opcionalmente copia `.env.example` a `.env` para cambiar credenciales o puertos.
-- Las dependencias se sincronizan al arrancar; reinicia `app` si cambias `package.json` o el lockfile.
-- Para levantar solo PostgreSQL: `docker compose -f compose.dev.yaml up -d db`.
+No `.env` file, API key or account is needed.
 
-### Despliegue
+## Run it
 
 ```bash
-cp .env.example .env
-openssl rand -hex 32
-# Guarda la contraseña generada en POSTGRES_PASSWORD dentro de .env.
-docker compose -f compose.prod.yaml up -d --build --wait
-```
-
-La contraseña es obligatoria y no se incluye en la imagen. Usa valores seguros para URL
-(por ejemplo, hexadecimales) en usuario y contraseña porque forman parte de `DATABASE_URL`.
-La imagen usa la salida standalone de Next.js y ejecuta la aplicación sin root.
-PostgreSQL no publica puertos en producción; solo es accesible en la red de Compose.
-Configura HTTPS en el proxy inverso o plataforma de despliegue antes de exponer el sitio a Internet.
-La compilación requiere Internet para descargar dependencias y las fuentes de Google de `next/font`.
-
-### Datos y comprobación
-
-Ambos entornos esperan a que PostgreSQL esté listo y usan volúmenes separados.
-`DATABASE_URL` queda disponible en el servidor de Next.js con host `db`;
-todavía no hay cliente de base de datos, esquema ni migraciones en esta aplicación.
-
-```bash
-docker compose -f compose.dev.yaml config --quiet
-docker compose -f compose.prod.yaml config --quiet # Requiere POSTGRES_PASSWORD.
-docker compose -f compose.prod.yaml ps
-docker compose -f compose.prod.yaml logs -f app
-docker compose -f compose.prod.yaml exec db sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "SELECT 1"'
-```
-
-Para detener sin borrar datos: `docker compose -f compose.prod.yaml down`
-(usa `compose.dev.yaml` para desarrollo). **No añadas `-v`: elimina los datos persistentes.**
-Cambiar las credenciales en `.env` no modifica una base ya inicializada: rótalas con SQL.
-Los volúmenes no sustituyen las copias de seguridad; programa backups antes del despliegue real.
-
-## Getting Started
-
-First, run the development server:
-
-```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other useful commands:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npx tsc --noEmit -p .   # type check
+npx vitest run          # tests
+npx next build          # production build
+```
 
-## Learn More
+## Project map
 
-To learn more about Next.js, take a look at the following resources:
+| Where | What lives there |
+| --- | --- |
+| `app/(site)/` | Public pages: home, properties, listing detail, blog, about, concierge. |
+| `app/(site)/[...segments]/` | Catch-all route that renders content pages from `data/pages.json`. |
+| `app/(site)/listing/[slug]/` | One property page, with photos, quote box and booking widget. |
+| `app/checkout/page.tsx` | Checkout: itemized bill, coupon and the payment method. |
+| `app/(site)/booking-confirmation/` | Confirmation page, read from the booking store. |
+| `app/api/bookings/` | Creates a booking with its quoted total. |
+| `app/api/checkout/quote/` | Price quote: nights, cleaning, extra guests, pets, coupon, IVA 13%, tourism tax 5%. |
+| `app/api/checkout/status/` | Reads booking status. |
+| `app/api/checkout/btc/` | **Student work.** Starter route for the Bitcoin payment. |
+| `app/api/listings/[id]/availability/` | Availability for a listing (confirmed bookings only). |
+| `lib/booking-quote.ts` | Real pricing logic. Keep it. |
+| `lib/booking-store.ts` | Bookings in memory, saved to `.data/bookings.json` (gitignored). `markPaid()` lives here. |
+| `lib/bookings.ts`, `lib/checkout-session.ts` | Booking helpers used by the pages and routes. |
+| `lib/coupons.ts`, `lib/coupon-rules.ts` | Coupon lookup. The sample code is `GETAWAYS10` (10% off). |
+| `lib/payments/types.ts` | The `PaymentProvider` contract that students implement. |
+| `lib/payments/btc-mock.ts` | **Student work.** Starter stub for the Bitcoin provider. |
+| `lib/payments/index.ts` | Exports the active payment provider. |
+| `components/BitcoinPanel.tsx` | **Student work.** Bitcoin payment UI shown on checkout. |
+| `components/CheckoutExtras.tsx`, `components/CheckoutMethods.tsx` | Checkout bill and payment-method area. |
+| `lib/supabase.ts` | Local, read-only data client built from `data/*.json`. No database. |
+| `lib/content.ts` | Functions that read pages, posts, listings and terms. Signatures are stable. |
+| `lib/media.ts` | Turns a media path into a URL under `/media/`. |
+| `data/*.json` | Public site data: pages, posts, listings (with prices), terms, media index. |
+| `public/media/` | Photos and files referenced by `data/media.json`. |
+| `test/` | Test helpers, including the data double. |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How data works
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- The site does not connect to a database. `data/*.json` holds everything a visitor can see on the public site: pages, blog posts, listings with their prices, terms and the media index.
+- `lib/supabase.ts` gives the rest of the code a small query interface over those JSON files. It is read-only. Edits to the JSON files show up after a reload.
+- Photos are in `public/media/`. A path such as `listings/casa-x/01.jpg` in the data is served at `/media/listings/casa-x/01.jpg`.
+- Bookings are different: they are created while you use the site. They are kept in memory and saved to `.data/bookings.json`, so a dev restart keeps them. Delete that folder to reset all bookings.
+- The public data has no guest data, no staff data and no keys.
 
-## Deploy on Vercel
+## Secrets
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Nothing in this repo is secret. You do not need to create `.env.local`. Do not add real API keys, wallet seeds or private data to this repo. If you need configuration, put it in `.env.local` (already gitignored) and never commit it.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Notes
+
+- This is Next.js 16. Read [AGENTS.md](./AGENTS.md) before you write code, and check `node_modules/next/dist/docs/` when unsure about an API.
+- Photos, texts and the brand belong to Getaways El Salvador. See [LICENSE-NOTE.md](./LICENSE-NOTE.md).

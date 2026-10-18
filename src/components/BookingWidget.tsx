@@ -1,0 +1,313 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { AlertCircle, CalendarDays, Loader2, ShieldCheck } from "lucide-react";
+import BookingDatePicker from "@/components/BookingDatePicker";
+import { useBookingDates } from "@/components/BookingDates";
+import { addDaysIso, nightsBetween, todayIso } from "@/lib/booking-dates";
+import PaymentButtonIcon from "@/components/PaymentButtonIcon";
+import PhoneNumberField from "@/components/PhoneNumberField";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+type BlockedRange = { start_date: string; end_date: string };
+
+type BookingWidgetProps = {
+  listingId: number;
+  listingTitle: string;
+  listingSlug: string;
+  price?: string;
+  cleaningFee?: string;
+  minNights?: string;
+  checkoutMode: "checkout" | "contact";
+};
+
+function parseMoney(value?: string) {
+  if (!value) return null;
+  const parsed = Number(value.replace(/[^0-9.]/g, ""));
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function overlaps(checkIn: string, checkOut: string, range: BlockedRange) {
+  return checkIn < range.end_date && range.start_date < checkOut;
+}
+
+/*
+ * The taken dates, or null when they could not be read. A failed read used to
+ * look exactly like "nothing is taken": the error was swallowed, the list stayed
+ * empty, and every date showed as free.
+ */
+async function fetchBlockedRanges(listingId: number): Promise<BlockedRange[] | null> {
+  try {
+    const response = await fetch(`/api/listings/${listingId}/availability`, { cache: "no-store" });
+    const json = await response.json().catch(() => null);
+    if (!response.ok || !json?.ok || !Array.isArray(json.data?.blocked)) return null;
+    return json.data.blocked as BlockedRange[];
+  } catch {
+    return null;
+  }
+}
+
+function money(value: number) {
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
+}
+
+export default function BookingWidget({ listingId, listingTitle, listingSlug, price, cleaningFee, minNights, checkoutMode }: BookingWidgetProps) {
+  const router = useRouter();
+  const checkoutEnabled = checkoutMode !== "contact";
+  const minStay = Math.max(1, Number(minNights || 1) || 1);
+  /* Shared with the phone booking bar when one is on the page, local
+     otherwise. See components/BookingDates.tsx. */
+  const { checkIn, checkOut, setCheckIn: updateCheckIn, setCheckOut } = useBookingDates(minStay);
+  const [guestFirstName, setGuestFirstName] = useState("");
+  const [guestLastName, setGuestLastName] = useState("");
+  const [guestEmail, setGuestEmail] = useState("");
+  const [guestPhone, setGuestPhone] = useState("");
+  const [blocked, setBlocked] = useState<BlockedRange[]>([]);
+  const [availability, setAvailability] = useState<"loading" | "ready" | "failed">("loading");
+  const loadingAvailability = availability === "loading";
+  const [submitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const [checkoutUnavailable, setCheckoutUnavailable] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    fetchBlockedRanges(listingId).then((ranges) => {
+      if (!active) return;
+      if (ranges) {
+        setBlocked(ranges);
+        setAvailability("ready");
+      } else {
+        setAvailability("failed");
+      }
+    });
+
+    return () => {
+      active = false;
+    };
+  }, [listingId]);
+
+  /* The retry button, and the refresh after somebody else took the dates. */
+  async function reloadAvailability() {
+    setAvailability("loading");
+    const ranges = await fetchBlockedRanges(listingId);
+    if (ranges) {
+      setBlocked(ranges);
+      setAvailability("ready");
+    } else {
+      setAvailability("failed");
+    }
+  }
+
+  const pricePerNight = parseMoney(price);
+  const cleaning = parseMoney(cleaningFee) ?? 0;
+  const nights = nightsBetween(checkIn, checkOut);
+  const datesBlocked = checkIn && checkOut ? blocked.some((range) => overlaps(checkIn, checkOut, range)) : false;
+  const validDates = nights >= minStay && checkIn >= todayIso() && checkOut > checkIn && !datesBlocked;
+  // Not until the calendar has actually loaded: with no calendar every date looks free.
+  const canReserve = Boolean(pricePerNight) && validDates && availability === "ready";
+  const total = useMemo(() => (pricePerNight && nights > 0 ? pricePerNight * nights + cleaning : null), [cleaning, nights, pricePerNight]);
+  const guestName = `${guestFirstName} ${guestLastName}`.trim();
+
+  async function submitBooking(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setMessage(null);
+    setCheckoutUnavailable(false);
+
+    if (!checkoutEnabled) {
+      router.push(
+        `/contact-us?property=${encodeURIComponent(listingSlug)}&check_in=${encodeURIComponent(checkIn)}&check_out=${encodeURIComponent(checkOut)}`,
+      );
+      return;
+    }
+
+    if (!pricePerNight) {
+      setMessage("This listing needs a nightly price before online checkout can start.");
+      return;
+    }
+
+    // The button is disabled in these states, but the phone bar submits this
+    // form directly, so the rule is repeated here. When the check failed, the
+    // notice with its retry is already on screen.
+    if (availability !== "ready") {
+      if (availability === "loading") setMessage("Still checking which dates are free. One moment.");
+      return;
+    }
+
+    if (!validDates) {
+      setMessage(datesBlocked ? "Those dates are already blocked." : `Choose at least ${minStay} night${minStay === 1 ? "" : "s"}.`);
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const response = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          listing_id: listingId,
+          check_in: checkIn,
+          check_out: checkOut,
+          guest_name: guestName,
+          guest_email: guestEmail,
+          guest_phone: guestPhone,
+        }),
+      });
+      const json = await response.json();
+      if (!response.ok || !json?.ok) {
+        // 409: somebody else took the dates since this page loaded. Reload the
+        // calendar so they show as taken instead of inviting the same click.
+        if (response.status === 409) void reloadAvailability();
+        setCheckoutUnavailable(json?.error === "checkout_not_configured");
+        setMessage(json?.message ?? json?.error ?? "Booking could not be started. Please try again.");
+        return;
+      }
+      // Every path answers with a URL: the checkout page, where the rail is
+      // chosen. Assigning an absent one used to navigate to
+      // /listing/undefined and 404, stranding the booking row that had just
+      // been created, so it is checked rather than assumed.
+      if (typeof json.data?.url === "string" && json.data.url) {
+        window.location.href = json.data.url;
+        return;
+      }
+      setMessage("Checkout could not be started. Please contact us and we'll confirm your stay.");
+    } catch {
+      setMessage("Booking could not be started. Check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <>
+    <Card className="booking-widget">
+      <CardHeader className="booking-widget__header">
+        <div>
+          <CardTitle className="booking-widget__title">{checkoutEnabled ? "Reserve your stay" : "Request your stay"}</CardTitle>
+          <CardDescription>{listingTitle}</CardDescription>
+        </div>
+        {/* No price badge here. The nightly rate is already stated at the top
+            of the page, and the total for the chosen dates is stated at the
+            bottom of this very card -- a third figure in the header made the
+            card open with a number the guest had just read and would read
+            again. */}
+      </CardHeader>
+      <CardContent>
+        <form className="booking-widget__form" onSubmit={submitBooking}>
+          <div className="booking-widget__dates">
+            <div className="booking-widget__field">
+              <Label htmlFor={`check-in-${listingId}`}>Check-in</Label>
+              <BookingDatePicker id={`check-in-${listingId}`} min={todayIso()} value={checkIn} onChange={updateCheckIn} />
+            </div>
+            <div className="booking-widget__field">
+              <Label htmlFor={`check-out-${listingId}`}>Check-out</Label>
+              <BookingDatePicker id={`check-out-${listingId}`} min={addDaysIso(checkIn || todayIso(), minStay)} value={checkOut} onChange={setCheckOut} />
+            </div>
+          </div>
+
+          <div className="booking-widget__guest-grid">
+            <div className="booking-widget__field">
+              <Label htmlFor={`guest-first-name-${listingId}`}>First name</Label>
+              <Input id={`guest-first-name-${listingId}`} value={guestFirstName} onChange={(event) => setGuestFirstName(event.target.value)} placeholder="First name" autoComplete="given-name" required />
+            </div>
+            <div className="booking-widget__field">
+              <Label htmlFor={`guest-last-name-${listingId}`}>Last name</Label>
+              <Input id={`guest-last-name-${listingId}`} value={guestLastName} onChange={(event) => setGuestLastName(event.target.value)} placeholder="Last name" autoComplete="family-name" required />
+            </div>
+          </div>
+          <div className="booking-widget__field">
+            <Label htmlFor={`guest-email-${listingId}`}>Email</Label>
+            <Input id={`guest-email-${listingId}`} type="email" value={guestEmail} onChange={(event) => setGuestEmail(event.target.value)} placeholder="you@example.com" autoComplete="email" required />
+          </div>
+          <div className="booking-widget__field">
+            <Label htmlFor={`guest-phone-${listingId}`}>Phone</Label>
+            <PhoneNumberField id={`guest-phone-${listingId}`} value={guestPhone} onChange={setGuestPhone} />
+          </div>
+
+          <p className="booking-widget__helper">Our concierge will follow up by email for arrival details and any special requests.</p>
+
+          <div className="booking-widget__summary" aria-live="polite">
+            <div>
+              <span>
+                <CalendarDays size={16} aria-hidden="true" />
+                {nights > 0 ? `${nights} night${nights === 1 ? "" : "s"}` : "Select dates"}
+              </span>
+              {minStay > 1 && <small>Minimum stay: {minStay} nights</small>}
+            </div>
+            <strong>{total ? money(total) : pricePerNight ? "Choose dates" : "Request quote"}</strong>
+          </div>
+          {/* Only when there is a checkout step to add them in. */}
+          {pricePerNight && checkoutEnabled ? (
+            <p className="booking-widget__helper">Taxes (IVA and tourism tax) are added at checkout.</p>
+          ) : null}
+
+          {/* Always rendered, with a reserved min-height in CSS, so the
+              availability fetch resolving on mount does not shunt the button
+              and the notices below it up the card. */}
+          <div className="booking-widget__status" aria-live="polite">
+            {loadingAvailability ? (
+              <p className="booking-widget__note">
+                <Loader2 size={15} className="booking-widget__spin" aria-hidden="true" />
+                Checking availability
+              </p>
+            ) : availability === "failed" ? (
+              <p className="booking-widget__error" role="alert">
+                <AlertCircle size={15} aria-hidden="true" />
+                <span>We could not check which dates are free. Please try again.</span>
+                {/* The site's plain text-button style; this card has none of its own. */}
+                <button type="button" className="checkout-extras__coupon-remove" onClick={() => void reloadAvailability()}>
+                  Try again
+                </button>
+              </p>
+            ) : datesBlocked ? (
+              <p className="booking-widget__error">
+                <AlertCircle size={15} aria-hidden="true" />
+                <span>Those dates are unavailable.</span>
+              </p>
+            ) : null}
+            {message &&
+              (checkoutUnavailable ? (
+                <p className="booking-widget__notice">
+                  <span>
+                    We will confirm your stay personally. <Link href="/contact-us">Contact us</Link>
+                  </span>
+                </p>
+              ) : (
+                <p className="booking-widget__error" role="alert">
+                  <AlertCircle size={15} aria-hidden="true" />
+                  <span>{message}</span>
+                </p>
+              ))}
+          </div>
+
+          {/* No demo notice here. The checkout page carries the student-mock banner. */}
+          {checkoutMode === "contact" && (
+            <p className="booking-widget__notice">
+              <span>Send your dates and our team will confirm availability personally.</span>
+            </p>
+          )}
+
+          <Button
+            type="submit"
+            className="booking-widget__submit"
+            aria-busy={submitting}
+            disabled={submitting || (checkoutEnabled && availability !== "ready") || (checkoutEnabled && !canReserve)}
+          >
+            {submitting ? <Loader2 size={16} className="booking-widget__spin" aria-hidden="true" /> : <PaymentButtonIcon />}
+            <span>{submitting ? "Starting checkout" : checkoutEnabled ? (pricePerNight ? "Reserve now" : "Price unavailable") : "Request booking"}</span>
+          </Button>
+
+          <p className="booking-widget__secure">
+            <ShieldCheck size={15} aria-hidden="true" />
+            {checkoutMode === "checkout" ? "Bitcoin or card, on the next step" : "Concierge follow-up"}
+          </p>
+        </form>
+      </CardContent>
+    </Card>
+    </>
+  );
+}
