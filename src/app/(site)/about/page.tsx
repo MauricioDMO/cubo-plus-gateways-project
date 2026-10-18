@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 
-import AboutTeamGrid from "@/components/AboutTeamGrid";
-import JsonLd from "@/components/JsonLd";
-import { siteText } from "@/lib/site-text";
-import { breadcrumbSchema } from "@/lib/structured-data";
+import AboutTeamGrid from "@/components/organisms/AboutTeamGrid";
+import JsonLd from "@/components/seo/JsonLd";
+import { siteText } from "@/modules/site/server/site-text";
+import { breadcrumbSchema } from "@/shared/seo/structured-data";
 
 /*
  * The about page.
@@ -19,7 +20,7 @@ import { breadcrumbSchema } from "@/lib/structured-data";
  * own visual system (Montserrat, the cream/charcoal palette) rather than the
  * rest of the site's Inter/Lexend and tokens.
  *
- * Every word, photo and team member is a slot in lib/site-content.ts (the
+ * Every word, photo and team member is a slot in modules/content/site-content.ts (the
  * about.* groups), edited on the page itself; the defaults there are this
  * page exactly as designed. A team member with a quote reveals it on click
  * (AboutTeamGrid, matching the design's own interaction); one without is
@@ -98,8 +99,11 @@ export default async function AboutPage() {
       </div>
 
       {storyPhoto && (
-        <img
+        <Image
           src={storyPhoto.url}
+          width={1600}
+          height={900}
+          sizes="100vw"
           alt=""
           loading="lazy"
           {...c.focus("about.story.image@focus", "about.story.image@focusMobile", { className: "about-photo" })}

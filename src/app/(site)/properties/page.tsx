@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { getListingCategoriesWithCounts, getListingsForArchive, visibleListingCategories } from "@/lib/content";
-import PropertyArchive from "@/components/PropertyArchive";
-import type { ArchiveSearchParams } from "@/lib/properties-filter";
-import { parseSearchDates, unavailableListingIds } from "@/lib/availability-search";
-import { collectDestinations } from "@/lib/locations";
+import { getListingCategoriesWithCounts, getListingsForArchive } from "@/modules/listings/server/listings";
+import { visibleListingCategories } from "@/modules/listings/categories";
+import PropertyArchive from "@/components/organisms/PropertyArchive";
+import type { ArchiveSearchParams } from "@/modules/listings/properties-filter";
+import { parseSearchDates, unavailableListingIds } from "@/modules/bookings/server/availability-search";
+import { collectDestinations } from "@/modules/listings/locations";
 import Link from "next/link";
-import JsonLd from "@/components/JsonLd";
-import { breadcrumbSchema } from "@/lib/structured-data";
-import { siteText } from "@/lib/site-text";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/shared/seo/structured-data";
+import { siteText } from "@/modules/site/server/site-text";
 
 function firstParam(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value;

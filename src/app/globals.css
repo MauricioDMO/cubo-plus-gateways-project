@@ -2689,6 +2689,7 @@ img {
 }
 
 .ui-calendar {
+  position: relative;
   width: 100%;
   font-size: 13px;
 }
@@ -7531,6 +7532,7 @@ small.checkout-extras__coupon-error {
 .photo-tour__photo {
   display: block;
   width: 100%;
+  height: auto;
   border-radius: 10px;
   transition: transform 0.3s ease;
 }
@@ -9213,6 +9215,7 @@ small.checkout-extras__coupon-error {
 }
 
 .home-concierge__media {
+  position: relative;
   overflow: hidden;
   border-radius: 10px;
 }
@@ -9329,9 +9332,6 @@ small.checkout-extras__coupon-error {
      single word. */
   .home-concierge__media {
     min-height: 0;
-  }
-
-  .home-concierge__media img {
     aspect-ratio: 16 / 10;
   }
 

@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
-import { getBookingBySessionId, getListing } from "@/lib/bookings";
-import { markPaid, updateBooking } from "@/lib/booking-store";
-import { isCheckoutSessionId } from "@/lib/checkout-session";
-import { activePaymentProvider } from "@/lib/payments";
+import { getBookingBySessionId, getListing } from "@/modules/bookings/server/bookings";
+import { markPaid, updateBooking } from "@/modules/bookings/server/booking-store";
+import { isCheckoutSessionId } from "@/modules/checkout/checkout-session";
+import { activePaymentProvider } from "@/modules/payments";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +16,7 @@ export const dynamic = "force-dynamic";
  *                                      money had arrived. Refused in production.
  * GET  ?session_id=                    the booking's status, plus the payment if one is open
  *
- * The booking is confirmed ONLY through markPaid() in lib/booking-store.ts.
+ * The booking is confirmed ONLY through markPaid() in modules/bookings/server/booking-store.ts.
  * This route never sets the status itself.
  */
 

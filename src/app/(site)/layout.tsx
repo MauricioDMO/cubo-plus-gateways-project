@@ -1,5 +1,5 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/organisms/Header";
+import Footer from "@/components/organisms/Footer";
 
 /*
  * Public site layout: the Header and Footer around every public page.

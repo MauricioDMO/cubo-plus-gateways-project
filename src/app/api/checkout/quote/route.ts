@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
-import { getBookingBySessionId, getListing, saveQuote } from "@/lib/bookings";
-import { priceFieldsFromAttributes, quoteStay } from "@/lib/booking-quote";
-import { isCheckoutSessionId } from "@/lib/checkout-session";
-import { previewCoupon } from "@/lib/coupons";
+import { getBookingBySessionId, getListing, saveQuote } from "@/modules/bookings/server/bookings";
+import { priceFieldsFromAttributes, quoteStay } from "@/modules/bookings/booking-quote";
+import { isCheckoutSessionId } from "@/modules/checkout/checkout-session";
+import { previewCoupon } from "@/modules/coupons/server/coupons";
 
 /*
  * What this stay costs, priced on the server.
@@ -14,7 +14,7 @@ import { previewCoupon } from "@/lib/coupons";
  * it writes the new total onto the booking so the payment charges the figure
  * that was on screen. Never trust a total sent from the browser.
  *
- * Coupons are only previewed here (see lib/coupons.ts). Nothing is spent.
+ * Coupons are only previewed here (see modules/coupons/server/coupons.ts). Nothing is spent.
  *
  * Once a payment is open (booking.payment_reference is set), the price is
  * locked. A payment is open for a fixed amount, so the party size cannot change
@@ -164,4 +164,3 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "The price could not be worked out." }, { status: 500 });
   }
 }
-

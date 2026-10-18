@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { getBookingBySessionId } from "@/lib/bookings";
-import { isCheckoutSessionId } from "@/lib/checkout-session";
+import { getBookingBySessionId } from "@/modules/bookings/server/bookings";
+import { isCheckoutSessionId } from "@/modules/checkout/checkout-session";
 
 /*
  * Lets the checkout page watch for a payment that is confirmed elsewhere.

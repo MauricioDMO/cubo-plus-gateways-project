@@ -1,5 +1,5 @@
-import { getRecentPosts } from "@/lib/content";
-import { blogPostPath } from "@/lib/paths";
+import { getRecentPosts } from "@/modules/content/server/content";
+import { blogPostPath } from "@/modules/content/paths";
 
 /*
  * A Google News sitemap.

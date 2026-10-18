@@ -21,12 +21,14 @@ Open http://localhost:3000, pick a property, go to checkout and reach the paymen
 
 | File | What you do there |
 | --- | --- |
-| `lib/payments/types.ts` | The contract. Read it first. Do not change its shape without telling the teacher. |
-| `lib/payments/btc-mock.ts` | Implement `createPayment` and `getPayment` for Bitcoin. This is a starter stub with `TODO(student)` comments. |
-| `lib/payments/index.ts` | Exports the active provider. |
+| `modules/payments/types.ts` | The contract. Read it first. Do not change its shape without telling the teacher. |
+| `modules/payments/btc-mock.ts` | Implement `createPayment` and `getPayment` for Bitcoin. This is a starter stub with `TODO(student)` comments. |
+| `modules/payments/index.ts` | Exports the active provider. |
 | `app/api/checkout/btc/route.ts` | Server route. `POST` creates a payment for the saved total. `GET ?session_id=` returns the status. |
-| `lib/booking-store.ts` | Has `markPaid(paymentId)`. Only this function confirms a booking. |
-| `components/BitcoinPanel.tsx` | The checkout UI for the Bitcoin method. Shows the amount, address or invoice, QR code, timer and status. |
+| `modules/bookings/server/booking-store.ts` | Has `markPaid(paymentId)`. Only this function confirms a booking. |
+| `components/organisms/BitcoinPanel.tsx` | The checkout UI for the Bitcoin method. Shows the amount, address or invoice, QR code, timer and status. |
+
+Keep provider logic in `modules/payments/` and payment UI in `components/organisms/`. Add real tests under the relevant area's `_test_/` folder (for example, `modules/payments/_test_/btc-mock.test.ts`); `npm test` discovers those folders. Do not create a parallel payments implementation under the route or template.
 
 ### The contract
 
@@ -59,7 +61,7 @@ export interface PaymentProvider {
 
 Rules that come with the contract:
 
-- A booking becomes `confirmed` only through `markPaid(paymentId)` in `lib/booking-store.ts`. Do not set the status any other way.
+- A booking becomes `confirmed` only through `markPaid(paymentId)` in `modules/bookings/server/booking-store.ts`. Do not set the status any other way.
 - The total comes from the saved quote on the booking. Do not recalculate the price in the payment code.
 - In development, a "simulate payment" button may call `markPaid`. It is not shown in production builds (`NODE_ENV !== "production"`). Keep it that way.
 
@@ -122,18 +124,20 @@ Abran http://localhost:3000, elijan una propiedad, vayan al checkout y lleguen a
 
 | Archivo | Qué hacer |
 | --- | --- |
-| `lib/payments/types.ts` | El contrato. Léanlo primero. No cambien su forma sin avisar al profesor. |
-| `lib/payments/btc-mock.ts` | Implementen `createPayment` y `getPayment` para Bitcoin. Es un stub con comentarios `TODO(student)`. |
-| `lib/payments/index.ts` | Exporta el proveedor activo. |
+| `modules/payments/types.ts` | El contrato. Léanlo primero. No cambien su forma sin avisar al profesor. |
+| `modules/payments/btc-mock.ts` | Implementen `createPayment` y `getPayment` para Bitcoin. Es un stub con comentarios `TODO(student)`. |
+| `modules/payments/index.ts` | Exporta el proveedor activo. |
 | `app/api/checkout/btc/route.ts` | Ruta del servidor. `POST` crea el pago por el total guardado. `GET ?session_id=` devuelve el estado. |
-| `lib/booking-store.ts` | Tiene `markPaid(paymentId)`. Solo esta función confirma una reserva. |
-| `components/BitcoinPanel.tsx` | La interfaz de pago con Bitcoin: monto, dirección o factura, QR, temporizador y estado. |
+| `modules/bookings/server/booking-store.ts` | Tiene `markPaid(paymentId)`. Solo esta función confirma una reserva. |
+| `components/organisms/BitcoinPanel.tsx` | La interfaz de pago con Bitcoin: monto, dirección o factura, QR, temporizador y estado. |
+
+Mantengan la lógica del proveedor en `modules/payments/` y la interfaz en `components/organisms/`. Las pruebas nuevas van dentro de `_test_/` de su área (por ejemplo, `modules/payments/_test_/btc-mock.test.ts`); `npm test` descubre esas carpetas. No creen otra implementación de pagos dentro de la ruta o el template.
 
 ### El contrato
 
 Es el mismo código de arriba. Reglas:
 
-- Una reserva pasa a `confirmed` solo mediante `markPaid(paymentId)` en `lib/booking-store.ts`.
+- Una reserva pasa a `confirmed` solo mediante `markPaid(paymentId)` en `modules/bookings/server/booking-store.ts`.
 - El total sale de la cotización guardada en la reserva. No recalculen el precio en el código de pago.
 - En desarrollo puede existir un botón "simular pago" que llama a `markPaid`. No debe aparecer en producción (`NODE_ENV !== "production"`).
 

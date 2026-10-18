@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 
-import ConciergeForm from "@/components/ConciergeForm";
-import JsonLd from "@/components/JsonLd";
-import { BUSINESS } from "@/lib/business";
-import { parseConciergePrefill } from "@/lib/concierge-shared";
-import { getFeaturedListings, getListingBySlug, getMediaByIds } from "@/lib/content";
-import { pickPhotoIdByRoom } from "@/lib/listing-gallery-groups";
-import { mediaPublicUrl } from "@/lib/media";
-import { breadcrumbSchema } from "@/lib/structured-data";
-import { siteText } from "@/lib/site-text";
+import ConciergeForm from "@/components/organisms/ConciergeForm";
+import JsonLd from "@/components/seo/JsonLd";
+import { BUSINESS } from "@/modules/site/business";
+import { parseConciergePrefill } from "@/modules/concierge/concierge-shared";
+import { getFeaturedListings, getListingBySlug } from "@/modules/listings/server/listings";
+import { getMediaByIds } from "@/shared/media/server/media";
+import { pickPhotoIdByRoom } from "@/modules/listings/listing-gallery-groups";
+import { mediaPublicUrl } from "@/shared/media/media";
+import { breadcrumbSchema } from "@/shared/seo/structured-data";
+import { siteText } from "@/modules/site/server/site-text";
 
 /*
  * The concierge page.
@@ -66,9 +68,12 @@ export default async function ConciergePage({
 
       <header className="concierge__hero">
         {hero && (
-          <img
+          <Image
             className="concierge__hero-photo"
             src={mediaPublicUrl(hero.storage_path)}
+            fill
+            sizes="(max-width: 1148px) calc(100vw - 48px), 1100px"
+            loading="eager"
             alt=""
             aria-hidden="true"
           />

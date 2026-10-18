@@ -2,19 +2,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-import PropertyArchive from "@/components/PropertyArchive";
-import JsonLd from "@/components/JsonLd";
-import {
-  getListingCategoriesWithCounts,
-  getListingsForArchive,
-  getMediaByIds,
-  visibleListingCategories,
-} from "@/lib/content";
-import { mediaPublicUrl } from "@/lib/media";
-import { parseSearchDates, unavailableListingIds } from "@/lib/availability-search";
-import { collectDestinations, destinationSlug, matchesDestination } from "@/lib/locations";
-import { breadcrumbSchema, destinationSchema } from "@/lib/structured-data";
-import type { ArchiveSearchParams } from "@/lib/properties-filter";
+import PropertyArchive from "@/components/organisms/PropertyArchive";
+import JsonLd from "@/components/seo/JsonLd";
+import { getListingCategoriesWithCounts, getListingsForArchive } from "@/modules/listings/server/listings";
+import { getMediaByIds } from "@/shared/media/server/media";
+import { visibleListingCategories } from "@/modules/listings/categories";
+import { mediaPublicUrl } from "@/shared/media/media";
+import { parseSearchDates, unavailableListingIds } from "@/modules/bookings/server/availability-search";
+import { collectDestinations, destinationSlug, matchesDestination } from "@/modules/listings/locations";
+import { breadcrumbSchema, destinationSchema } from "@/shared/seo/structured-data";
+import type { ArchiveSearchParams } from "@/modules/listings/properties-filter";
 
 /*
  * A page per town.

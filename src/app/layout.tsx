@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Lexend, Montserrat } from "next/font/google";
 import "react-phone-number-input/style.css";
 import "./globals.css";
-import { mediaPublicUrl } from "@/lib/media";
+import { mediaPublicUrl } from "@/shared/media/media";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -21,7 +21,6 @@ const lexend = Lexend({
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ["300", "800"],
   display: "swap",
 });
 

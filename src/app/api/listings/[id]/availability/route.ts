@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { getBlockedRanges, NotFoundError, requireBookableListing } from "@/lib/bookings";
+import { getBlockedRanges, NotFoundError, requireBookableListing } from "@/modules/bookings/server/bookings";
 
 export const dynamic = "force-dynamic";
 

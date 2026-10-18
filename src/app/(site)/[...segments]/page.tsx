@@ -1,18 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { descriptionFromHtml, getMediaByIds, getPageBySlug, getPostBySlugAndDate } from "@/lib/content";
-import { mediaPublicUrl } from "@/lib/media";
-import { sanitizeContentHtml } from "@/lib/sanitize-html";
-import ContactDetails from "@/components/ContactDetails";
-import JsonLd from "@/components/JsonLd";
-import { articleSchema, breadcrumbSchema, contactPageSchema } from "@/lib/structured-data";
-
-/** The featured image's storage path, or null when the post has none. */
-async function postCoverPath(featuredMediaId: number | null): Promise<string | null> {
-  if (featuredMediaId == null) return null;
-  const [media] = await getMediaByIds([featuredMediaId]);
-  return media?.storage_path ?? null;
-}
+import { descriptionFromHtml } from "@/modules/content/description";
+import { getPageBySlug, getPostBySlugAndDate } from "@/modules/content/server/content";
+import { mediaPublicUrl } from "@/shared/media/media";
+import EditorialTemplate from "@/components/templates/EditorialTemplate";
+import { getEditorialData, postCoverPath } from "@/modules/content/server/editorial";
 
 async function postCoverUrl(featuredMediaId: number | null): Promise<string | null> {
   const path = await postCoverPath(featuredMediaId);
@@ -82,60 +74,7 @@ export default async function CatchAllPage({
   params: Promise<{ segments: string[] }>;
 }) {
   const { segments } = await params;
-
-  if (segments.length === 1) {
-    const page = await getPageBySlug(segments[0]);
-    if (!page) notFound();
-    const isContact = page.slug === "contact-us";
-    return (
-      <article>
-        <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: page.title, path: `/${page.slug}` }])} />
-        {/* The contact page is where Google most expects a local business to
-            state plainly where it is, and where it reconciles a site against a
-            Business Profile. This one said only "Email: ..." in a paragraph. */}
-        {isContact && <JsonLd data={contactPageSchema()} />}
-
-        <h1>{page.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: sanitizeContentHtml(page.content_html) }} />
-        {isContact && <ContactDetails />}
-      </article>
-    );
-  }
-
-  if (segments.length === 4) {
-    const [year, month, day, slug] = segments;
-    const post = await getPostBySlugAndDate(year, month, day, slug);
-    if (!post) notFound();
-    const path = `/${segments.join("/")}`;
-    const coverPath = await postCoverPath(post.featured_media_id);
-    return (
-      <article>
-        <JsonLd
-          data={articleSchema({
-            title: post.title,
-            slug: post.slug,
-            path,
-            published_at: post.published_at ?? null,
-            updated_at: post.updated_at ?? null,
-            description: post.seo_description || post.excerpt || descriptionFromHtml(post.content_html),
-            // articleSchema has always accepted an image and never been given
-            // one, so every BlogPosting shipped without it. Discover reads it.
-            imagePath: coverPath,
-          })}
-        />
-        <JsonLd
-          data={breadcrumbSchema([
-            { name: "Home", path: "/" },
-            { name: "Journal", path: "/blog" },
-            { name: post.title, path },
-          ])}
-        />
-
-        <h1>{post.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: sanitizeContentHtml(post.content_html) }} />
-      </article>
-    );
-  }
-
-  notFound();
+  const data = await getEditorialData(segments);
+  if (!data) notFound();
+  return <EditorialTemplate data={data} />;
 }

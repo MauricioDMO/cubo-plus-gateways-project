@@ -1,8 +1,10 @@
 import type { MetadataRoute } from "next";
 
-import { getAllListings, getListingCategoriesWithCounts, getRecentPosts, visibleListingCategories } from "@/lib/content";
-import { collectDestinations } from "@/lib/locations";
-import { blogPostPath } from "@/lib/paths";
+import { getAllListings, getListingCategoriesWithCounts } from "@/modules/listings/server/listings";
+import { getRecentPosts } from "@/modules/content/server/content";
+import { visibleListingCategories } from "@/modules/listings/categories";
+import { collectDestinations } from "@/modules/listings/locations";
+import { blogPostPath } from "@/modules/content/paths";
 
 /*
  * The site served no sitemap at all -- /sitemap.xml was a 404 -- so every URL

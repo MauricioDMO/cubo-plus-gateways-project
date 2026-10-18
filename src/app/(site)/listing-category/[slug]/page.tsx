@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import {
-  getListingCategoriesWithCounts,
-  getListingCategoryWithListings,
-  visibleListingCategories,
-} from "@/lib/content";
-import { mediaPublicUrl } from "@/lib/media";
-import PropertyArchive from "@/components/PropertyArchive";
-import type { ArchiveSearchParams } from "@/lib/properties-filter";
+import { getListingCategoriesWithCounts, getListingCategoryWithListings } from "@/modules/listings/server/listings";
+import { visibleListingCategories } from "@/modules/listings/categories";
+import { mediaPublicUrl } from "@/shared/media/media";
+import PropertyArchive from "@/components/organisms/PropertyArchive";
+import type { ArchiveSearchParams } from "@/modules/listings/properties-filter";
 
 export const dynamic = "force-dynamic";
 

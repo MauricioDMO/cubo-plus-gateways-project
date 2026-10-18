@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-import { getPostCategoriesWithCounts, getPostsByCategory } from "@/lib/content";
-import PostCard from "@/components/PostCard";
+import { getPostCategoriesWithCounts, getPostsByCategory } from "@/modules/content/server/content";
+import PostCard from "@/components/molecules/PostCard";
 
 /*
  * Blog category archive (Task 27), the /category/<slug>/ URL WordPress gives
  * every `category` term. The real site links here from its footer "Blog"
  * widget (Getaways Guides, Uncategorized) and from each post card's category
- * label. Cards reuse /blog's components/PostCard verbatim so the two
+ * label. Cards reuse /blog's components/molecules/PostCard verbatim so the two
  * archives look like the same site.
  *
  * A category with no posts is a 404, not an empty state -- the same rule

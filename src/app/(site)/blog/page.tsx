@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { getAllPosts, getPostCategoriesWithCounts } from "@/lib/content";
-import PostCard from "@/components/PostCard";
-import { siteText } from "@/lib/site-text";
+import { getAllPosts, getPostCategoriesWithCounts } from "@/modules/content/server/content";
+import PostCard from "@/components/molecules/PostCard";
+import { siteText } from "@/modules/site/server/site-text";
 
 /*
  * The journal.

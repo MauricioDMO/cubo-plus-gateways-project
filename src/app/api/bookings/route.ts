@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { attachCheckoutSession, createPendingBooking, DatesUnavailableError, NotFoundError, ValidationError, type BookingInput } from "@/lib/bookings";
-import { newCheckoutSessionId } from "@/lib/checkout-session";
+import { attachCheckoutSession, createPendingBooking, DatesUnavailableError, NotFoundError, ValidationError, type BookingInput } from "@/modules/bookings/server/bookings";
+import { newCheckoutSessionId } from "@/modules/checkout/checkout-session";
 
 /*
  * Starts a booking. Writes a pending booking to the local store and sends the
