@@ -89,16 +89,11 @@ export default function CheckoutMethods({
   }
 
   return (
-    <section className="[&_h2]:mt-0 [&_h2]:mb-3 [&_h2]:text-[15px] [&_h2]:tracking-[0.2px] [&_h2]:mx-0 [&_ul]:flex [&_ul]:flex-col [&_ul]:mt-0
-      [&_ul]:mb-3.5 [&_ul]:list-none [&_ul]:mx-0 [&_ul]:p-0 [&_ul]:gap-2.5 [&_li]:flex [&_li]:items-center [&_li]:justify-between
-      [&_li]:px-4 [&_li]:py-3.5 [&_li]:gap-4 [&_li]:rounded-[8px] [&_li]:border [&_li]:border-solid [&_li]:border-border [&_li_div]:flex
-      [&_li_div]:flex-col [&_li_div]:min-w-0 [&_li_div]:gap-0.75 [&_strong]:text-[15px] [&_strong]:text-text
-      [&_li_span:not(.checkout-page\_\_badge)]:text-[13px] [&_li_span:not(.checkout-page\_\_badge)]:leading-[1.45]
-      [&_li_span:not(.checkout-page\_\_badge)]:text-body-text [&_li]:max-[480.001px]:flex-col [&_li]:max-[480.001px]:items-start" aria-label="Payment methods">
-      <h2>How would you like to pay?</h2>
-      <ul className="flex flex-col mt-0 mb-5 list-none mx-0 p-0 gap-2.5">
+    <section aria-label="Payment methods">
+      <h2 className="mt-0 mb-3 mx-0 text-[15px] tracking-[0.2px]">How would you like to pay?</h2>
+      <ul className="flex flex-col mt-0 mb-3.5 list-none mx-0 p-0 gap-2.5">
         {usable.map((method) => (
-          <li key={method.key}>
+          <li className="flex items-center justify-between px-4 py-3.5 gap-4 rounded-lg border border-border max-[480.001px]:flex-col max-[480.001px]:items-start" key={method.key}>
             <button
               type="button"
               className="flex items-center w-full bg-white text-left cursor-pointer [transition:border-color_0.12s,_box-shadow_0.12s] p-4 gap-3.5
@@ -108,24 +103,23 @@ export default function CheckoutMethods({
               disabled={starting}
               aria-busy={starting}
             >
-              <span className="grid place-items-center flex-none w-10 h-10 bg-[rgba(15,_23,_39,_0.06)] text-heading rounded-full" aria-hidden="true">
-                {starting ? <Loader2 size={20} className="grow-0 shrink-0 basis-5.5 w-5.5 [animation:booking-spin_0.9s_linear_infinite] motion-reduce:[animation-duration:2.4s]" /> : <Bitcoin size={20} />}
+              <span className="grid place-items-center flex-none size-10 bg-[rgba(15,_23,_39,_0.06)] text-body-text text-[13px] leading-[1.45] rounded-full" aria-hidden="true">
+                {starting ? <Loader2 size={20} className="flex-none basis-5.5 w-5.5 animate-spin [animation-duration:900ms] motion-reduce:[animation-duration:2.4s]" /> : <Bitcoin size={20} />}
               </span>
-              <span className="flex flex-col min-w-0 flex-1 gap-0.75 [&_strong]:text-[15px] [&_strong]:text-text [&_span]:text-[13px] [&_span]:leading-[1.45]
-                [&_span]:text-body-text">
-                <strong>{method.name}</strong>
+              <span className="flex flex-col min-w-0 flex-1 gap-0.75 text-[13px] leading-[1.45] text-body-text">
+                <strong className="text-[15px] text-text">{method.name}</strong>
                 <span>{method.detail}</span>
               </span>
-              {method.demo && <span className="checkout-page__badge flex-none self-start bg-accent text-heading text-[11px] font-bold tracking-[0.5px] uppercase whitespace-nowrap
-                px-2.5 py-1 rounded-full [&&]:bg-[#7a5206] [&&]:text-white">Demo</span>}
+              {method.demo && <span className="flex-none self-start bg-[#7a5206] text-white text-[11px] font-bold tracking-[0.5px] uppercase whitespace-nowrap
+                px-2.5 py-1 rounded-full">Demo</span>}
             </button>
           </li>
         ))}
       </ul>
 
       {message && (
-        <p className="flex items-start mt-3 mb-0 text-[13px] leading-[1.5] text-[#8a1c2b] mx-0 gap-2 [&_svg]:flex-none [&_svg]:mt-0.5" role="alert">
-          <AlertCircle size={15} aria-hidden="true" />
+        <p className="flex items-start mt-3 mb-0 text-[13px] leading-[1.5] text-[#8a1c2b] mx-0 gap-2" role="alert">
+          <AlertCircle className="flex-none mt-0.5" size={15} aria-hidden="true" />
           <span>{message}</span>
         </p>
       )}

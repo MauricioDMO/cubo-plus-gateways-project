@@ -79,6 +79,24 @@ const CALL_WINDOWS = [
   { value: "afternoon", label: "Afternoon" },
 ];
 
+const INPUT_CLASS = `min-w-0 min-h-13 bg-white/68 shadow-none text-[#26312f] [font-family:inherit] text-[15px] [font-weight:inherit]
+  [font-style:inherit] leading-[inherit] [font-variant:inherit] transition-[border-color,box-shadow,background-color] duration-160 ease-[ease]
+  px-3.75 py-3.25 rounded-[8px] border-solid border-[#394342]/28 placeholder:text-[#26312f]/50 placeholder:opacity-100
+  hover:enabled:bg-white/90 hover:enabled:border-[#394342]/52 focus-visible:bg-white/96
+  focus-visible:shadow-[0_0_0_3px_rgba(57,67,66,0.13)] focus-visible:outline-none focus-visible:border-[#394342] motion-reduce:transition-none`;
+
+const SELECT_TRIGGER_CLASS = `inline-flex min-w-0 min-h-13 bg-white/68 shadow-none text-[#26312f] [font-family:inherit] text-[15px] [font-weight:inherit]
+  [font-style:inherit] leading-[inherit] [font-variant:inherit] transition-[border-color,box-shadow,background-color] duration-160 ease-[ease]
+  text-left px-3.75 py-3.25 gap-3 rounded-[8px] border-solid border-[#394342]/28
+  hover:enabled:bg-white/90 hover:enabled:border-[#394342]/52 focus-visible:bg-white/96
+  focus-visible:shadow-[0_0_0_3px_rgba(57,67,66,0.13)] focus-visible:outline-none focus-visible:border-[#394342] motion-reduce:transition-none`;
+
+const DATE_PICKER_CLASS = `min-w-0 min-h-13 bg-white/68 shadow-none text-[#26312f] [font-family:inherit] text-[15px] [font-weight:inherit]
+  [font-style:inherit] leading-[inherit] [font-variant:inherit] transition-[border-color,box-shadow,background-color] duration-160 ease-[ease]
+  justify-between text-left px-3.75 py-3.25 gap-3 rounded-[8px] border-[#394342]/28
+  hover:enabled:bg-white/90 hover:enabled:border-[#394342]/52 hover:text-[#26312f] focus-visible:bg-white/96
+  focus-visible:shadow-[0_0_0_3px_rgba(57,67,66,0.13)] focus-visible:outline-none focus-visible:border-[#394342] motion-reduce:transition-none`;
+
 const SERVICE_ICONS: Record<ConciergeServiceIconKey, typeof Plane> = {
   plane: Plane,
   car: Car,
@@ -230,11 +248,10 @@ export default function ConciergeForm({
 
   if (sent === "stored") {
     return (
-      <div className="grid gap-[clamp(26px,_4vw,_42px)] [&&]:grid [&&]:justify-items-start [&&]:max-w-[62ch] [&&]:gap-2 [&_h3]:text-[22px] [&_h3]:m-0
-        [&_p]:text-body-text [&_p]:m-0" role="status">
+      <div className="grid justify-items-start max-w-[62ch] gap-2" role="status">
         <CheckCircle2 size={22} aria-hidden="true" />
-        <h3>Got it, {name.split(" ")[0] || "thanks"}.</h3>
-        <p>
+        <h3 className="text-[22px] m-0">Got it, {name.split(" ")[0] || "thanks"}.</h3>
+        <p className="text-body-text m-0">
           We will write back to {email} to sort out the details. If it is urgent, reach us at{" "}
           <a href={`mailto:${fallbackEmail}`}>{fallbackEmail}</a>.
         </p>
@@ -244,11 +261,10 @@ export default function ConciergeForm({
 
   if (sent === "email") {
     return (
-      <div className="grid gap-[clamp(26px,_4vw,_42px)] [&&]:grid [&&]:justify-items-start [&&]:max-w-[62ch] [&&]:gap-2 [&_h3]:text-[22px] [&_h3]:m-0
-        [&_p]:text-body-text [&_p]:m-0" role="status">
+      <div className="grid justify-items-start max-w-[62ch] gap-2" role="status">
         <CheckCircle2 size={22} aria-hidden="true" />
-        <h3>Almost there</h3>
-        <p>
+        <h3 className="text-[22px] m-0">Almost there</h3>
+        <p className="text-body-text m-0">
           Your email app should be opening with everything filled in — send it and we will take it
           from there. If nothing opened, write to{" "}
           <a href={`mailto:${fallbackEmail}`}>{fallbackEmail}</a>.
@@ -271,46 +287,39 @@ export default function ConciergeForm({
             are already mutually exclusive in the state below: choosing this
             clears the rest, and choosing any service clears this. So they are
             two options, and they are labelled as two options. */}
-        <div className="grid grid-cols-1 mt-0 gap-3 max-[760.001px]:grid-cols-1">
+        <div className="grid grid-cols-1 mt-0 gap-3">
           <p className="mt-0 mb-2 text-[11px] font-extrabold tracking-[0.1em] uppercase text-muted-text mx-0">Option 1</p>
-          <label className={`relative grid grid-cols-[26px_minmax(0,_1fr)] items-start min-h-19 pr-11 pl-4 text-body-text cursor-pointer
+          <label className="relative grid grid-cols-[26px_minmax(0,_1fr)] items-start min-h-19 pr-11 pl-4 text-body-text cursor-pointer bg-[#f2eee6]
             [transition:background-color_0.16s_ease,_color_0.16s_ease] py-3.5 gap-2.5 rounded-[8px] border border-solid
-            border-border [&_input]:absolute [&_input]:w-0.25 [&_input]:h-0.25 [&_input]:overflow-hidden
-            [&_input]:[clip:rect(0,_0,_0,_0)] [&_input]:m-[-1px] [&>svg]:mt-0.5 [&>svg]:text-[#566560] [&_strong]:block
-            [&_strong]:text-heading [&_strong]:font-semibold [&_small]:block [&_small]:mt-0.75 [&_small]:text-[12px]
-            [&_small]:leading-[1.4] [&_small]:text-muted-text hover:bg-[rgba(57,_67,_66,_0.06)] [&:has(input:checked)]:bg-[#e6eeea]
-            [&:has(input:checked)]:shadow-[inset_0_0_0_1px_#394342] focus-within:[outline:2px_solid_var(--color-heading)]
-            focus-within:outline-offset-[2px] [&::after]:content-[''] [&::after]:absolute [&::after]:top-3.5 [&::after]:right-3.75
-            [&::after]:grid [&::after]:w-5.5 [&::after]:h-5.5 [&::after]:place-items-center [&::after]:text-[#26312f]
-            [&::after]:text-[14px] [&::after]:font-extrabold [&::after]:leading-none [&::after]:rounded-[50%] [&::after]:border
-            [&::after]:border-solid [&::after]:border-[#71807b] [&:has(input:checked)::after]:content-['✓']
-            [&:has(input:checked)::after]:border-[2px] [&:has(input:checked)::after]:border-[#394342]
+            border-border has-[input:checked]:bg-[#e6eeea]
+            has-[input:checked]:shadow-[inset_0_0_0_1px_#394342] focus-within:[outline:2px_solid_var(--color-heading)]
+            focus-within:outline-offset-2 after:absolute after:top-3.5 after:right-3.75
+            after:grid after:size-5.5 after:place-items-center after:text-[#26312f]
+            after:text-[14px] after:font-extrabold after:leading-none after:rounded-full after:border
+            after:border-solid after:border-[#71807b] has-[input:checked]:after:content-['✓']
+            has-[input:checked]:after:border-2 has-[input:checked]:after:border-[#394342]
             forced-colors:[forced-color-adjust:auto] forced-colors:border forced-colors:border-solid
-            forced-colors:border-[ButtonText] [&_input]:forced-colors:absolute [&_input]:forced-colors:top-3.5
-            [&_input]:forced-colors:right-3.5 [&_input]:forced-colors:w-5 [&_input]:forced-colors:h-5
-            [&_input]:forced-colors:overflow-visible [&_input]:forced-colors:[clip:auto] [&_input]:forced-colors:m-0
-            [&::after]:forced-colors:hidden [&:has(input:checked)]:forced-colors:[outline:2px_solid_Highlight]
-            [&:has(input:checked)]:forced-colors:outline-offset-[2px] [&:has(input:checked)]:forced-colors:shadow-none
+            forced-colors:border-[ButtonText] forced-colors:after:hidden has-[input:checked]:forced-colors:[outline:2px_solid_Highlight]
+            has-[input:checked]:forced-colors:outline-offset-2 has-[input:checked]:forced-colors:shadow-none
             forced-colors:focus-within:[outline:3px_double_Highlight] forced-colors:focus-within:outline-offset-[3px]
-            motion-reduce:transition-none [&&]:bg-[#f2eee6] ${services.includes("plan_everything") ? ` [&&]:bg-[#e6eeea] [&&]:shadow-[inset_0_0_0_1px_#394342] [&_strong]:text-[#26312f] [&::after]:content-['✓']
-            [&::after]:border-[2px] [&::after]:border-[#394342] [&&]:forced-colors:[outline:2px_solid_Highlight]
-            [&&]:forced-colors:outline-offset-[2px] [&&]:forced-colors:shadow-none` : ""}`}>
+            motion-reduce:transition-none">
             <input
+              className="absolute size-0.25 overflow-hidden [clip:rect(0,_0,_0,_0)] -m-px forced-colors:top-3.5 forced-colors:right-3.5 forced-colors:size-5 forced-colors:overflow-visible forced-colors:[clip:auto] forced-colors:m-0"
               type="checkbox"
               name="services"
               value="plan_everything"
               checked={services.includes("plan_everything")}
               onChange={() => toggleService("plan_everything")}
             />
-            <Sparkles size={22} aria-hidden="true" />
+            <Sparkles className="mt-0.5 text-[#566560]" size={22} aria-hidden="true" />
             {/* The card splits what CONCIERGE_SERVICE_LABELS keeps on one
                 line. That label -- "Customize a full experience - we plan
                 everything" -- is what a summary, an email and the admin show,
                 where it has to stand alone; as a card title it would wrap to
                 two lines and say the same thing twice. */}
             <span>
-              <strong>Customize a full experience</strong>
-              <small>We plan everything. Tell us the shape of the trip and we connect the rest.</small>
+              <strong className={`block font-semibold ${planEverything ? "text-[#26312f]" : "text-heading"}`}>Customize a full experience</strong>
+              <small className="block mt-0.75 text-[12px] leading-[1.4] text-muted-text">We plan everything. Tell us the shape of the trip and we connect the rest.</small>
             </span>
           </label>
         </div>
@@ -334,7 +343,7 @@ export default function ConciergeForm({
           </p>
         ) : (
         <>
-        <p className="mt-0 mb-2 text-[11px] font-extrabold tracking-[0.1em] uppercase text-muted-text mx-0 [&&]:mt-8.5">Option 2</p>
+        <p className="mt-8.5 mb-2 text-[11px] font-extrabold tracking-[0.1em] uppercase text-muted-text mx-0">Option 2</p>
         <h3 className="text-[clamp(17px,_1.6vw,_20px)] font-[650] leading-[1.25] text-heading m-0">Choose a few of your interests</h3>
         <p className="mt-1.5 mb-4.5 text-body-text mx-0">One or as many as you need. We arrange those and leave the rest of the week alone.</p>
         <div className="grid grid-cols-[0.9fr_0.9fr_1.2fr_1fr] border-t border-solid border-t-border border-b border-b-border
@@ -346,56 +355,48 @@ export default function ConciergeForm({
               and labelled nothing at all. */}
           {CONCIERGE_SERVICE_GROUPS.map((group) => (
             <section
-              className="concierge-services__group min-w-0 px-[clamp(12px,_1.8vw,_24px)] py-5.5 [.concierge-services\_\_group+&]:border-l
-                [.concierge-services\_\_group+&]:border-solid [.concierge-services\_\_group+&]:border-l-border [&_h4]:mt-0 [&_h4]:mb-3
-                [&_h4]:text-[12px] [&_h4]:font-extrabold [&_h4]:tracking-[0.08em] [&_h4]:uppercase [&_h4]:text-muted-text [&_h4]:mx-0
+              className="min-w-0 px-[clamp(12px,_1.8vw,_24px)] py-5.5 not-first:border-l
+                not-first:border-solid not-first:border-l-border
                 [&:nth-child(3)]:max-[900.001px]:border-t [&:nth-child(3)]:max-[900.001px]:border-solid
                 [&:nth-child(3)]:max-[900.001px]:border-t-border [&:nth-child(3)]:max-[900.001px]:border-l-0
                 [&:nth-child(4)]:max-[900.001px]:border-t [&:nth-child(4)]:max-[900.001px]:border-solid
                 [&:nth-child(4)]:max-[900.001px]:border-t-border max-[760.001px]:px-0 max-[760.001px]:py-4.5
-                [.concierge-services\_\_group+&]:max-[760.001px]:border-t [.concierge-services\_\_group+&]:max-[760.001px]:border-solid
-                [.concierge-services\_\_group+&]:max-[760.001px]:border-t-border [.concierge-services\_\_group+&]:max-[760.001px]:border-l-0"
+                not-first:max-[760.001px]:border-t not-first:max-[760.001px]:border-solid
+                not-first:max-[760.001px]:border-t-border not-first:max-[760.001px]:border-l-0"
               key={group.id}
               aria-labelledby={`services-${group.id}`}
             >
-              <h4 id={`services-${group.id}`}>{group.label}</h4>
+              <h4 className="mt-0 mb-3 mx-0 text-[12px] font-extrabold tracking-[0.08em] uppercase text-muted-text" id={`services-${group.id}`}>{group.label}</h4>
               <div className="grid gap-1">
                 {group.services.map((service) => {
                   const Icon = SERVICE_ICONS[CONCIERGE_SERVICE_DETAILS[service].icon];
                   return (
                     <label
                       key={service}
-                      className={`concierge-services__choice relative grid grid-cols-[24px_minmax(0,_1fr)_20px] items-start min-h-14 text-body-text
+                      className="relative grid grid-cols-[24px_minmax(0,_1fr)_20px] items-start min-h-14 text-body-text
                         cursor-pointer [transition:background-color_0.16s_ease,_color_0.16s_ease] px-2 py-2.75 gap-2.5 rounded-[8px]
-                        [&_input]:absolute [&_input]:w-0.25 [&_input]:h-0.25 [&_input]:overflow-hidden [&_input]:[clip:rect(0,_0,_0,_0)]
-                        [&_input]:m-[-1px] [&>svg]:mt-0.5 [&>svg]:text-[#566560] [&_strong]:block [&_strong]:text-heading
-                        [&_strong]:font-semibold [&_small]:block [&_small]:mt-0.75 [&_small]:text-[12px] [&_small]:leading-[1.4]
-                        [&_small]:text-muted-text hover:bg-[rgba(57,_67,_66,_0.06)] [&:has(input:checked)]:bg-[#e6eeea]
-                        [&:has(input:checked)]:shadow-[inset_0_0_0_1px_#394342] focus-within:[outline:2px_solid_var(--color-heading)]
+                        hover:bg-[rgba(57,_67,_66,_0.06)] has-[input:checked]:bg-[#e6eeea]
+                        has-[input:checked]:shadow-[inset_0_0_0_1px_#394342] focus-within:[outline:2px_solid_var(--color-heading)]
                         focus-within:outline-offset-[2px] forced-colors:[forced-color-adjust:auto] forced-colors:border
-                        forced-colors:border-solid forced-colors:border-[ButtonText] [&_input]:forced-colors:absolute
-                        [&_input]:forced-colors:top-3.5 [&_input]:forced-colors:right-3.5 [&_input]:forced-colors:w-5
-                        [&_input]:forced-colors:h-5 [&_input]:forced-colors:overflow-visible [&_input]:forced-colors:[clip:auto]
-                        [&_input]:forced-colors:m-0 [&:has(input:checked)]:forced-colors:[outline:2px_solid_Highlight]
-                        [&:has(input:checked)]:forced-colors:outline-offset-[2px] [&:has(input:checked)]:forced-colors:shadow-none
+                        forced-colors:border-solid forced-colors:border-[ButtonText] has-[input:checked]:forced-colors:[outline:2px_solid_Highlight]
+                        has-[input:checked]:forced-colors:outline-offset-2 has-[input:checked]:forced-colors:shadow-none
                         forced-colors:focus-within:[outline:3px_double_Highlight] forced-colors:focus-within:outline-offset-[3px]
-                        motion-reduce:transition-none max-[760.001px]:px-2.5 ${services.includes(service) ? ` concierge-services__choice--on [&&]:bg-[#e6eeea] [&&]:shadow-[inset_0_0_0_1px_#394342] [&_strong]:text-[#26312f]
-                        [&&]:forced-colors:[outline:2px_solid_Highlight] [&&]:forced-colors:outline-offset-[2px] [&&]:forced-colors:shadow-none` : ""}`}
+                        motion-reduce:transition-none max-[760.001px]:px-2.5"
                     >
                       <input
+                        className="absolute size-0.25 overflow-hidden [clip:rect(0,_0,_0,_0)] -m-px forced-colors:top-3.5 forced-colors:right-3.5 forced-colors:size-5 forced-colors:overflow-visible forced-colors:[clip:auto] forced-colors:m-0"
                         type="checkbox"
                         name="services"
                         value={service}
                         checked={services.includes(service)}
                         onChange={() => toggleService(service)}
                       />
-                      <Icon size={21} strokeWidth={1.7} aria-hidden="true" />
+                      <Icon className="mt-0.5 text-[#566560]" size={21} strokeWidth={1.7} aria-hidden="true" />
                       <span>
-                        <strong>{CONCIERGE_SERVICE_LABELS[service]}</strong>
-                        <small>{CONCIERGE_SERVICE_DETAILS[service].description}</small>
+                        <strong className={`block font-semibold ${services.includes(service) ? "text-[#26312f]" : "text-heading"}`}>{CONCIERGE_SERVICE_LABELS[service]}</strong>
+                        <small className="block mt-0.75 text-[12px] leading-[1.4] text-muted-text">{CONCIERGE_SERVICE_DETAILS[service].description}</small>
                       </span>
-                      <CheckCircle2 className="opacity-0 text-[#394342]! [.concierge-services\_\_choice--on_&]:opacity-100
-                        [.concierge-services\_\_choice:has(input:checked)_&]:opacity-100 forced-colors:hidden" size={19} aria-hidden="true" />
+                      <CheckCircle2 className={`mt-0.5 text-[#394342] forced-colors:hidden ${services.includes(service) ? "opacity-100" : "opacity-0"}`} size={19} aria-hidden="true" />
                     </label>
                   );
                 })}
@@ -431,53 +432,8 @@ export default function ConciergeForm({
       )}
 
       {services.length > 0 && (
-        <div className="concierge-form__details grid w-[min(100%,_820px)] bg-[#f7f4ed] mx-auto p-[clamp(24px,_4vw,_44px)] gap-5.5 rounded-[14px] border
-          border-solid border-[rgba(57,_67,_66,_0.12)] [&_[data-slot=input]]:w-full [&_[data-slot=input]]:min-w-0
-          [&_[data-slot=input]]:min-h-13 [&_[data-slot=input]]:bg-[rgba(255,_255,_255,_0.68)] [&_[data-slot=input]]:shadow-none
-          [&_[data-slot=input]]:text-[#26312f] [&_[data-slot=input]]:[font-family:inherit] [&_[data-slot=input]]:text-[15px]
-          [&_[data-slot=input]]:[font-weight:inherit] [&_[data-slot=input]]:[font-style:inherit] [&_[data-slot=input]]:leading-[inherit]
-          [&_[data-slot=input]]:[font-variant:inherit]
-          [&_[data-slot=input]]:[transition:border-color_0.16s_ease,_box-shadow_0.16s_ease,_background-color_0.16s_ease]
-          [&_[data-slot=input]]:px-3.75 [&_[data-slot=input]]:py-3.25 [&_[data-slot=input]]:rounded-[8px] [&_[data-slot=input]]:border
-          [&_[data-slot=input]]:border-solid [&_[data-slot=input]]:border-[rgba(57,_67,_66,_0.28)] [&_[data-slot=select-trigger]]:w-full
-          [&_[data-slot=select-trigger]]:min-w-0 [&_[data-slot=select-trigger]]:min-h-13
-          [&_[data-slot=select-trigger]]:bg-[rgba(255,_255,_255,_0.68)] [&_[data-slot=select-trigger]]:shadow-none
-          [&_[data-slot=select-trigger]]:text-[#26312f] [&_[data-slot=select-trigger]]:[font-family:inherit]
-          [&_[data-slot=select-trigger]]:text-[15px] [&_[data-slot=select-trigger]]:[font-weight:inherit]
-          [&_[data-slot=select-trigger]]:[font-style:inherit] [&_[data-slot=select-trigger]]:leading-[inherit]
-          [&_[data-slot=select-trigger]]:[font-variant:inherit]
-          [&_[data-slot=select-trigger]]:[transition:border-color_0.16s_ease,_box-shadow_0.16s_ease,_background-color_0.16s_ease]
-          [&_[data-slot=select-trigger]]:inline-flex [&_[data-slot=select-trigger]]:items-center
-          [&_[data-slot=select-trigger]]:justify-between [&_[data-slot=select-trigger]]:text-left [&_[data-slot=select-trigger]]:px-3.75
-          [&_[data-slot=select-trigger]]:py-3.25 [&_[data-slot=select-trigger]]:gap-3 [&_[data-slot=select-trigger]]:rounded-[8px]
-          [&_[data-slot=select-trigger]]:border [&_[data-slot=select-trigger]]:border-solid
-          [&_[data-slot=select-trigger]]:border-[rgba(57,_67,_66,_0.28)] [&_[data-slot=textarea]]:w-full [&_[data-slot=textarea]]:min-w-0
-          [&_[data-slot=textarea]]:min-h-28 [&_[data-slot=textarea]]:bg-[rgba(255,_255,_255,_0.68)] [&_[data-slot=textarea]]:shadow-none
-          [&_[data-slot=textarea]]:text-[#26312f] [&_[data-slot=textarea]]:[font-family:inherit] [&_[data-slot=textarea]]:text-[15px]
-          [&_[data-slot=textarea]]:[font-weight:inherit] [&_[data-slot=textarea]]:[font-style:inherit] [&_[data-slot=textarea]]:leading-[inherit]
-          [&_[data-slot=textarea]]:[font-variant:inherit]
-          [&_[data-slot=textarea]]:[transition:border-color_0.16s_ease,_box-shadow_0.16s_ease,_background-color_0.16s_ease]
-          [&_[data-slot=textarea]]:resize-y [&_[data-slot=textarea]]:px-3.75 [&_[data-slot=textarea]]:py-3.25
-          [&_[data-slot=textarea]]:rounded-[8px] [&_[data-slot=textarea]]:border [&_[data-slot=textarea]]:border-solid
-          [&_[data-slot=textarea]]:border-[rgba(57,_67,_66,_0.28)] [&_[data-slot=input]::placeholder]:text-[rgba(38,_49,_47,_0.5)]
-          [&_[data-slot=input]::placeholder]:opacity-100 [&_[data-slot=textarea]::placeholder]:text-[rgba(38,_49,_47,_0.5)]
-          [&_[data-slot=textarea]::placeholder]:opacity-100 [&_[data-slot=input]:hover:not(:disabled)]:bg-[rgba(255,_255,_255,_0.9)]
-          [&_[data-slot=input]:hover:not(:disabled)]:border-[rgba(57,_67,_66,_0.52)]
-          [&_[data-slot=select-trigger]:hover:not(:disabled)]:bg-[rgba(255,_255,_255,_0.9)]
-          [&_[data-slot=select-trigger]:hover:not(:disabled)]:border-[rgba(57,_67,_66,_0.52)]
-          [&_[data-slot=textarea]:hover:not(:disabled)]:bg-[rgba(255,_255,_255,_0.9)]
-          [&_[data-slot=textarea]:hover:not(:disabled)]:border-[rgba(57,_67,_66,_0.52)]
-          [&_[data-slot=input]:focus-visible]:bg-[rgba(255,_255,_255,_0.96)]
-          [&_[data-slot=input]:focus-visible]:shadow-[0_0_0_3px_rgba(57,_67,_66,_0.13)] [&_[data-slot=input]:focus-visible]:[outline:none]
-          [&_[data-slot=input]:focus-visible]:border-[#394342] [&_[data-slot=select-trigger]:focus-visible]:bg-[rgba(255,_255,_255,_0.96)]
-          [&_[data-slot=select-trigger]:focus-visible]:shadow-[0_0_0_3px_rgba(57,_67,_66,_0.13)]
-          [&_[data-slot=select-trigger]:focus-visible]:[outline:none] [&_[data-slot=select-trigger]:focus-visible]:border-[#394342]
-          [&_[data-slot=textarea]:focus-visible]:bg-[rgba(255,_255,_255,_0.96)]
-          [&_[data-slot=textarea]:focus-visible]:shadow-[0_0_0_3px_rgba(57,_67,_66,_0.13)]
-          [&_[data-slot=textarea]:focus-visible]:[outline:none] [&_[data-slot=textarea]:focus-visible]:border-[#394342]
-          max-[760.001px]:mx-[-4px] max-[760.001px]:px-4.5 max-[760.001px]:py-6 max-[760.001px]:gap-5 max-[760.001px]:rounded-[10px]
-          [&_[data-slot=input]]:motion-reduce:transition-none [&_[data-slot=select-trigger]]:motion-reduce:transition-none
-          [&_[data-slot=textarea]]:motion-reduce:transition-none" ref={details}>
+        <div className="grid w-[min(100%,_820px)] bg-[#f7f4ed] mx-auto p-[clamp(24px,_4vw,_44px)] gap-5.5 rounded-[14px] border border-solid border-[#394342]/12
+          max-[760.001px]:-mx-1 max-[760.001px]:px-4.5 max-[760.001px]:py-6 max-[760.001px]:gap-5 max-[760.001px]:rounded-[10px]" ref={details}>
           <div className="flex flex-wrap justify-between gap-y-2.5 gap-x-6 pb-3.5 border-b border-solid border-b-border [&_p]:inline-flex [&_p]:items-center
             [&_p]:font-[650] [&_p]:text-heading [&_p]:m-0 [&_p]:gap-2.25 [&_p_svg]:text-[#566560]" aria-live="polite">
             <p>
@@ -502,11 +458,12 @@ export default function ConciergeForm({
             <p>A few details help us arrange the right people and timing.</p>
           </div>
 
-          <div className="grid grid-cols-[1fr_1fr] gap-y-4.5 gap-x-5.5 max-[760.001px]:grid-cols-1 max-[960.001px]:grid-cols-1">
+          <div className="grid grid-cols-[1fr_1fr] gap-y-4.5 gap-x-5.5 max-[960.001px]:grid-cols-1">
             <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
               <Label htmlFor="concierge-name">Name</Label>
               <Input
                 id="concierge-name"
+                className={INPUT_CLASS}
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 autoComplete="name"
@@ -519,6 +476,7 @@ export default function ConciergeForm({
               <Label htmlFor="concierge-email">Email</Label>
               <Input
                 id="concierge-email"
+                className={INPUT_CLASS}
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
@@ -530,15 +488,21 @@ export default function ConciergeForm({
             </div>
           </div>
 
-          <div className="grid grid-cols-[1fr_1fr] gap-y-4.5 gap-x-5.5 max-[760.001px]:grid-cols-1 max-[960.001px]:grid-cols-1">
+          <div className="grid grid-cols-[1fr_1fr] gap-y-4.5 gap-x-5.5 max-[960.001px]:grid-cols-1">
             <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
               <Label htmlFor="concierge-phone">Phone (optional)</Label>
-              <PhoneNumberField id="concierge-phone" value={phone} onChange={setPhone} />
+              <PhoneNumberField id="concierge-phone" value={phone} onChange={setPhone}
+                className="min-h-13 bg-white/68 shadow-none text-[#26312f] [font-family:inherit] text-[15px] [font-weight:inherit]
+                  [font-style:inherit] leading-[inherit] [font-variant:inherit] transition-[border-color,box-shadow,background-color] duration-160 ease-[ease]
+                  px-3.75 py-3.25 gap-2.5 rounded-[8px] border-[#394342]/28 hover:bg-white/90 hover:border-[#394342]/52
+                  focus-within:bg-white/96 focus-within:shadow-[0_0_0_3px_rgba(57,67,66,0.13)] focus-within:outline-none focus-within:border-[#394342]
+                  [&_.PhoneInputInput]:min-h-6 [&_.PhoneInputInput]:leading-[inherit] [&_.PhoneInputInput::placeholder]:text-[#26312f]/50 [&_.PhoneInputInput::placeholder]:opacity-100
+                  motion-reduce:transition-none" />
             </div>
             <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
               <Label htmlFor="concierge-guests">Guests (optional)</Label>
               <Select value={guests} onValueChange={setGuests}>
-                <SelectTrigger id="concierge-guests">
+                <SelectTrigger id="concierge-guests" className={SELECT_TRIGGER_CLASS}>
                   <SelectValue placeholder="How many of you?" />
                 </SelectTrigger>
                 <SelectContent>
@@ -552,11 +516,12 @@ export default function ConciergeForm({
             </div>
           </div>
 
-          <div className="grid grid-cols-[1fr_1fr] gap-y-4.5 gap-x-5.5 max-[760.001px]:grid-cols-1 max-[960.001px]:grid-cols-1">
+          <div className="grid grid-cols-[1fr_1fr] gap-y-4.5 gap-x-5.5 max-[960.001px]:grid-cols-1">
             <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
               <Label htmlFor="concierge-check-in">Arriving (optional)</Label>
               <BookingDatePicker
                 id="concierge-check-in"
+                className={DATE_PICKER_CLASS}
                 min={todayIso()}
                 value={checkIn}
                 onChange={setCheckIn}
@@ -567,6 +532,7 @@ export default function ConciergeForm({
               <Label htmlFor="concierge-check-out">Leaving (optional)</Label>
               <BookingDatePicker
                 id="concierge-check-out"
+                className={DATE_PICKER_CLASS}
                 min={checkIn || todayIso()}
                 value={checkOut}
                 onChange={setCheckOut}
@@ -579,6 +545,11 @@ export default function ConciergeForm({
             <Label htmlFor="concierge-message">Notes (optional)</Label>
             <Textarea
               id="concierge-message"
+              className="min-w-0 min-h-28 resize-y bg-white/68 shadow-none text-[#26312f] [font-family:inherit] text-[15px] [font-weight:inherit]
+                [font-style:inherit] leading-[inherit] [font-variant:inherit] transition-[border-color,box-shadow,background-color] duration-160 ease-[ease]
+                px-3.75 py-3.25 rounded-[8px] border-solid border-[#394342]/28 placeholder:text-[#26312f]/50 placeholder:opacity-100
+                hover:enabled:bg-white/90 hover:enabled:border-[#394342]/52 focus-visible:bg-white/96
+                focus-visible:shadow-[0_0_0_3px_rgba(57,67,66,0.13)] focus-visible:outline-none focus-visible:border-[#394342] motion-reduce:transition-none"
               value={message}
               onChange={(event) => setMessage(event.target.value)}
               maxLength={2000}
@@ -609,17 +580,18 @@ export default function ConciergeForm({
                 </span>
               </span>
               <ChevronDown
-                className={wantsCall ? "flex-none [transition:transform_0.2s_ease] motion-reduce:transition-none [&&]:[transform:rotate(180deg)]" : "flex-none [transition:transform_0.2s_ease] motion-reduce:transition-none"}
+                className={`flex-none transition-transform duration-200 ease-[ease] motion-reduce:transition-none ${wantsCall ? "rotate-180" : ""}`}
                 size={18}
                 aria-hidden="true"
               />
             </button>
             {wantsCall && (
-              <div className="grid grid-cols-[1fr_1fr] gap-y-4.5 gap-x-5.5 max-[760.001px]:grid-cols-1 max-[960.001px]:grid-cols-1" id="concierge-call-fields">
+              <div className="grid grid-cols-[1fr_1fr] gap-y-4.5 gap-x-5.5 max-[960.001px]:grid-cols-1" id="concierge-call-fields">
                 <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
                   <Label htmlFor="concierge-call-day">Preferred call day</Label>
                   <BookingDatePicker
                     id="concierge-call-day"
+                    className={DATE_PICKER_CLASS}
                     min={todayIso()}
                     value={callDay}
                     onChange={setCallDay}
@@ -629,7 +601,7 @@ export default function ConciergeForm({
                 <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
                   <Label htmlFor="concierge-call-window">Preferred call time</Label>
                   <Select value={callWindow} onValueChange={setCallWindow}>
-                    <SelectTrigger id="concierge-call-window">
+                    <SelectTrigger id="concierge-call-window" className={SELECT_TRIGGER_CLASS}>
                       <SelectValue placeholder="Any time" />
                     </SelectTrigger>
                     <SelectContent>

@@ -90,7 +90,7 @@ export default function HomeSearchBar({ destinations, maxGuests }: HomeSearchBar
   }
 
   return (
-    <form className="home-search relative z-[2] grid grid-cols-[minmax(0,_1.1fr)_minmax(0,_1.4fr)_minmax(0,_0.9fr)_auto] items-stretch
+    <form className="group/search relative z-2 grid grid-cols-[minmax(0,_1.1fr)_minmax(0,_1.4fr)_minmax(0,_0.9fr)_auto] items-stretch
       w-[min(100%,_1204px)] mt-[-82px] mb-0 bg-background shadow-[0_5px_30px_rgba(7,_36,_86,_0.075)] overflow-hidden mx-auto
       rounded-[10px] max-[900.001px]:grid-cols-1 max-[900.001px]:mt-[-28px] max-[900.001px]:w-[min(100%_-_32px,_1204px)]" onSubmit={handleSearch} data-expanded={expanded ? "true" : undefined}>
       {/* Collapsed, the whole search is one 64px row instead of four stacked
@@ -101,34 +101,26 @@ export default function HomeSearchBar({ destinations, maxGuests }: HomeSearchBar
       <button type="button" className="hidden max-[900.001px]:flex max-[900.001px]:items-center max-[900.001px]:w-full max-[900.001px]:min-h-16
         max-[900.001px]:bg-transparent max-[900.001px]:text-text max-[900.001px]:[font-family:inherit] max-[900.001px]:text-left
         max-[900.001px]:cursor-pointer max-[900.001px]:px-4.5 max-[900.001px]:py-0 max-[900.001px]:gap-3 max-[900.001px]:border-0
-        [&_svg]:max-[900.001px]:flex-none [&_svg]:max-[900.001px]:text-link [.home-search[data-expanded=true]_&]:max-[900.001px]:hidden" onClick={() => setExpanded(true)} aria-expanded={expanded}>
-        <Search size={18} aria-hidden="true" />
-        <span className="max-[900.001px]:flex max-[900.001px]:flex-col max-[900.001px]:min-w-0 max-[900.001px]:gap-0.5
-          [&_strong]:max-[900.001px]:font-heading [&_strong]:max-[900.001px]:text-[16px] [&_small]:max-[900.001px]:overflow-hidden
-          [&_small]:max-[900.001px]:text-ellipsis [&_small]:max-[900.001px]:whitespace-nowrap [&_small]:max-[900.001px]:text-[12.5px]
-          [&_small]:max-[900.001px]:text-muted-text">
-          <strong>Where to?</strong>
-          <small>{summary}</small>
+        group-data-[expanded=true]/search:max-[900.001px]:hidden" onClick={() => setExpanded(true)} aria-expanded={expanded}>
+        <Search className="flex-none text-link" size={18} aria-hidden="true" />
+        <span className="flex flex-col min-w-0 gap-0.5">
+          <strong className="font-heading text-[16px]">Where to?</strong>
+          <small className="truncate text-[12.5px] text-muted-text">{summary}</small>
         </span>
       </button>
 
       <div className="flex flex-col justify-center min-w-0 border-r border-solid border-r-border px-6 py-4.5 gap-1.5 max-[900.001px]:hidden
         max-[900.001px]:border-r-0 max-[900.001px]:border-b max-[900.001px]:border-solid max-[900.001px]:border-b-border
-        max-[900.001px]:px-4.5 max-[900.001px]:py-3 [.home-search[data-expanded=true]_&]:max-[900.001px]:flex">
+        max-[900.001px]:px-4.5 max-[900.001px]:py-3 group-data-[expanded=true]/search:max-[900.001px]:flex">
         <span className="text-[11px] leading-none font-bold tracking-[1px] uppercase text-muted-text" id="home-search-destination-label">
           Destination
         </span>
         <Select value={destination} onValueChange={setDestination}>
           <SelectTrigger
-            className="[.home-search_&]:h-auto [.home-search_&]:min-h-0 [.home-search_&]:bg-transparent [.home-search_&]:shadow-none
-              [.home-search_&]:text-[15px] [.home-search_&]:text-link [.home-search_&]:justify-start [.home-search_&]:text-left
-              [.home-search_&]:p-0 [.home-search_&]:gap-1.5 [.home-search_&]:border-0 [.home-search_&_[data-slot=select-value]]:text-left
-              [.home-search_&:hover]:bg-transparent [.home-search_&:hover]:text-link-strong [.home-search_&:hover]:border-0
-              [.home-search_&:focus-visible]:[outline:2px_solid_var(--color-link)] [.home-search_&:focus-visible]:outline-offset-[3px]
-              [.home-search_&:focus-visible]:rounded-[3px] [.home-search_&[data-empty=true]]:text-muted-text
-              [.home-search_&]:max-[900.001px]:min-h-11 [.home-search_&]:max-[900.001px]:text-[16px] [.home-search_&]:max-[900.001px]:px-0.5
-              [.home-search_&]:max-[900.001px]:py-0 [.home-search\_\_dates_&]:max-[900.001px]:flex-1
-              [.home-search\_\_dates_&]:max-[900.001px]:min-w-0 [.home-search\_\_dates_&]:max-[900.001px]:justify-start"
+            className="h-auto min-h-0 bg-transparent shadow-none text-[15px] text-link justify-start text-left p-0 gap-1.5 border-0
+              [&_[data-slot=select-value]]:text-left hover:bg-transparent hover:text-link-strong hover:border-0
+              focus-visible:[outline:2px_solid_var(--color-link)] focus-visible:outline-offset-3 focus-visible:rounded-[3px]
+              data-[empty=true]:text-muted-text max-[900.001px]:min-h-11 max-[900.001px]:text-[16px] max-[900.001px]:px-0.5 max-[900.001px]:py-0"
             aria-labelledby="home-search-destination-label"
             data-empty={destination ? undefined : "true"}
           >
@@ -146,25 +138,20 @@ export default function HomeSearchBar({ destinations, maxGuests }: HomeSearchBar
 
       <div className="flex flex-col justify-center min-w-0 border-r border-solid border-r-border px-6 py-4.5 gap-1.5 max-[900.001px]:hidden
         max-[900.001px]:border-r-0 max-[900.001px]:border-b max-[900.001px]:border-solid max-[900.001px]:border-b-border
-        max-[900.001px]:px-4.5 max-[900.001px]:py-3 [.home-search[data-expanded=true]_&]:max-[900.001px]:flex home-search__field--dates">
+        max-[900.001px]:px-4.5 max-[900.001px]:py-3 group-data-[expanded=true]/search:max-[900.001px]:flex">
         <span className="text-[11px] leading-none font-bold tracking-[1px] uppercase text-muted-text" id="home-search-dates-label">
           Dates
         </span>
-        <div className="home-search__dates flex items-center min-w-0 gap-2 max-[900.001px]:gap-1.5" role="group" aria-labelledby="home-search-dates-label">
+        <div className="flex items-center min-w-0 gap-2 max-[900.001px]:gap-1.5" role="group" aria-labelledby="home-search-dates-label">
           <BookingDatePicker
             id="home-search-check-in"
             min={todayIso()}
             value={checkIn}
             onChange={updateCheckIn}
-            className="[.home-search_&]:h-auto [.home-search_&]:min-h-0 [.home-search_&]:bg-transparent [.home-search_&]:shadow-none
-              [.home-search_&]:text-[15px] [.home-search_&]:text-link [.home-search_&]:justify-start [.home-search_&]:text-left
-              [.home-search_&]:p-0 [.home-search_&]:gap-1.5 [.home-search_&]:border-0 [.home-search_&_[data-slot=select-value]]:text-left
-              [.home-search_&:hover]:bg-transparent [.home-search_&:hover]:text-link-strong [.home-search_&:hover]:border-0
-              [.home-search_&:focus-visible]:[outline:2px_solid_var(--color-link)] [.home-search_&:focus-visible]:outline-offset-[3px]
-              [.home-search_&:focus-visible]:rounded-[3px] [.home-search_&[data-empty=true]]:text-muted-text
-              [.home-search_&]:max-[900.001px]:min-h-11 [.home-search_&]:max-[900.001px]:text-[16px] [.home-search_&]:max-[900.001px]:px-0.5
-              [.home-search_&]:max-[900.001px]:py-0 [.home-search\_\_dates_&]:max-[900.001px]:flex-1
-              [.home-search\_\_dates_&]:max-[900.001px]:min-w-0 [.home-search\_\_dates_&]:max-[900.001px]:justify-start"
+            className="h-auto min-h-0 bg-transparent shadow-none text-[15px] text-link justify-start text-left p-0 gap-1.5 border-0
+              hover:bg-transparent hover:text-link-strong hover:border-0 focus-visible:[outline:2px_solid_var(--color-link)]
+              focus-visible:outline-offset-3 focus-visible:rounded-[3px] focus-visible:shadow-none data-[empty=true]:text-muted-text max-[900.001px]:min-h-11
+              max-[900.001px]:text-[16px] max-[900.001px]:px-0.5 max-[900.001px]:py-0 max-[900.001px]:flex-1 max-[900.001px]:min-w-0"
             placeholder="Add dates"
           />
           <span className="text-muted-text flex-none" aria-hidden="true">
@@ -175,15 +162,10 @@ export default function HomeSearchBar({ destinations, maxGuests }: HomeSearchBar
             min={checkIn ? addDaysIso(checkIn, 1) : addDaysIso(todayIso(), 1)}
             value={checkOut}
             onChange={setCheckOut}
-            className="[.home-search_&]:h-auto [.home-search_&]:min-h-0 [.home-search_&]:bg-transparent [.home-search_&]:shadow-none
-              [.home-search_&]:text-[15px] [.home-search_&]:text-link [.home-search_&]:justify-start [.home-search_&]:text-left
-              [.home-search_&]:p-0 [.home-search_&]:gap-1.5 [.home-search_&]:border-0 [.home-search_&_[data-slot=select-value]]:text-left
-              [.home-search_&:hover]:bg-transparent [.home-search_&:hover]:text-link-strong [.home-search_&:hover]:border-0
-              [.home-search_&:focus-visible]:[outline:2px_solid_var(--color-link)] [.home-search_&:focus-visible]:outline-offset-[3px]
-              [.home-search_&:focus-visible]:rounded-[3px] [.home-search_&[data-empty=true]]:text-muted-text
-              [.home-search_&]:max-[900.001px]:min-h-11 [.home-search_&]:max-[900.001px]:text-[16px] [.home-search_&]:max-[900.001px]:px-0.5
-              [.home-search_&]:max-[900.001px]:py-0 [.home-search\_\_dates_&]:max-[900.001px]:flex-1
-              [.home-search\_\_dates_&]:max-[900.001px]:min-w-0 [.home-search\_\_dates_&]:max-[900.001px]:justify-start"
+            className="h-auto min-h-0 bg-transparent shadow-none text-[15px] text-link justify-start text-left p-0 gap-1.5 border-0
+              hover:bg-transparent hover:text-link-strong hover:border-0 focus-visible:[outline:2px_solid_var(--color-link)]
+              focus-visible:outline-offset-3 focus-visible:rounded-[3px] focus-visible:shadow-none data-[empty=true]:text-muted-text max-[900.001px]:min-h-11
+              max-[900.001px]:text-[16px] max-[900.001px]:px-0.5 max-[900.001px]:py-0 max-[900.001px]:flex-1 max-[900.001px]:min-w-0"
             placeholder="Add dates"
           />
         </div>
@@ -191,21 +173,16 @@ export default function HomeSearchBar({ destinations, maxGuests }: HomeSearchBar
 
       <div className="flex flex-col justify-center min-w-0 border-r border-solid border-r-border px-6 py-4.5 gap-1.5 max-[900.001px]:hidden
         max-[900.001px]:border-r-0 max-[900.001px]:border-b max-[900.001px]:border-solid max-[900.001px]:border-b-border
-        max-[900.001px]:px-4.5 max-[900.001px]:py-3 [.home-search[data-expanded=true]_&]:max-[900.001px]:flex">
+        max-[900.001px]:px-4.5 max-[900.001px]:py-3 group-data-[expanded=true]/search:max-[900.001px]:flex">
         <span className="text-[11px] leading-none font-bold tracking-[1px] uppercase text-muted-text" id="home-search-guests-label">
           Guests
         </span>
         <Select value={guests} onValueChange={setGuests}>
           <SelectTrigger
-            className="[.home-search_&]:h-auto [.home-search_&]:min-h-0 [.home-search_&]:bg-transparent [.home-search_&]:shadow-none
-              [.home-search_&]:text-[15px] [.home-search_&]:text-link [.home-search_&]:justify-start [.home-search_&]:text-left
-              [.home-search_&]:p-0 [.home-search_&]:gap-1.5 [.home-search_&]:border-0 [.home-search_&_[data-slot=select-value]]:text-left
-              [.home-search_&:hover]:bg-transparent [.home-search_&:hover]:text-link-strong [.home-search_&:hover]:border-0
-              [.home-search_&:focus-visible]:[outline:2px_solid_var(--color-link)] [.home-search_&:focus-visible]:outline-offset-[3px]
-              [.home-search_&:focus-visible]:rounded-[3px] [.home-search_&[data-empty=true]]:text-muted-text
-              [.home-search_&]:max-[900.001px]:min-h-11 [.home-search_&]:max-[900.001px]:text-[16px] [.home-search_&]:max-[900.001px]:px-0.5
-              [.home-search_&]:max-[900.001px]:py-0 [.home-search\_\_dates_&]:max-[900.001px]:flex-1
-              [.home-search\_\_dates_&]:max-[900.001px]:min-w-0 [.home-search\_\_dates_&]:max-[900.001px]:justify-start"
+            className="h-auto min-h-0 bg-transparent shadow-none text-[15px] text-link justify-start text-left p-0 gap-1.5 border-0
+              [&_[data-slot=select-value]]:text-left hover:bg-transparent hover:text-link-strong hover:border-0
+              focus-visible:[outline:2px_solid_var(--color-link)] focus-visible:outline-offset-3 focus-visible:rounded-[3px]
+              data-[empty=true]:text-muted-text max-[900.001px]:min-h-11 max-[900.001px]:text-[16px] max-[900.001px]:px-0.5 max-[900.001px]:py-0"
             aria-labelledby="home-search-guests-label"
             data-empty={guests ? undefined : "true"}
           >
@@ -224,7 +201,7 @@ export default function HomeSearchBar({ destinations, maxGuests }: HomeSearchBar
       <button type="submit" className="bg-button-bg text-button-text font-heading text-[13px] font-bold tracking-[1.5px] uppercase cursor-pointer
         [transition:background-color_200ms_ease] px-[clamp(28px,_4vw,_52px)] py-0 border-0 hover:bg-[#2b3433]
         focus-visible:[outline:2px_solid_var(--color-link)] focus-visible:outline-offset-[-4px] max-[900.001px]:hidden
-        max-[900.001px]:min-h-13 max-[900.001px]:px-6 max-[900.001px]:py-4 [.home-search[data-expanded=true]_&]:max-[900.001px]:block">
+        max-[900.001px]:min-h-13 max-[900.001px]:px-6 max-[900.001px]:py-4 group-data-[expanded=true]/search:max-[900.001px]:block">
         Search
       </button>
     </form>

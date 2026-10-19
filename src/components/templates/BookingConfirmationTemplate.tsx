@@ -44,13 +44,13 @@ function ReceiptShell({
 }) {
   return (
     <article className={`w-[min(100%_-_32px,_640px)] mt-[clamp(32px,_5vw,_64px)] mb-[clamp(56px,_7vw,_88px)] mx-auto ${receiptAccent[state]}`}>
-      <div className="grid justify-items-center text-center mb-7 gap-3 [&_h1]:text-[clamp(28px,_4.4vw,_40px)] [&_h1]:leading-[1.16] [&_h1]:m-0">
-        <span className="grid place-items-center w-14 h-14 bg-[color-mix(in_oklch,_var(--receipt-accent)_14%,_var(--color-background))]
+      <div className="grid justify-items-center text-center mb-7 gap-3">
+        <span className="grid place-items-center size-14 bg-[color-mix(in_oklch,_var(--receipt-accent)_14%,_var(--color-background))]
           text-[var(--receipt-accent)] rounded-full" aria-hidden="true">
           {icon}
         </span>
         <p className="text-[var(--receipt-accent)] text-[11px] font-extrabold tracking-[0.09em] leading-none uppercase m-0">{eyebrow}</p>
-        <h1>{title}</h1>
+        <h1 className="text-[clamp(28px,_4.4vw,_40px)] leading-[1.16] m-0">{title}</h1>
         <p className="max-w-[46ch] text-body-text text-[16px] leading-[26px] m-0">{lede}</p>
       </div>
       {children}
@@ -60,18 +60,16 @@ function ReceiptShell({
         [&_a]:rounded-full [&_a:hover]:[transform:translateY(-1px)] [&_a:active]:[transform:translateY(0)]
         [&_a:focus-visible]:[outline:none] [&_a:focus-visible]:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.35)] [&_a]:max-[420.001px]:grow
         [&_a]:max-[420.001px]:shrink [&_a]:max-[420.001px]:basis-full">{actions}</div>
-      {footnote ? <p className="mt-5 mb-0 text-muted-text text-[13px] leading-[20px] text-center [overflow-wrap:anywhere] mx-0">{footnote}</p> : null}
+      {footnote ? <p className="mt-5 mb-0 text-muted-text text-[13px] leading-[20px] text-center wrap-anywhere mx-0">{footnote}</p> : null}
     </article>
   );
 }
 
 function Row({ label, value }: { label: string; value: ReactNode }) {
   return (
-    <li>
-      <span className="grow-0 shrink-0 basis-[auto] text-muted-text text-[13px] font-semibold leading-[22px] [.booking-receipt\_\_total_&]:text-heading">{label}</span>
-      <span className="min-w-0 text-heading text-[15px] font-semibold tabular-nums leading-[22px] text-right [overflow-wrap:anywhere]
-        [.booking-receipt\_\_total_&]:font-heading [.booking-receipt\_\_total_&]:text-[24px] [.booking-receipt\_\_total_&]:font-bold
-        [.booking-receipt\_\_total_&]:leading-[1.15] max-[420.001px]:text-left">{value}</span>
+    <li className="flex items-baseline justify-between px-5 py-3 gap-4 border-b border-border max-[420.001px]:items-start max-[420.001px]:flex-col max-[420.001px]:gap-0.5">
+      <span className="flex-none text-muted-text text-[13px] font-semibold leading-[22px]">{label}</span>
+      <span className="min-w-0 text-heading text-[15px] font-semibold tabular-nums leading-[22px] text-right wrap-anywhere max-[420.001px]:text-left">{value}</span>
     </li>
   );
 }
@@ -116,8 +114,7 @@ function ConciergeInvitation({
 }) {
   return (
     <section className="mt-[clamp(34px,_5vw,_52px)] mb-0 mx-0" aria-labelledby="receipt-concierge-title">
-      <h2 className="text-[24px] leading-[1.25] m-0 [&::before]:content-[''] [&::before]:block [&::before]:w-6 [&::before]:mb-3.5
-        [&::before]:border-t-[2px] [&::before]:border-solid [&::before]:border-t-heading" id="receipt-concierge-title">
+      <h2 className="text-[24px] leading-[1.25] m-0 before:block before:w-6 before:mb-3.5 before:border-t-2 before:border-heading" id="receipt-concierge-title">
         Now the rest of the trip
       </h2>
       <p className="mt-2.5 mb-0 max-w-[56ch] text-body-text text-[15px] leading-[1.55] mx-0">
@@ -128,21 +125,19 @@ function ConciergeInvitation({
       {/* An index, not a row of cards: the thing on the left, what it means
           on the right, hairlines between. The same treatment the home page
           gives the concierge. */}
-      <ul className="mt-5.5 mb-0 list-none border-t border-solid border-t-border mx-0 p-0 [&_li]:border-b [&_li]:border-solid [&_li]:border-b-border">
+      <ul className="mt-5.5 mb-0 list-none border-t border-border mx-0 p-0">
         {AFTER_BOOKING_SERVICES.map((service) => (
-          <li key={service}>
+          <li className="border-b border-border" key={service}>
             <Link
-              className="grid grid-cols-[minmax(0,_200px)_minmax(0,_1fr)_16px] items-center gap-y-1.5 gap-x-4.5 text-inherit no-underline px-0.5 py-3.5
-                [&>svg]:text-muted-text [&>svg]:[transition:transform_180ms_ease] [&:hover>svg]:[transform:translateX(3px)]
-                focus-visible:[outline:2px_solid_var(--color-heading)] focus-visible:outline-offset-[3px] [&>svg]:motion-reduce:transition-none
-                max-[560.001px]:grid-cols-1 max-[560.001px]:gap-1 [&>svg]:max-[560.001px]:hidden"
+              className="group/concierge grid grid-cols-[minmax(0,_200px)_minmax(0,_1fr)_16px] items-center gap-y-1.5 gap-x-4.5 text-inherit no-underline px-0.5 py-3.5
+                focus-visible:outline-2 focus-visible:outline-heading focus-visible:outline-offset-[3px] max-[560.001px]:grid-cols-1 max-[560.001px]:gap-1"
               href={buildConciergeHref({ service, listingSlug, checkIn, checkOut })}
             >
               <span className="font-heading text-[16px] font-medium text-heading">{CONCIERGE_SERVICE_LABELS[service]}</span>
               <span className="text-body-text text-[14px] leading-[1.5]">
                 {CONCIERGE_SERVICE_DETAILS[service].description}
               </span>
-              <ArrowRight size={16} aria-hidden="true" />
+              <ArrowRight className="text-muted-text transition-transform duration-180 ease-[ease] group-hover/concierge:translate-x-0.75 motion-reduce:transition-none max-[560.001px]:hidden" size={16} aria-hidden="true" />
             </Link>
           </li>
         ))}
@@ -164,10 +159,10 @@ export default function BookingConfirmationTemplate({ data }: { data: BookingCon
 
   const browseActions = (
     <>
-      <Link className="[&&]:bg-button-bg [&&]:text-button-text hover:bg-[rgb(28,_36,_35)]" href="/properties">
+      <Link className="bg-button-bg text-button-text hover:bg-[rgb(28,_36,_35)]" href="/properties">
         Browse properties
       </Link>
-      <Link className="[&&]:bg-[rgba(15,_23,_39,_0.05)] [&&]:text-heading hover:bg-[rgba(15,_23,_39,_0.09)]" href="/contact-us">
+      <Link className="bg-[rgba(15,_23,_39,_0.05)] text-heading hover:bg-[rgba(15,_23,_39,_0.09)]" href="/contact-us">
         Contact our team
       </Link>
     </>
@@ -211,12 +206,12 @@ export default function BookingConfirmationTemplate({ data }: { data: BookingCon
         actions={
           <>
             <Link
-              className="[&&]:bg-button-bg [&&]:text-button-text hover:bg-[rgb(28,_36,_35)]"
+              className="bg-button-bg text-button-text hover:bg-[rgb(28,_36,_35)]"
               href={`/booking-confirmation?session_id=${encodeURIComponent(sessionId)}`}
             >
               Refresh status
             </Link>
-            <Link className="[&&]:bg-[rgba(15,_23,_39,_0.05)] [&&]:text-heading hover:bg-[rgba(15,_23,_39,_0.09)]" href="/contact-us">
+            <Link className="bg-[rgba(15,_23,_39,_0.05)] text-heading hover:bg-[rgba(15,_23,_39,_0.09)]" href="/contact-us">
               Contact our team
             </Link>
           </>
@@ -270,12 +265,12 @@ export default function BookingConfirmationTemplate({ data }: { data: BookingCon
       actions={
         <>
           <Link
-            className="[&&]:bg-button-bg [&&]:text-button-text hover:bg-[rgb(28,_36,_35)]"
+            className="bg-button-bg text-button-text hover:bg-[rgb(28,_36,_35)]"
             href={listing?.slug ? `/listing/${listing.slug}` : "/properties"}
           >
             View your property
           </Link>
-          <Link className="[&&]:bg-[rgba(15,_23,_39,_0.05)] [&&]:text-heading hover:bg-[rgba(15,_23,_39,_0.09)]" href="/contact-us">
+          <Link className="bg-[rgba(15,_23,_39,_0.05)] text-heading hover:bg-[rgba(15,_23,_39,_0.09)]" href="/contact-us">
             Contact our team
           </Link>
         </>
@@ -283,24 +278,19 @@ export default function BookingConfirmationTemplate({ data }: { data: BookingCon
       footnote={<>Payment reference: {sessionId}. Confirmation email: {booking.guest_email}.</>}
     >
       <section className="bg-background shadow-[0_5px_30px_rgba(7,_36,_86,_0.075)] overflow-hidden rounded-[10px]" aria-label="Booking details">
-        <div className="flex items-baseline justify-between border-b border-solid border-b-border px-5 py-4 gap-3 [&_h2]:text-[15px] [&_h2]:font-semibold
-          [&_h2]:leading-[22px] [&_h2]:m-0">
-          <h2>Your reservation</h2>
-          <span className="text-muted-text text-[12px] tabular-nums leading-[22px] [overflow-wrap:anywhere]">{sessionId}</span>
+        <div className="flex items-baseline justify-between border-b border-border px-5 py-4 gap-3">
+          <h2 className="text-[15px] font-semibold leading-[22px] m-0">Your reservation</h2>
+          <span className="text-muted-text text-[12px] tabular-nums leading-[22px] wrap-anywhere">{sessionId}</span>
         </div>
-        <ul className="booking-receipt__rows list-none m-0 p-0 [&_li]:flex [&_li]:items-baseline [&_li]:justify-between [&_li]:px-5 [&_li]:py-3
-          [&_li]:gap-4 [&_li:not(:last-child)]:border-b [&_li:not(:last-child)]:border-solid [&_li:not(:last-child)]:border-b-border
-          [&_li]:max-[420.001px]:items-start [&_li]:max-[420.001px]:flex-col [&_li]:max-[420.001px]:gap-0.5">
+        <ul className="list-none m-0 p-0">
           <Row label="Property" value={listing?.title ?? "Your listing"} />
           <Row label="Guest" value={booking.guest_name} />
           <Row label="Check-in" value={formatDate(booking.check_in)} />
           <Row label="Check-out" value={formatDate(booking.check_out)} />
           <Row label="Nights" value={booking.nights} />
-          <li className="booking-receipt__total [.booking-receipt\_\_rows_li&]:bg-[rgba(15,_23,_39,_0.035)] [.booking-receipt\_\_rows_li&]:py-4">
-            <span className="grow-0 shrink-0 basis-[auto] text-muted-text text-[13px] font-semibold leading-[22px] [.booking-receipt\_\_total_&]:text-heading">Total paid</span>
-            <span className="min-w-0 text-heading text-[15px] font-semibold tabular-nums leading-[22px] text-right [overflow-wrap:anywhere]
-              [.booking-receipt\_\_total_&]:font-heading [.booking-receipt\_\_total_&]:text-[24px] [.booking-receipt\_\_total_&]:font-bold
-              [.booking-receipt\_\_total_&]:leading-[1.15] max-[420.001px]:text-left">{money(booking.total_amount_cents)}</span>
+          <li className="flex items-baseline justify-between px-5 py-4 gap-4 bg-[rgba(15,_23,_39,_0.035)] max-[420.001px]:items-start max-[420.001px]:flex-col max-[420.001px]:gap-0.5">
+            <span className="flex-none text-heading text-[13px] font-semibold leading-[22px]">Total paid</span>
+            <span className="min-w-0 text-heading font-heading text-[24px] font-bold tabular-nums leading-[1.15] text-right wrap-anywhere max-[420.001px]:text-left">{money(booking.total_amount_cents)}</span>
           </li>
         </ul>
       </section>

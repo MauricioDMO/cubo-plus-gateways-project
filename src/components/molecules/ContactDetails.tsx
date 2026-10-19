@@ -18,29 +18,26 @@ export default function ContactDetails() {
   const tel = telHref();
 
   return (
-    <aside className="mt-7 mb-0 bg-[rgba(15,_23,_39,_0.02)] mx-0 p-5 rounded-[10px] border border-solid border-border [&_h2]:mt-0 [&_h2]:mb-3
-      [&_h2]:font-heading [&_h2]:text-[18px] [&_h2]:mx-0 [&_ul]:list-none [&_ul]:flex [&_ul]:flex-col [&_ul]:m-0 [&_ul]:p-0
-      [&_ul]:gap-2.25 [&_li]:flex [&_li]:items-start [&_li]:text-[15px] [&_li]:leading-[1.5] [&_li]:gap-2.5 [&_li_svg]:flex-none
-      [&_li_svg]:mt-0.5 [&_li_svg]:text-heading [&_a]:text-inherit" aria-label="Contact details">
-      <h2>Getaways El Salvador</h2>
+    <aside className="mt-7 mb-0 bg-[rgba(15,_23,_39,_0.02)] mx-0 p-5 rounded-[10px] border border-solid border-border" aria-label="Contact details">
+      <h2 className="mt-0 mb-3 mx-0 font-heading text-[18px]">Getaways El Salvador</h2>
 
-      <ul>
-        <li>
-          <MapPin size={17} aria-hidden="true" />
+      <ul className="list-none flex flex-col m-0 p-0 gap-2.25">
+        <li className="flex items-start text-[15px] leading-[1.5] gap-2.5">
+          <MapPin className="flex-none mt-0.5 text-heading" size={17} aria-hidden="true" />
           <span>{formattedAddress()}</span>
         </li>
 
         {tel && (
-          <li>
-            <Phone size={17} aria-hidden="true" />
+          <li className="flex items-start text-[15px] leading-[1.5] gap-2.5">
+            <Phone className="flex-none mt-0.5 text-heading" size={17} aria-hidden="true" />
             {/* A tel: link, because most of this traffic is a phone. */}
-            <a href={tel}>{BUSINESS.telephone}</a>
+            <a className="text-inherit" href={tel}>{BUSINESS.telephone}</a>
           </li>
         )}
 
-        <li>
-          <Mail size={17} aria-hidden="true" />
-          <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
+        <li className="flex items-start text-[15px] leading-[1.5] gap-2.5">
+          <Mail className="flex-none mt-0.5 text-heading" size={17} aria-hidden="true" />
+          <a className="text-inherit" href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
         </li>
       </ul>
 

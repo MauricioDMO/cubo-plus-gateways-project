@@ -55,9 +55,9 @@ export default async function Header() {
   return (
     <header className="border-b border-solid border-b-border bg-background">
       <div className="flex items-center justify-between px-8 py-4 gap-6 max-[767.981px]:px-5 max-[767.981px]:py-3.5">
-        <Link href="/" className="block min-w-0 leading-[0] [&_img]:block [&_img]:w-69.75 [&_img]:max-w-full [&_img]:h-auto
-          [&_img]:max-[767.981px]:w-[clamp(150px,_50vw,_220px)]" aria-label="Getaways El Salvador — Home">
+        <Link href="/" className="block min-w-0 leading-[0]" aria-label="Getaways El Salvador — Home">
           <Image
+            className="block h-auto w-69.75 max-w-full max-[767.981px]:w-[clamp(150px,_50vw,_220px)]"
             src={mediaPublicUrl(LOGO_STORAGE_PATH)}
             alt="Getaways El Salvador"
             width={LOGO_INTRINSIC_WIDTH}
@@ -69,25 +69,26 @@ export default async function Header() {
 
         {/* Hidden below 1199.84px, where MobileNav's burger takes over -- the
             live breakpoint, `max-width: 74.99em` in the RentalHive stylesheet. */}
-        <nav className="flex self-stretch items-stretch mx-0 my-[-16px] max-[1199.981px]:hidden" aria-label="Primary">
-          <ul className="site-nav__list flex items-stretch list-none m-0 p-0 [&>li]:relative [&>li]:flex [&>li]:items-center [&>li]:px-4 [&>li]:py-0
-            [&_a]:text-body-text [&_a]:text-[16px] [&_a]:whitespace-nowrap [&_a]:[transition:color_0.25s] [&_a:hover]:text-accent">
+        <nav className="flex self-stretch items-stretch mx-0 -my-4 max-[1199.981px]:hidden" aria-label="Primary">
+          <ul className="flex items-stretch list-none m-0 p-0">
             {navItems.map((item) => (
-              <li key={item.href} className={item.children ? `site-nav__item--has-children [&>a::after]:content-[''] [&>a::after]:inline-block [&>a::after]:[vertical-align:middle]
-                [&>a::after]:ml-2 [&>a::after]:border-l-[4px] [&>a::after]:border-solid [&>a::after]:border-l-[transparent]
-                [&>a::after]:border-r-[4px] [&>a::after]:border-r-[transparent] [&>a::after]:border-t-[5px]
-                [&>a::after]:border-t-[currentColor] [&>a::after]:opacity-40` : undefined}>
-                <NavLink href={item.href}>{item.label}</NavLink>
+              <li key={item.href} className="group/nav relative flex items-center px-4 py-0">
+                <NavLink href={item.href} className={`text-body-text text-[16px] whitespace-nowrap [transition:color_0.25s] not-aria-[current=page]:hover:text-accent
+                  aria-[current=page]:text-button-bg aria-[current=page]:before:absolute aria-[current=page]:before:inset-x-0
+                  aria-[current=page]:before:top-0 aria-[current=page]:before:h-0.75 aria-[current=page]:before:bg-accent
+                  ${item.children ? "after:inline-block after:align-middle after:ml-2 after:border-x-4 after:border-solid after:border-x-transparent after:border-t-[5px] after:border-t-current after:opacity-40" : ""}`}>
+                  {item.label}
+                </NavLink>
                 {/* Hover/focus dropdown, matching the live menu item's own
                     `menu-item-has-children` + `ul.sub-menu` pair. CSS-only: see
                     the submenu's hover/focus-within Tailwind variants. */}
                 {item.children && (
-                  <ul className="site-nav__submenu hidden absolute z-[1000] top-[100%] left-0 min-w-[14rem] list-none bg-background
+                  <ul className="hidden absolute z-1000 top-full left-0 min-w-56 list-none bg-background
                     shadow-[0_2px_4px_0_rgba(7,_36,_86,_0.075)] m-0 px-0 py-4 border border-solid border-border
-                    [.site-nav\_\_item--has-children:hover>&]:block [.site-nav\_\_item--has-children:focus-within>&]:block [&_li]:px-6 [&_li]:py-1">
+                    group-hover/nav:block group-focus-within/nav:block">
                     {item.children.map((child) => (
-                      <li key={child.href}>
-                        <NavLink href={child.href}>{child.label}</NavLink>
+                      <li key={child.href} className="px-6 py-1">
+                        <NavLink href={child.href} className="text-body-text text-[16px] whitespace-nowrap [transition:color_0.25s] not-aria-[current=page]:hover:text-accent aria-[current=page]:text-button-bg">{child.label}</NavLink>
                       </li>
                     ))}
                   </ul>

@@ -196,12 +196,9 @@ export default function PhotoTourRoom({
           <>
             <button
               type="button"
-              className="hidden max-[560.001px]:absolute max-[560.001px]:top-[28%] max-[560.001px]:z-[2] max-[560.001px]:grid
-                max-[560.001px]:place-items-center max-[560.001px]:w-9 max-[560.001px]:h-9 max-[560.001px]:bg-[rgba(255,_255,_255,_0.94)]
-                max-[560.001px]:text-heading max-[560.001px]:shadow-[0_4px_14px_rgba(7,_36,_86,_0.16)] max-[560.001px]:cursor-pointer
-                max-[560.001px]:p-0 max-[560.001px]:rounded-full max-[560.001px]:border max-[560.001px]:border-solid max-[560.001px]:border-border
-                max-[560.001px]:focus-visible:[outline:2px_solid_var(--color-link)] max-[560.001px]:focus-visible:outline-offset-[2px]
-                [&&]:max-[560.001px]:left-1.5"
+              className="hidden max-[560.001px]:grid absolute top-[28%] left-1.5 z-2 place-items-center size-9 bg-white/94
+                text-heading shadow-[0_4px_14px_rgba(7,_36,_86,_0.16)] cursor-pointer p-0 rounded-full border border-border
+                focus-visible:outline-2 focus-visible:outline-link focus-visible:outline-offset-2"
               onClick={() => scrollRow(-1)}
               aria-label={`Previous photo of ${label}`}
             >
@@ -209,12 +206,9 @@ export default function PhotoTourRoom({
             </button>
             <button
               type="button"
-              className="hidden max-[560.001px]:absolute max-[560.001px]:top-[28%] max-[560.001px]:z-[2] max-[560.001px]:grid
-                max-[560.001px]:place-items-center max-[560.001px]:w-9 max-[560.001px]:h-9 max-[560.001px]:bg-[rgba(255,_255,_255,_0.94)]
-                max-[560.001px]:text-heading max-[560.001px]:shadow-[0_4px_14px_rgba(7,_36,_86,_0.16)] max-[560.001px]:cursor-pointer
-                max-[560.001px]:p-0 max-[560.001px]:rounded-full max-[560.001px]:border max-[560.001px]:border-solid max-[560.001px]:border-border
-                max-[560.001px]:focus-visible:[outline:2px_solid_var(--color-link)] max-[560.001px]:focus-visible:outline-offset-[2px]
-                [&&]:max-[560.001px]:right-1.5"
+              className="hidden max-[560.001px]:grid absolute top-[28%] right-1.5 z-2 place-items-center size-9 bg-white/94
+                text-heading shadow-[0_4px_14px_rgba(7,_36,_86,_0.16)] cursor-pointer p-0 rounded-full border border-border
+                focus-visible:outline-2 focus-visible:outline-link focus-visible:outline-offset-2"
               onClick={() => scrollRow(1)}
               aria-label={`Next photo of ${label}`}
             >
@@ -223,12 +217,12 @@ export default function PhotoTourRoom({
           </>
         )}
       <div className="grid grid-cols-[repeat(auto-fit,_minmax(min(100%,_260px),_1fr))] items-start gap-[clamp(16px,_2.4vw,_26px)] max-[560.001px]:flex
-        max-[560.001px]:overflow-x-auto max-[560.001px]:[scroll-snap-type:x_proximity] max-[560.001px]:[scrollbar-width:none]
-        max-[560.001px]:pb-0.5 max-[560.001px]:grid-cols-[repeat(auto-fit,_minmax(min(100%,_140px),_1fr))] max-[560.001px]:gap-3
+        max-[560.001px]:overflow-x-auto max-[560.001px]:snap-x max-[560.001px]:[scrollbar-width:none]
+        max-[560.001px]:pb-0.5 max-[560.001px]:gap-3
         [&::-webkit-scrollbar]:max-[560.001px]:hidden" ref={row}>
         {media.map((item, index) => (
-          <figure key={item.id} className="photo-tour__figure w-full m-0 max-[560.001px]:grow-0 max-[560.001px]:shrink-0 max-[560.001px]:basis-[82%]
-            max-[560.001px]:snap-start [&_figcaption]:mt-2 [&_figcaption]:text-[14px] [&_figcaption]:text-body-text">
+          <figure key={item.id} className="photo-tour__figure w-full m-0 max-[560.001px]:flex-none max-[560.001px]:basis-[82%]
+            max-[560.001px]:snap-start">
             {/*
              * An anchor to the photograph itself, not a button.
              *
@@ -240,8 +234,8 @@ export default function PhotoTourRoom({
              * is ever a control that does nothing.
              */}
             <a
-              className="photo-tour__open block w-full overflow-hidden bg-transparent cursor-zoom-in p-0 rounded-[10px] border-0
-                focus-visible:[outline:2px_solid_var(--color-heading)] focus-visible:outline-offset-[3px]"
+              className="group block w-full overflow-hidden bg-transparent cursor-zoom-in p-0 rounded-[10px] border-0
+                focus-visible:outline-2 focus-visible:outline-heading focus-visible:outline-offset-3"
               href={mediaPublicUrl(item.storage_path)}
               aria-haspopup="dialog"
               aria-label={`View larger: ${altFor(item)}`}
@@ -252,9 +246,7 @@ export default function PhotoTourRoom({
               }}
             >
               <Image
-                className="block w-full h-auto [transition:transform_0.3s_ease] rounded-[10px] [.photo-tour\_\_figure:not(:only-child)_&]:aspect-[4_/_3]
-                  [.photo-tour\_\_figure:not(:only-child)_&]:object-cover [.photo-tour\_\_figure:not(:only-child)_&]:max-[560.001px]:aspect-[4_/_3]
-                  [.photo-tour\_\_open:hover_&]:[transform:scale(1.03)]"
+                className={`block w-full h-auto transition-transform duration-300 ease-[ease] rounded-[10px] group-hover:scale-[1.03] ${many ? "aspect-4/3 object-cover" : ""}`}
                 src={mediaPublicUrl(item.storage_path)}
                 width={item.width ?? 1200}
                 height={item.height ?? 800}
@@ -263,7 +255,7 @@ export default function PhotoTourRoom({
                 loading="lazy"
               />
             </a>
-            {item.alt_text && <figcaption>{item.alt_text}</figcaption>}
+            {item.alt_text && <figcaption className="mt-2 text-[14px] text-body-text">{item.alt_text}</figcaption>}
           </figure>
         ))}
       </div>
@@ -279,7 +271,7 @@ export default function PhotoTourRoom({
            * because .listing-gallery sets transform: translateX(-50%).
            */
           <div
-            className="fixed top-0 right-0 bottom-0 left-0 z-[9000] grid grid-rows-[auto_1fr] bg-[rgba(7,_16,_30,_0.94)]"
+            className="fixed inset-0 z-[9000] grid grid-rows-[auto_1fr] bg-[rgba(7,_16,_30,_0.94)]"
             role="dialog"
             aria-modal="true"
             aria-label={`${label} — photographs of ${title}`}
@@ -294,13 +286,13 @@ export default function PhotoTourRoom({
               <p className="flex items-baseline font-heading text-[16px] m-0 gap-2.5">
                 {label}
                 {many && (
-                  <span className="[font-family:inherit] text-[13px] text-[rgba(255,_255,_255,_0.66)] tabular-nums" aria-live="polite">
+                  <span className="text-[13px] text-white/66 tabular-nums" aria-live="polite">
                     {openAt + 1} of {media.length}
                   </span>
                 )}
               </p>
-              <button type="button" className="grid place-items-center w-11 h-11 bg-[rgba(255,_255,_255,_0.14)] text-white cursor-pointer p-0 rounded-full border-0
-                hover:bg-[rgba(255,_255,_255,_0.24)]" onClick={close} aria-label="Close">
+              <button type="button" className="grid place-items-center size-11 bg-white/14 text-white cursor-pointer p-0 rounded-full border-0
+                hover:bg-white/24" onClick={close} aria-label="Close">
                 <X size={20} aria-hidden="true" />
               </button>
             </div>
@@ -308,10 +300,9 @@ export default function PhotoTourRoom({
             {/* A scroll-snap strip rather than one swapped <img>: swiping is
                 then the browser's job and there is no touch handling here to
                 get wrong. */}
-            <div className="flex overflow-x-auto overflow-y-hidden [scroll-snap-type:x_mandatory] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" ref={strip} onScroll={readIndex}>
+            <div className="flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" ref={strip} onScroll={readIndex}>
               {media.map((item, index) => (
-                <div key={item.id} className="grow-0 shrink-0 basis-full grid place-items-center pt-0 pb-[clamp(20px,_4vw,_40px)] snap-start px-[clamp(14px,_6vw,_76px)]
-                  [&_img]:max-w-full [&_img]:max-h-full [&_img]:object-contain [&_img]:rounded-[8px]
+                <div key={item.id} className="flex-none basis-full grid place-items-center pt-0 pb-[clamp(20px,_4vw,_40px)] snap-start px-[clamp(14px,_6vw,_76px)]
                   max-[560.001px]:pb-[calc(20px_+_env(safe-area-inset-bottom,_0px))]">
                   <Image
                     src={mediaPublicUrl(item.storage_path)}
@@ -320,7 +311,7 @@ export default function PhotoTourRoom({
                     height={item.height ?? 800}
                     sizes="100vw"
                     loading={openAt === index ? "eager" : "lazy"}
-                    className="w-auto h-auto"
+                    className="w-auto h-auto max-w-full max-h-full object-contain rounded-lg"
                   />
                 </div>
               ))}
@@ -330,10 +321,10 @@ export default function PhotoTourRoom({
               <>
                 <button
                   type="button"
-                  className="absolute top-[50%] [transform:translateY(-50%)] grid place-items-center w-12 h-12 bg-[rgba(255,_255,_255,_0.16)] text-white
+                  className="absolute top-1/2 -translate-y-1/2 grid place-items-center size-12 bg-white/16 text-white
                     cursor-pointer [transition:background-color_0.15s_ease,_opacity_0.15s_ease] p-0 rounded-full border-0
-                    [&:hover:not(:disabled)]:bg-[rgba(255,_255,_255,_0.3)] disabled:opacity-30 disabled:cursor-default max-[560.001px]:w-10
-                    max-[560.001px]:h-10 [&&]:left-[clamp(8px,_2vw,_20px)] [&&]:max-[560.001px]:left-1"
+                    enabled:hover:bg-white/30 disabled:opacity-30 disabled:cursor-default max-[560.001px]:size-10
+                    left-[clamp(8px,_2vw,_20px)] max-[560.001px]:left-1"
                   onClick={() => goTo(openAt - 1)}
                   disabled={openAt === 0}
                   aria-label="Previous photo"
@@ -342,10 +333,10 @@ export default function PhotoTourRoom({
                 </button>
                 <button
                   type="button"
-                  className="absolute top-[50%] [transform:translateY(-50%)] grid place-items-center w-12 h-12 bg-[rgba(255,_255,_255,_0.16)] text-white
+                  className="absolute top-1/2 -translate-y-1/2 grid place-items-center size-12 bg-white/16 text-white
                     cursor-pointer [transition:background-color_0.15s_ease,_opacity_0.15s_ease] p-0 rounded-full border-0
-                    [&:hover:not(:disabled)]:bg-[rgba(255,_255,_255,_0.3)] disabled:opacity-30 disabled:cursor-default max-[560.001px]:w-10
-                    max-[560.001px]:h-10 [&&]:right-[clamp(8px,_2vw,_20px)] [&&]:max-[560.001px]:right-1"
+                    enabled:hover:bg-white/30 disabled:opacity-30 disabled:cursor-default max-[560.001px]:size-10
+                    right-[clamp(8px,_2vw,_20px)] max-[560.001px]:right-1"
                   onClick={() => goTo(openAt + 1)}
                   disabled={openAt === media.length - 1}
                   aria-label="Next photo"

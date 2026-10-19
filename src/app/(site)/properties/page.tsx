@@ -46,10 +46,8 @@ export default async function PropertiesIndexPage({
   );
 
   return (
-    <div className="[.listing-category-page_&]:mt-0 w-[min(100%_-_48px,_1240px)] mt-[clamp(36px,_5vw,_70px)] mb-20 mx-auto [&>h1]:mt-0 [&>h1]:mb-7
-      [&>h1]:text-[clamp(40px,_5vw,_58px)] [&>h1]:leading-[1.02] [&>h1]:tracking-[0] [&>h1]:text-heading [&>h1]:mx-0
-      max-[860.001px]:w-[min(100%_-_32px,_720px)] max-[860.001px]:mt-4.5
-      [&>h1]:max-[860.001px]:text-[clamp(26px,_7.5vw,_34px)] [&>h1]:max-[860.001px]:mb-3.5 max-[640.001px]:w-full">
+    <div className="w-[min(100%_-_48px,_1240px)] mt-[clamp(36px,_5vw,_70px)] mb-20 mx-auto
+      max-[860.001px]:w-[min(100%_-_32px,_720px)] max-[860.001px]:mt-4.5 max-[640.001px]:w-full">
       <JsonLd
         data={breadcrumbSchema([
           { name: "Home", path: "/" },
@@ -59,20 +57,17 @@ export default async function PropertiesIndexPage({
 
       {/* Names the coast rather than saying "Our Properties", which is a
           heading that could belong to any rental company anywhere. */}
-      <h1 {...edit("properties.title", "Page heading")}>{text("properties.title")}</h1>
+      <h1 {...edit("properties.title", "Page heading", "text", { className: "mt-0 mb-7 mx-0 text-[clamp(40px,_5vw,_58px)] leading-[1.02] tracking-[0] text-heading max-[860.001px]:text-[clamp(26px,_7.5vw,_34px)] max-[860.001px]:mb-3.5" })}>{text("properties.title")}</h1>
 
       {/* Links into the per-town pages. Without these the destination pages
           would exist but be orphaned -- reachable only from a sitemap, which
           is not how a crawler decides a page matters. */}
       {destinations.length > 0 && (
-        <nav className="flex flex-wrap mt-0 mb-4.5 mx-0 gap-2 [&_a]:inline-flex [&_a]:items-center [&_a]:text-text [&_a]:text-[14px] [&_a]:no-underline
-          [&_a]:px-3.25 [&_a]:py-1.75 [&_a]:gap-1.75 [&_a]:rounded-full [&_a]:border [&_a]:border-solid [&_a]:border-border
-          [&_a:hover]:border-heading [&_a_span]:bg-[rgba(15,_23,_39,_0.07)] [&_a_span]:text-[12px] [&_a_span]:px-1.75 [&_a_span]:py-0.25
-          [&_a_span]:rounded-full" aria-label="Destinations">
+        <nav className="flex flex-wrap mt-0 mb-4.5 mx-0 gap-2" aria-label="Destinations">
           {destinations.map((destination) => (
-            <Link key={destination.slug} href={`/destinations/${destination.slug}`}>
+            <Link className="inline-flex items-center text-text text-[14px] no-underline px-3.25 py-1.75 gap-1.75 rounded-full border border-solid border-border hover:border-heading" key={destination.slug} href={`/destinations/${destination.slug}`}>
               {destination.label.split(",")[0]?.trim() ?? destination.label}
-              <span>{destination.count}</span>
+              <span className="bg-[rgba(15,_23,_39,_0.07)] text-[12px] px-1.75 py-0.25 rounded-full">{destination.count}</span>
             </Link>
           ))}
         </nav>

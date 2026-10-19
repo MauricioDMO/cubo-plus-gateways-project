@@ -214,9 +214,7 @@ export default function ListingGallery({
 
   return (
     <div
-      className="relative w-[100vw] mt-0 mr-0 mb-[clamp(36px,_5vw,_56px)] ml-[50%] [transform:translateX(-50%)] [&_img]:grow-0 [&_img]:shrink-0
-        [&_img]:basis-[min(590px,_70vw)] [&_img]:w-[min(590px,_70vw)] [&_img]:h-[clamp(260px,_23vw,_360px)] [&_img]:object-cover
-        [&_img]:rounded-[8px] [&_img]:max-[560.001px]:basis-[86vw] [&_img]:max-[560.001px]:w-[86vw] [&_img]:max-[560.001px]:h-62.5"
+      className="relative w-screen mt-0 mr-0 mb-[clamp(36px,_5vw,_56px)] ml-[50%] -translate-x-1/2"
       onPointerEnter={() => {
         paused.current = true;
       }}
@@ -238,9 +236,10 @@ export default function ListingGallery({
     >
       <div className="overflow-x-auto overflow-y-hidden pt-0 pb-2.5 [scrollbar-width:none] px-[clamp(20px,_3vw,_36px)] [&::-webkit-scrollbar]:hidden
         max-[560.001px]:px-3" ref={scroller} onScroll={onScroll}>
-        <div className="listing-gallery__track flex w-[max-content] gap-7 max-[560.001px]:gap-3.5">
+        <div className="listing-gallery__track flex w-max gap-7 max-[560.001px]:gap-3.5">
           {strip.map((m, index) => (
             <Image
+              className="flex-none basis-[min(590px,_70vw)] w-[min(590px,_70vw)] h-[clamp(260px,_23vw,_360px)] object-cover rounded-lg max-[560.001px]:basis-[86vw] max-[560.001px]:w-[86vw] max-[560.001px]:h-62.5"
               key={`${m.storage_path}-${index}`}
               src={mediaPublicUrl(m.storage_path)}
               width={590}
@@ -258,10 +257,10 @@ export default function ListingGallery({
         <>
           <button
             type="button"
-            className="absolute top-[calc(50%_-_5px)] [transform:translateY(-50%)] z-[2] grid place-items-center w-11 h-11 bg-[rgba(255,_255,_255,_0.92)]
+            className="absolute top-[calc(50%_-_5px)] -translate-y-1/2 z-2 grid place-items-center size-11 bg-white/92
               text-heading cursor-pointer shadow-[0_4px_16px_rgba(7,_36,_86,_0.16)] [transition:background-color_0.15s_ease,_opacity_0.15s_ease]
-              p-0 rounded-full border border-solid border-border hover:bg-white disabled:opacity-35 disabled:cursor-default max-[560.001px]:w-9.5
-              max-[560.001px]:h-9.5 [&&]:left-[clamp(24px,_3.5vw,_44px)] [&&]:max-[560.001px]:left-1.5"
+              p-0 rounded-full border border-border hover:bg-white disabled:opacity-35 disabled:cursor-default max-[560.001px]:size-9.5
+              left-[clamp(24px,_3.5vw,_44px)] max-[560.001px]:left-1.5"
             onClick={() => scrollByPhotos(-1)}
             aria-label="Previous photo"
           >
@@ -269,10 +268,10 @@ export default function ListingGallery({
           </button>
           <button
             type="button"
-            className="absolute top-[calc(50%_-_5px)] [transform:translateY(-50%)] z-[2] grid place-items-center w-11 h-11 bg-[rgba(255,_255,_255,_0.92)]
+            className="absolute top-[calc(50%_-_5px)] -translate-y-1/2 z-2 grid place-items-center size-11 bg-white/92
               text-heading cursor-pointer shadow-[0_4px_16px_rgba(7,_36,_86,_0.16)] [transition:background-color_0.15s_ease,_opacity_0.15s_ease]
-              p-0 rounded-full border border-solid border-border hover:bg-white disabled:opacity-35 disabled:cursor-default max-[560.001px]:w-9.5
-              max-[560.001px]:h-9.5 [&&]:right-[clamp(24px,_3.5vw,_44px)] [&&]:max-[560.001px]:right-1.5"
+              p-0 rounded-full border border-border hover:bg-white disabled:opacity-35 disabled:cursor-default max-[560.001px]:size-9.5
+              right-[clamp(24px,_3.5vw,_44px)] max-[560.001px]:right-1.5"
             onClick={() => scrollByPhotos(1)}
             aria-label="Next photo"
           >

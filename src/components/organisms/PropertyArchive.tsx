@@ -205,7 +205,7 @@ export default function PropertyArchive({
   return (
     <>
       {hasSearch && (
-        <div className="flex items-center flex-wrap gap-y-2.5 gap-x-3.5 mb-4.5 bg-[rgba(15,_23,_39,_0.03)] px-4.5 py-3.5 rounded-[8px] max-[860.001px]:mb-3
+        <div className="flex items-center flex-wrap gap-y-2.5 gap-x-3.5 mb-4.5 bg-text/3 px-4.5 py-3.5 rounded-lg max-[860.001px]:mb-3
           max-[860.001px]:px-3 max-[860.001px]:py-2.5 max-[860.001px]:gap-2">
           <span className="text-[11px] font-bold tracking-[1px] uppercase text-muted-text max-[860.001px]:hidden">Your search</span>
           <ul className="flex flex-wrap list-none m-0 p-0 gap-2 [&_li]:bg-background [&_li]:text-[13px] [&_li]:text-text [&_li]:px-3 [&_li]:py-1.25
@@ -225,8 +225,8 @@ export default function PropertyArchive({
             )}
             {/* Inside the chip row rather than beside it: as a separate block
                 it forced the row onto its own line and cost a phone 60px. */}
-            <li className="max-[860.001px]:bg-transparent max-[860.001px]:border-[transparent] [&_a]:max-[860.001px]:text-link-strong">
-              <Link href={basePath}>Clear</Link>
+            <li className="max-[860.001px]:bg-transparent max-[860.001px]:border-transparent">
+              <Link href={basePath} className="max-[860.001px]:text-link-strong">Clear</Link>
             </li>
           </ul>
         </div>
@@ -234,7 +234,7 @@ export default function PropertyArchive({
       <div className="grid grid-cols-[300px_minmax(0,_1fr)] items-start mt-0 gap-[clamp(34px,_4vw,_58px)] max-[860.001px]:grid-cols-1
         max-[860.001px]:gap-3">
         <PropertyFiltersPanel activeFilterCount={activeFilterCount}>
-          <form method="get" action={basePath}>
+          <form method="get" action={basePath} className="flex flex-col p-0 gap-5">
             {/* Without these the sidebar's "Filter" button would throw away
                 the destination, dates and party size the guest arrived with. */}
             {SEARCH_PARAM_KEYS.map((key) => {
@@ -242,39 +242,24 @@ export default function PropertyArchive({
               return value ? <input key={key} type="hidden" name={key} value={value} /> : null;
             })}
 
-            <fieldset className="border-t-0 border-r-0 border-b border-solid border-b-border border-l-0 pt-0 pb-4.5 m-0 px-0 [&_legend]:text-[11px]
-              [&_legend]:font-bold [&_legend]:uppercase [&_legend]:tracking-[0.04em] [&_legend]:text-muted-text [&_legend]:mb-1.5 [&_legend]:p-0
-              [&_input[type=number]]:w-full [&_input[type=number]]:[font-family:inherit] [&_input[type=number]]:text-[14px]
-              [&_input[type=number]]:[font-weight:inherit] [&_input[type=number]]:[font-style:inherit] [&_input[type=number]]:leading-[inherit]
-              [&_input[type=number]]:[font-variant:inherit] [&_input[type=number]]:text-body-text [&_input[type=number]]:bg-background
-              [&_input[type=number]]:px-2.5 [&_input[type=number]]:py-2 [&_input[type=number]]:rounded-[6px] [&_input[type=number]]:border
-              [&_input[type=number]]:border-solid [&_input[type=number]]:border-[rgba(15,_23,_39,_0.14)] [&_select]:w-full
-              [&_select]:[font-family:inherit] [&_select]:text-[14px] [&_select]:[font-weight:inherit] [&_select]:[font-style:inherit]
-              [&_select]:leading-[inherit] [&_select]:[font-variant:inherit] [&_select]:text-body-text [&_select]:bg-background [&_select]:px-2.5
-              [&_select]:py-2 [&_select]:rounded-[6px] [&_select]:border [&_select]:border-solid [&_select]:border-[rgba(15,_23,_39,_0.14)]">
-              <legend>Category</legend>
+            <fieldset className="border-0 border-b border-border pt-0 pb-4.5 m-0 px-0">
+              <legend className="text-[11px] font-bold uppercase tracking-[0.04em] text-muted-text mb-1.5 p-0">Category</legend>
               {categoryLinks ? (
                 <>
                   <Link
                     href="/properties"
-                    className={`flex items-center text-[14px] text-body-text no-underline px-0 py-0.5 gap-2 ${!activeCategorySlug ? " properties-filters__radio--active [&&]:text-heading [&&]:font-semibold" : ""}`}
+                    className={`flex items-center text-[14px] no-underline px-0 py-0.5 gap-2 ${!activeCategorySlug ? "text-heading font-semibold" : "text-body-text"}`}
                   >
-                    <span className="shrink-0 w-3.5 h-3.5 rounded-full border border-solid border-[rgba(15,_23,_39,_0.3)]
-                      [.properties-filters\_\_radio--active_&]:bg-button-bg
-                      [.properties-filters\_\_radio--active_&]:shadow-[inset_0_0_0_2px_var(--color-background)]
-                      [.properties-filters\_\_radio--active_&]:border-button-bg" aria-hidden="true" />
+                    <span className={`shrink-0 size-3.5 rounded-full border ${!activeCategorySlug ? "bg-button-bg shadow-[inset_0_0_0_2px_var(--color-background)] border-button-bg" : "border-text/30"}`} aria-hidden="true" />
                     All Categories
                   </Link>
                   {categories.map((category) => (
                     <Link
                       key={category.id}
                       href={`/listing-category/${category.slug}`}
-                      className={`flex items-center text-[14px] text-body-text no-underline px-0 py-0.5 gap-2 ${activeCategorySlug === category.slug ? " properties-filters__radio--active [&&]:text-heading [&&]:font-semibold" : ""}`}
+                      className={`flex items-center text-[14px] no-underline px-0 py-0.5 gap-2 ${activeCategorySlug === category.slug ? "text-heading font-semibold" : "text-body-text"}`}
                     >
-                      <span className="shrink-0 w-3.5 h-3.5 rounded-full border border-solid border-[rgba(15,_23,_39,_0.3)]
-                        [.properties-filters\_\_radio--active_&]:bg-button-bg
-                        [.properties-filters\_\_radio--active_&]:shadow-[inset_0_0_0_2px_var(--color-background)]
-                        [.properties-filters\_\_radio--active_&]:border-button-bg" aria-hidden="true" />
+                      <span className={`shrink-0 size-3.5 rounded-full border ${activeCategorySlug === category.slug ? "bg-button-bg shadow-[inset_0_0_0_2px_var(--color-background)] border-button-bg" : "border-text/30"}`} aria-hidden="true" />
                       {category.name}
                     </Link>
                   ))}
@@ -313,25 +298,14 @@ export default function PropertyArchive({
                 ["Bathrooms", "bathrooms", bathroomChoices, filters.bathroomsMin],
               ] as const
             ).map(([legend, name, choices, current]) => (
-              <fieldset key={name} className="border-t-0 border-r-0 border-b border-solid border-b-border border-l-0 pt-0 pb-4.5 m-0 px-0 [&_legend]:text-[11px]
-                [&_legend]:font-bold [&_legend]:uppercase [&_legend]:tracking-[0.04em] [&_legend]:text-muted-text [&_legend]:mb-1.5 [&_legend]:p-0
-                [&_input[type=number]]:w-full [&_input[type=number]]:[font-family:inherit] [&_input[type=number]]:text-[14px]
-                [&_input[type=number]]:[font-weight:inherit] [&_input[type=number]]:[font-style:inherit] [&_input[type=number]]:leading-[inherit]
-                [&_input[type=number]]:[font-variant:inherit] [&_input[type=number]]:text-body-text [&_input[type=number]]:bg-background
-                [&_input[type=number]]:px-2.5 [&_input[type=number]]:py-2 [&_input[type=number]]:rounded-[6px] [&_input[type=number]]:border
-                [&_input[type=number]]:border-solid [&_input[type=number]]:border-[rgba(15,_23,_39,_0.14)] [&_select]:w-full
-                [&_select]:[font-family:inherit] [&_select]:text-[14px] [&_select]:[font-weight:inherit] [&_select]:[font-style:inherit]
-                [&_select]:leading-[inherit] [&_select]:[font-variant:inherit] [&_select]:text-body-text [&_select]:bg-background [&_select]:px-2.5
-                [&_select]:py-2 [&_select]:rounded-[6px] [&_select]:border [&_select]:border-solid [&_select]:border-[rgba(15,_23,_39,_0.14)]">
-                <legend>{legend}</legend>
+              <fieldset key={name} className="border-0 border-b border-border pt-0 pb-4.5 m-0 px-0">
+                <legend className="text-[11px] font-bold uppercase tracking-[0.04em] text-muted-text mb-1.5 p-0">{legend}</legend>
                 <div className="flex flex-wrap mt-0.5 gap-1.5">
                   <label className="relative inline-flex items-center justify-center min-w-9.5 h-8.5 text-[13px] text-body-text cursor-pointer select-none
                     [transition:border-color_0.15s_ease,_background-color_0.15s_ease,_color_0.15s_ease] px-2.5 py-0 rounded-full border border-solid
-                    border-border [&_input]:absolute [&_input]:top-[50%] [&_input]:left-[50%] [&_input]:w-0.25 [&_input]:h-0.25 [&_input]:opacity-0
-                    [&_input]:cursor-pointer [&_input]:m-0 hover:border-heading [&:has(input:checked)]:bg-heading [&:has(input:checked)]:text-white
-                    [&:has(input:checked)]:font-semibold [&:has(input:checked)]:border-heading
-                    [&:has(input:focus-visible)]:[outline:2px_solid_var(--color-heading)] [&:has(input:focus-visible)]:outline-offset-[2px]">
-                    <input type="radio" name={name} value="" defaultChecked={!current} />
+                    border-border hover:border-heading has-checked:bg-heading has-checked:text-white has-checked:font-semibold has-checked:border-heading
+                    has-focus-visible:outline-2 has-focus-visible:outline-heading has-focus-visible:outline-offset-2">
+                    <input className="absolute top-1/2 left-1/2 size-0.25 opacity-0 cursor-pointer m-0" type="radio" name={name} value="" defaultChecked={!current} />
                     Any
                   </label>
                   {choices.map((count, index) => {
@@ -339,14 +313,13 @@ export default function PropertyArchive({
                     return (
                       <label key={count} className="relative inline-flex items-center justify-center min-w-9.5 h-8.5 text-[13px] text-body-text cursor-pointer select-none
                         [transition:border-color_0.15s_ease,_background-color_0.15s_ease,_color_0.15s_ease] px-2.5 py-0 rounded-full border border-solid
-                        border-border [&_input]:absolute [&_input]:top-[50%] [&_input]:left-[50%] [&_input]:w-0.25 [&_input]:h-0.25 [&_input]:opacity-0
-                        [&_input]:cursor-pointer [&_input]:m-0 hover:border-heading [&:has(input:checked)]:bg-heading [&:has(input:checked)]:text-white
-                        [&:has(input:checked)]:font-semibold [&:has(input:checked)]:border-heading
-                        [&:has(input:focus-visible)]:[outline:2px_solid_var(--color-heading)] [&:has(input:focus-visible)]:outline-offset-[2px]">
+                        border-border hover:border-heading has-checked:bg-heading has-checked:text-white has-checked:font-semibold has-checked:border-heading
+                        has-focus-visible:outline-2 has-focus-visible:outline-heading has-focus-visible:outline-offset-2">
                         {/* The last chip means "this many or more", so a saved
                             link carrying a bigger number still lands on a
                             selected option instead of silently on none. */}
                         <input
+                          className="absolute top-1/2 left-1/2 size-0.25 opacity-0 cursor-pointer m-0"
                           type="radio"
                           name={name}
                           value={count}
@@ -366,17 +339,8 @@ export default function PropertyArchive({
                 label directly underneath it -- eleven headings for eleven
                 ticks, and a sidebar the guest had to scroll past to reach the
                 numbers that actually narrow a search. */}
-            <fieldset className="border-t-0 border-r-0 border-b border-solid border-b-border border-l-0 pt-0 pb-4.5 m-0 px-0 [&_legend]:text-[11px]
-              [&_legend]:font-bold [&_legend]:uppercase [&_legend]:tracking-[0.04em] [&_legend]:text-muted-text [&_legend]:mb-1.5 [&_legend]:p-0
-              [&_input[type=number]]:w-full [&_input[type=number]]:[font-family:inherit] [&_input[type=number]]:text-[14px]
-              [&_input[type=number]]:[font-weight:inherit] [&_input[type=number]]:[font-style:inherit] [&_input[type=number]]:leading-[inherit]
-              [&_input[type=number]]:[font-variant:inherit] [&_input[type=number]]:text-body-text [&_input[type=number]]:bg-background
-              [&_input[type=number]]:px-2.5 [&_input[type=number]]:py-2 [&_input[type=number]]:rounded-[6px] [&_input[type=number]]:border
-              [&_input[type=number]]:border-solid [&_input[type=number]]:border-[rgba(15,_23,_39,_0.14)] [&_select]:w-full
-              [&_select]:[font-family:inherit] [&_select]:text-[14px] [&_select]:[font-weight:inherit] [&_select]:[font-style:inherit]
-              [&_select]:leading-[inherit] [&_select]:[font-variant:inherit] [&_select]:text-body-text [&_select]:bg-background [&_select]:px-2.5
-              [&_select]:py-2 [&_select]:rounded-[6px] [&_select]:border [&_select]:border-solid [&_select]:border-[rgba(15,_23,_39,_0.14)]">
-              <legend>Amenities</legend>
+            <fieldset className="border-0 border-b border-border pt-0 pb-4.5 m-0 px-0">
+              <legend className="text-[11px] font-bold uppercase tracking-[0.04em] text-muted-text mb-1.5 p-0">Amenities</legend>
               {amenityFields.map((field) => (
                 <label key={field.key} className="flex items-center text-[14px] text-body-text no-underline px-0 py-0.5 gap-2">
                   <input
@@ -390,29 +354,26 @@ export default function PropertyArchive({
               ))}
             </fieldset>
 
-            <button type="submit" className="inline-flex items-center justify-center self-stretch bg-button-bg text-button-text [font-family:inherit] [font-size:inherit]
-              font-semibold [font-style:inherit] leading-[inherit] [font-variant:inherit] cursor-pointer
+            <button type="submit" className="inline-flex items-center justify-center self-stretch bg-button-bg text-button-text [font-family:inherit] text-[length:inherit]
+              font-semibold leading-[inherit] cursor-pointer
               shadow-[0_14px_26px_rgba(7,_36,_86,_0.18)] px-6 py-3.75 rounded-full border-0">
               Filter
             </button>
           </form>
         </PropertyFiltersPanel>
 
-        <div className="properties-results w-full max-[860.001px]:w-full max-[860.001px]:min-w-0
-          [.properties-filters:not([data-open=true])+&]:max-[860.001px]:mt-0">
+        <div className="w-full max-[860.001px]:min-w-0">
           <div className="flex items-center justify-between flex-wrap w-full mb-7 gap-4
-            max-[860.001px]:flex max-[860.001px]:flex-row max-[860.001px]:items-center max-[860.001px]:justify-between
             max-[860.001px]:mt-3.5 max-[860.001px]:mb-3 max-[860.001px]:flex-nowrap max-[860.001px]:mx-0 max-[860.001px]:gap-3">
             {/* The "N hidden for your dates" line used to be its own paragraph
                 above the keyword form -- 60px of its own on a phone, three
                 elements away from the count it qualifies. It belongs on the
                 same line as the count. */}
-            <p className="text-[13px] uppercase tracking-[0.04em] text-muted-text m-0 max-[860.001px]:text-[13px] max-[860.001px]:min-w-0
-              max-[860.001px]:overflow-hidden max-[860.001px]:text-ellipsis max-[860.001px]:whitespace-nowrap max-[860.001px]:normal-case
-              max-[860.001px]:tracking-[0]">
+            <p className="text-[13px] uppercase tracking-[0.04em] text-muted-text m-0 max-[860.001px]:min-w-0
+              max-[860.001px]:truncate max-[860.001px]:normal-case max-[860.001px]:tracking-normal">
               {totalCount === 0 ? "No results" : `${totalCount} ${totalCount === 1 ? "property" : "properties"}`}
               {bookedOut > 0 && (
-                <span className="max-[860.001px]:text-muted-text" title={`${bookedOut} already booked for your dates`}>
+                <span title={`${bookedOut} already booked for your dates`}>
                   {" · "}
                   {bookedOut} booked
                 </span>
@@ -424,7 +385,7 @@ export default function PropertyArchive({
             <p>No properties match your filters.</p>
           ) : (
             buildingGroups.map((group) => (
-              <section key={group.building ?? "unassigned"} className="properties-group [.properties-group+&]:mt-8.5">
+              <section key={group.building ?? "unassigned"} className="mt-8.5 first-of-type:mt-0">
                 {/* The heading is what stops a guest enquiring about an
                     apartment in the other building: both are oceanfront, both
                     are in El Zonte, and the photographs look alike. */}
@@ -437,10 +398,7 @@ export default function PropertyArchive({
                     </span>
                   </h2>
                 )}
-                <div className="grid grid-cols-3 mx-0 my-6 gap-6 max-[960.001px]:grid-cols-2 max-[640.001px]:grid-cols-1
-                  [.related-listings_&]:grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] [.related-listings_&]:m-0 [.related-listings_&]:gap-7.5
-                  [.properties-results_&]:grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] [.properties-results_&]:gap-y-8.5
-                  [.properties-results_&]:gap-x-8 [.properties-results_&]:m-0 [.properties-results_&]:max-[860.001px]:grid-cols-1">
+                <div className="grid grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] gap-y-8.5 gap-x-8 m-0 max-[860.001px]:grid-cols-1">
                   {group.listings.map((listing) => {
                 const attrs = (listing.attributes as Record<string, string>) ?? {};
                 const category = listing.categories[0];
@@ -464,42 +422,14 @@ export default function PropertyArchive({
                 const showCollection =
                   collection !== null && !(showBuildingHeadings && group.building === collection);
                 return (
-                  <article key={listing.id} className="listing-card shadow-[0_5px_30px_rgba(7,_36,_86,_0.075)] flex flex-col items-start px-6 py-5 rounded-[10px]
-                    [&_h3]:[display:-webkit-box] [&_h3]:[-webkit-box-orient:vertical] [&_h3]:[-webkit-line-clamp:3] [&_h3]:min-h-[calc(3_*_1.25em)]
-                    [&_h3]:overflow-hidden [&_h3]:text-[20px] [&_h3]:leading-[1.25] [&_h3]:mt-0 [&_h3]:mb-2 [&_h3]:mx-0 [&_h3_a]:text-heading
-                    [.properties-results_&]:min-h-full [.properties-results_&]:pt-0 [.properties-results_&]:pb-6.5
-                    [.properties-results_&]:overflow-hidden [.properties-results_&]:bg-background
-                    [.properties-results_&]:shadow-[0_24px_55px_rgba(7,_36,_86,_0.08)]
-                    [.properties-results_&]:[transition:transform_180ms_ease-out,_box-shadow_180ms_ease-out] [.properties-results_&]:px-7.5
-                    [.properties-results_&]:rounded-[8px] [.related-listings_&]:min-h-full [.related-listings_&]:pt-0 [.related-listings_&]:pb-6.5
-                    [.related-listings_&]:overflow-hidden [.related-listings_&]:bg-background
-                    [.related-listings_&]:shadow-[0_24px_55px_rgba(7,_36,_86,_0.08)]
-                    [.related-listings_&]:[transition:transform_180ms_ease-out,_box-shadow_180ms_ease-out] [.related-listings_&]:px-7.5
-                    [.related-listings_&]:rounded-[8px] [.properties-results_&:hover]:[transform:translateY(-3px)]
-                    [.properties-results_&:hover]:shadow-[0_30px_70px_rgba(7,_36,_86,_0.12)] [.related-listings_&:hover]:[transform:translateY(-3px)]
-                    [.related-listings_&:hover]:shadow-[0_30px_70px_rgba(7,_36,_86,_0.12)] [.properties-results_&_h3]:max-w-[95%]
-                    [.properties-results_&_h3]:mb-4.5 [.properties-results_&_h3]:text-[21px] [.properties-results_&_h3]:leading-[26.25px]
-                    [.related-listings_&_h3]:max-w-[95%] [.related-listings_&_h3]:mb-4.5 [.related-listings_&_h3]:text-[21px]
-                    [.related-listings_&_h3]:leading-[26.25px] [.properties-results_&]:max-[560.001px]:pt-0
-                    [.properties-results_&]:max-[560.001px]:pb-5.5 [.properties-results_&]:max-[560.001px]:px-5 listing-card--archive">
-                    <div className="relative block [.properties-results_&]:w-[calc(100%_+_60px)] [.properties-results_&]:mt-0 [.properties-results_&]:mb-5.5
-                      [.properties-results_&]:overflow-hidden [.properties-results_&]:rounded-tl-[8px] [.properties-results_&]:rounded-tr-[8px]
-                      [.properties-results_&]:rounded-br-[0] [.properties-results_&]:rounded-bl-[0] [.properties-results_&]:mx-[-30px]
-                      [.related-listings_&]:w-[calc(100%_+_60px)] [.related-listings_&]:mt-0 [.related-listings_&]:mb-5.5
-                      [.related-listings_&]:overflow-hidden [.related-listings_&]:rounded-tl-[8px] [.related-listings_&]:rounded-tr-[8px]
-                      [.related-listings_&]:rounded-br-[0] [.related-listings_&]:rounded-bl-[0] [.related-listings_&]:mx-[-30px]
-                      [.properties-results_&]:max-[560.001px]:w-[calc(100%_+_40px)] [.properties-results_&]:max-[560.001px]:mx-[-20px]">
+                  <article key={listing.id} className="group/card flex min-h-full flex-col items-start overflow-hidden bg-background px-7.5 pt-0 pb-6.5 rounded-lg
+                    shadow-[0_24px_55px_rgba(7,_36,_86,_0.08)] transition-[transform,translate,box-shadow] duration-180 ease-[ease-out]
+                    hover:-translate-y-0.75 hover:shadow-[0_30px_70px_rgba(7,_36,_86,_0.12)] max-[560.001px]:pb-5.5 max-[560.001px]:px-5">
+                    <div className="relative block w-[calc(100%_+_60px)] mt-0 mb-5.5 overflow-hidden rounded-t-lg -mx-7.5 max-[560.001px]:w-[calc(100%_+_40px)] max-[560.001px]:-mx-5">
                       {listing.featured_media && (
                         <Link href={`/listing/${listing.slug}`}>
                           <Image
-                            className="block w-[calc(100%_+_48px)] h-40 object-cover rounded-tl-[10px] rounded-tr-[10px] rounded-br-[0] rounded-bl-[0] mt-[-20px] mb-4
-                              mx-[-24px] [.properties-results_&]:w-full [.properties-results_&]:h-[clamp(210px,_18vw,_260px)]
-                              [.properties-results_&]:[transition:transform_450ms_cubic-bezier(0.22,_1,_0.36,_1)] [.properties-results_&]:m-0
-                              [.properties-results_&]:rounded-[0] [.related-listings_&]:w-full [.related-listings_&]:h-[clamp(210px,_18vw,_260px)]
-                              [.related-listings_&]:[transition:transform_450ms_cubic-bezier(0.22,_1,_0.36,_1)] [.related-listings_&]:m-0
-                              [.related-listings_&]:rounded-[0] [.properties-results_.listing-card:hover_&]:[transform:scale(1.035)]
-                              [.related-listings_.listing-card:hover_&]:[transform:scale(1.035)]
-                              [.properties-results_&]:max-[860.001px]:h-[clamp(220px,_56vw,_360px)]"
+                            className="block w-full h-[clamp(210px,_18vw,_260px)] object-cover m-0 rounded-none transition-transform duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-[1.035] max-[860.001px]:h-[clamp(220px,_56vw,_360px)]"
                             src={mediaPublicUrl(listing.featured_media.storage_path)}
                             width={640}
                             height={420}
@@ -510,44 +440,34 @@ export default function PropertyArchive({
                         </Link>
                       )}
                       {category && (
-                        <Link href={`/listing-category/${category.slug}`} className="absolute left-6 bottom-4 z-[1] inline-block bg-[rgba(255,_255,_255,_0.35)] text-white text-[11px] font-normal uppercase
-                          tracking-[0.04em] no-underline px-3 py-1.5 rounded-full [.properties-results_&]:left-7.5 [.properties-results_&]:bottom-5.5
-                          [.properties-results_&]:bg-[rgba(246,_248,_245,_0.78)] [.properties-results_&]:text-button-bg [.properties-results_&]:text-[11px]
-                          [.properties-results_&]:font-extrabold [.related-listings_&]:left-7.5 [.related-listings_&]:bottom-5.5
-                          [.related-listings_&]:bg-[rgba(246,_248,_245,_0.78)] [.related-listings_&]:text-button-bg [.related-listings_&]:text-[11px]
-                          [.related-listings_&]:font-extrabold [.properties-results_&]:max-[560.001px]:left-5">
+                        <Link href={`/listing-category/${category.slug}`} className="absolute left-7.5 bottom-5.5 z-1 inline-block bg-[rgba(246,_248,_245,_0.78)] text-button-bg text-[11px] font-extrabold uppercase tracking-[0.04em] no-underline px-3 py-1.5 rounded-full max-[560.001px]:left-5">
                           {category.name}
                         </Link>
                       )}
                     </div>
-                    {showCollection && <p className="listing-card__collection mt-3.5 mb-0.5 text-[10.5px] font-extrabold tracking-[1px] uppercase text-muted-text mx-0">{collection}</p>}
-                    <h3>
-                      <Link href={`/listing/${listing.slug}`}>{listing.title}</Link>
+                    {showCollection && <p className="mt-3.5 mb-0.5 text-[10.5px] font-extrabold tracking-[1px] uppercase text-muted-text mx-0">{collection}</p>}
+                    <h3 className="line-clamp-3 min-h-[calc(3_*_1.25em)] max-w-[95%] text-[21px] leading-[26.25px] mt-0 mb-4.5 mx-0">
+                      <Link href={`/listing/${listing.slug}`} className="text-heading">{listing.title}</Link>
                     </h3>
                     {town && (
-                      <p className="flex items-center mt-1.5 mb-0 text-[13.5px] text-body-text mx-0 gap-1.25 [&_svg]:flex-none [&_svg]:text-current">
-                        <MapPin size={14} strokeWidth={2} aria-hidden="true" />
+                      <p className="flex items-center mt-1.5 mb-0 text-[13.5px] text-body-text mx-0 gap-1.25">
+                        <MapPin size={14} strokeWidth={2} className="flex-none text-current" aria-hidden="true" />
                         <span>{town}</span>
                       </p>
                     )}
                     {summary.length > 0 && (
-                      <p className="flex flex-wrap items-center mt-2 mb-0 list-none text-body-text text-[14px] leading-[20px] tabular-nums min-h-5 mx-0 p-0
-                        [&>span]:inline-flex [&>span]:items-center [&>span]:whitespace-nowrap [&>span]:gap-1 [&>span+span::before]:content-['·']
-                        [&>span+span::before]:text-muted-text [&>span+span::before]:mx-1.5 [&>span+span::before]:my-0
-                        [.listing-card_&]:max-[640.001px]:grid [.listing-card_&]:max-[640.001px]:grid-cols-2 [.listing-card_&]:max-[640.001px]:gap-y-1
-                        [.listing-card_&]:max-[640.001px]:gap-x-2.5 [.listing-card_&>span+span::before]:max-[640.001px]:content-[none]">
+                      <p className="flex flex-wrap items-center mt-2 mb-0 list-none text-body-text text-[14px] leading-5 tabular-nums min-h-5 mx-0 p-0 max-[640.001px]:grid max-[640.001px]:grid-cols-2 max-[640.001px]:gap-y-1 max-[640.001px]:gap-x-2.5">
                         {summary.map((item) => (
-                          <span key={item.label}>
-                            <AmenityIcon type={item.icon} className="grow-0 shrink-0 basis-4 w-4 h-4 text-muted-text" />
+                          <span key={item.label} className="inline-flex items-center whitespace-nowrap gap-1 not-first:before:content-['·'] not-first:before:text-muted-text not-first:before:mx-1.5 not-first:before:my-0 max-[640.001px]:before:hidden">
+                            <AmenityIcon type={item.icon} className="flex-none basis-4 size-4 text-muted-text" />
                             {item.value} {item.label}
                           </span>
                         ))}
                       </p>
                     )}
                     {rate && (
-                      <p className="flex items-baseline mt-2.5 mb-0 font-heading text-heading mx-0 gap-1.25 [&_strong]:text-[19px] [&_strong]:font-semibold
-                        [&_strong]:tabular-nums">
-                        <strong>{rate}</strong>{" "}
+                      <p className="flex items-baseline mt-2.5 mb-0 font-heading text-heading mx-0 gap-1.25">
+                        <strong className="text-[19px] font-semibold tabular-nums">{rate}</strong>{" "}
                         <span className="font-body text-[13px] font-normal text-muted-text">per night</span>
                       </p>
                     )}
@@ -565,7 +485,7 @@ export default function PropertyArchive({
                 <Link
                   key={pageNumber}
                   href={buildHref(basePath, searchParams, { page: pageNumber === 1 ? undefined : String(pageNumber) })}
-                  className={`inline-flex items-center justify-center min-w-9 h-9 text-body-text no-underline text-[14px] px-2 py-0 rounded-[6px] border border-solid border-border ${pageNumber === page ? " [&&]:bg-button-bg [&&]:text-button-text [&&]:border-button-bg" : ""}`}
+                  className={`inline-flex items-center justify-center min-w-9 h-9 no-underline text-[14px] px-2 py-0 rounded-md border ${pageNumber === page ? "bg-button-bg text-button-text border-button-bg" : "text-body-text border-border"}`}
                   aria-current={pageNumber === page ? "page" : undefined}
                 >
                   {pageNumber}

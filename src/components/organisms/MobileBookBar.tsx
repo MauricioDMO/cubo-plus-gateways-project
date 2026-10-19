@@ -129,42 +129,29 @@ export default function MobileBookBar({
   const summary = `${formatShort(checkIn)} – ${formatShort(checkOut)} · ${nights} night${nights === 1 ? "" : "s"}`;
 
   return (
-    <div className="listing-mobile-book hidden max-[900.001px]:fixed max-[900.001px]:right-0 max-[900.001px]:bottom-0 max-[900.001px]:left-0
-      max-[900.001px]:z-[40] max-[900.001px]:block max-[900.001px]:pt-2.5
-      max-[900.001px]:pb-[calc(10px_+_env(safe-area-inset-bottom,_0px))] max-[900.001px]:bg-background max-[900.001px]:border-t
-      max-[900.001px]:border-solid max-[900.001px]:border-t-border max-[900.001px]:shadow-[0_-2px_14px_rgba(15,_23,_39,_0.1)]
-      max-[900.001px]:px-4" data-open={open ? "true" : undefined} ref={bar}>
+    <div className="group/mobile hidden max-[900.001px]:block fixed inset-x-0 bottom-0 z-40 pt-2.5
+      pb-[calc(10px_+_env(safe-area-inset-bottom,_0px))] bg-background border-t border-border shadow-[0_-2px_14px_rgba(15,_23,_39,_0.1)] px-4" data-open={open ? "true" : undefined} ref={bar}>
       {open && (
-        <div className="max-[900.001px]:grid max-[900.001px]:grid-cols-[1fr_1fr] max-[900.001px]:mt-0 max-[900.001px]:mb-3 max-[900.001px]:mx-0
-          max-[900.001px]:gap-2.5" id={panelId}>
-          <div className="max-[900.001px]:col-span-full max-[900.001px]:flex max-[900.001px]:items-center max-[900.001px]:justify-between
-            max-[900.001px]:text-[11px] max-[900.001px]:font-extrabold max-[900.001px]:tracking-[1px] max-[900.001px]:uppercase
-            max-[900.001px]:text-muted-text max-[900.001px]:gap-3">
+        <div className="grid grid-cols-2 mt-0 mb-3 mx-0 gap-2.5" id={panelId}>
+          <div className="col-span-full flex items-center justify-between text-[11px] font-extrabold tracking-[1px] uppercase text-muted-text gap-3">
             <span>Your dates</span>
             <button
               type="button"
-              className="max-[900.001px]:inline-flex max-[900.001px]:items-center max-[900.001px]:min-h-8.5 max-[900.001px]:bg-background
-                max-[900.001px]:text-heading max-[900.001px]:[font-family:inherit] max-[900.001px]:text-[13px] max-[900.001px]:font-semibold
-                max-[900.001px]:[font-style:inherit] max-[900.001px]:leading-[inherit] max-[900.001px]:[font-variant:inherit]
-                max-[900.001px]:tracking-[0] max-[900.001px]:normal-case max-[900.001px]:cursor-pointer max-[900.001px]:px-3 max-[900.001px]:py-0
-                max-[900.001px]:gap-1.25 max-[900.001px]:rounded-full max-[900.001px]:border max-[900.001px]:border-solid
-                max-[900.001px]:border-border max-[900.001px]:active:bg-[rgba(15,_23,_39,_0.04)]"
+              className="inline-flex items-center min-h-8.5 bg-background text-heading [font-family:inherit] text-[13px] font-semibold
+                [font-style:inherit] leading-[inherit] [font-variant:inherit] tracking-normal normal-case cursor-pointer px-3 py-0
+                gap-1.25 rounded-full border border-border active:bg-[rgba(15,_23,_39,_0.04)]"
               onClick={() => setOpen(false)}
             >
               Done
               <X size={15} aria-hidden="true" />
             </button>
           </div>
-          <div className="[&>label]:text-[11px] [&>label]:font-bold [&>label]:tracking-[0.06em] [&>label]:uppercase [&>label]:text-muted-text
-            max-[900.001px]:flex max-[900.001px]:min-w-0 max-[900.001px]:flex-col max-[900.001px]:text-[12px] max-[900.001px]:text-body-text
-            max-[900.001px]:gap-1">
-            <label htmlFor="mobile-check-in">Check-in</label>
+          <div className="flex min-w-0 flex-col text-[12px] text-body-text gap-1">
+            <label className="text-[11px] font-bold tracking-[0.06em] uppercase text-muted-text" htmlFor="mobile-check-in">Check-in</label>
             <BookingDatePicker id="mobile-check-in" min={todayIso()} value={checkIn} onChange={setCheckIn} />
           </div>
-          <div className="[&>label]:text-[11px] [&>label]:font-bold [&>label]:tracking-[0.06em] [&>label]:uppercase [&>label]:text-muted-text
-            max-[900.001px]:flex max-[900.001px]:min-w-0 max-[900.001px]:flex-col max-[900.001px]:text-[12px] max-[900.001px]:text-body-text
-            max-[900.001px]:gap-1">
-            <label htmlFor="mobile-check-out">Check-out</label>
+          <div className="flex min-w-0 flex-col text-[12px] text-body-text gap-1">
+            <label className="text-[11px] font-bold tracking-[0.06em] uppercase text-muted-text" htmlFor="mobile-check-out">Check-out</label>
             <BookingDatePicker
               id="mobile-check-out"
               min={addDaysIso(checkIn || todayIso(), minStay)}
@@ -175,32 +162,26 @@ export default function MobileBookBar({
         </div>
       )}
 
-      <div className="max-[900.001px]:flex max-[900.001px]:items-center max-[900.001px]:justify-between max-[900.001px]:gap-3.5">
+      <div className="flex items-center justify-between gap-3.5">
         <button
           type="button"
-          className="max-[900.001px]:flex max-[900.001px]:flex-1 max-[900.001px]:flex-col max-[900.001px]:items-start max-[900.001px]:min-w-0
-            max-[900.001px]:min-h-11 max-[900.001px]:bg-transparent max-[900.001px]:text-left max-[900.001px]:cursor-pointer
-            max-[900.001px]:p-0 max-[900.001px]:gap-0.5 max-[900.001px]:border-0"
+          className="flex flex-1 flex-col items-start min-w-0 min-h-11 bg-transparent text-left cursor-pointer p-0 gap-0.5 border-0"
           aria-expanded={open}
           aria-controls={panelId}
           onClick={() => setOpen((current) => !current)}
         >
           {nightlyRate && (
-            <span className="max-[900.001px]:text-[13px] max-[900.001px]:text-body-text max-[900.001px]:m-0 [&_strong]:max-[900.001px]:text-[15px]
-              [&_strong]:max-[900.001px]:text-heading">
-              <strong>{nightlyRate}</strong> per night
+            <span className="text-[13px] text-body-text m-0">
+              <strong className="text-[15px] text-heading">{nightlyRate}</strong> per night
             </span>
           )}
-          <span className="max-[900.001px]:flex max-[900.001px]:items-center max-[900.001px]:max-w-full max-[900.001px]:overflow-hidden
-            max-[900.001px]:whitespace-nowrap max-[900.001px]:text-ellipsis max-[900.001px]:text-[13px] max-[900.001px]:text-heading
-            max-[900.001px]:underline max-[900.001px]:underline-offset-[3px] max-[900.001px]:gap-1.25">
+          <span className="flex items-center max-w-full truncate text-[13px] text-heading underline underline-offset-[3px] gap-1.25">
             <CalendarDays size={14} aria-hidden="true" />
             {summary}
             {/* So the strip reads as a control in both states, rather than as
                 a line of text that happens to be tappable. */}
-            <ChevronDown size={14} className="motion-reduce:transition-none max-[900.001px]:flex-none max-[900.001px]:ml-0.5 max-[900.001px]:text-muted-text
-              max-[900.001px]:[transition:transform_200ms_ease]
-              [.listing-mobile-book[data-open=true]_&]:max-[900.001px]:[transform:rotate(180deg)]" aria-hidden="true" />
+            <ChevronDown size={14} className="flex-none ml-0.5 text-muted-text transition-transform duration-200 ease-[ease]
+              group-data-[open=true]/mobile:rotate-180 motion-reduce:transition-none" aria-hidden="true" />
           </span>
         </button>
 
@@ -221,10 +202,8 @@ export default function MobileBookBar({
           fire and point at the first one, which is the answer to "why can't I
           book", rather than another press that changes nothing.
         */}
-        <a className="max-[900.001px]:flex-none max-[900.001px]:min-h-11.5 max-[900.001px]:bg-[#394342] max-[900.001px]:text-white
-          max-[900.001px]:[font-family:inherit] max-[900.001px]:text-[16px] max-[900.001px]:font-bold max-[900.001px]:[font-style:inherit]
-          max-[900.001px]:leading-[inherit] max-[900.001px]:[font-variant:inherit] max-[900.001px]:no-underline
-          max-[900.001px]:cursor-pointer max-[900.001px]:px-6.5 max-[900.001px]:py-3 max-[900.001px]:rounded-full max-[900.001px]:border-0" href="#book" onClick={reserve}>
+        <a className="flex-none min-h-11.5 bg-button-bg text-white [font-family:inherit] text-[16px] font-bold [font-style:inherit]
+          leading-[inherit] [font-variant:inherit] no-underline cursor-pointer px-6.5 py-3 rounded-full border-0" href="#book" onClick={reserve}>
           Reserve now
         </a>
       </div>

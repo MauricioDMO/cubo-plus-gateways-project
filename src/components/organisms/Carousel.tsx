@@ -94,23 +94,22 @@ export default function Carousel({
     <div className="relative max-w-340 mx-auto my-0">
       <button
         type="button"
-        className="absolute top-[38%] z-[1] flex items-center justify-center w-12 h-12 [transform:translateY(-50%)] bg-background text-heading
+        className="absolute top-[38%] z-1 flex items-center justify-center size-12 -translate-y-1/2 bg-background text-heading
           shadow-[0_16px_36px_rgba(15,_23,_39,_0.16)] cursor-pointer
-          [transition:transform_180ms_ease,_box-shadow_180ms_ease,_opacity_180ms_ease] p-0 rounded-full border border-solid
-          border-[color-mix(in_oklch,_var(--color-heading)_12%,_transparent)]
-          [&:hover:not(:disabled)]:[transform:translateY(-50%)_scale(1.04)]
-          [&:hover:not(:disabled)]:shadow-[0_20px_42px_rgba(15,_23,_39,_0.2)] [&_svg]:w-5 [&_svg]:h-5 disabled:opacity-35
-          disabled:cursor-default max-[640.001px]:hidden [&&]:left-5"
+          transition-[transform,translate,scale,box-shadow,opacity] duration-180 ease-[ease] p-0 rounded-full border border-solid
+          border-heading/12 enabled:hover:scale-[1.04]
+          enabled:hover:shadow-[0_20px_42px_rgba(15,_23,_39,_0.2)] disabled:opacity-35
+          disabled:cursor-default max-[640.001px]:hidden left-5"
         aria-label={`Scroll ${label} left`}
         onClick={() => scrollByDirection(-1)}
         disabled={!canScrollPrev}
       >
-        <ArrowLeftIcon />
+        <ArrowLeftIcon className="size-5" />
       </button>
       <div
-        className={[`flex overflow-x-auto [scroll-snap-type:x_mandatory] scroll-smooth
+        className={[`flex overflow-x-auto snap-x snap-mandatory scroll-smooth
           [mask-image:linear-gradient(to_right,_transparent_0,_black_30px,_black_calc(100%_-_72px),_transparent_100%)]
-          [scrollbar-width:none] [-ms-overflow-style:none] gap-5.5 [&::-webkit-scrollbar]:hidden
+          [scrollbar-width:none] gap-5.5 [&::-webkit-scrollbar]:hidden
           max-[640.001px]:[mask-image:none]`, trackClassName].filter(Boolean).join(" ")}
         ref={trackRef}
       >
@@ -118,18 +117,17 @@ export default function Carousel({
       </div>
       <button
         type="button"
-        className="absolute top-[38%] z-[1] flex items-center justify-center w-12 h-12 [transform:translateY(-50%)] bg-background text-heading
+        className="absolute top-[38%] z-1 flex items-center justify-center size-12 -translate-y-1/2 bg-background text-heading
           shadow-[0_16px_36px_rgba(15,_23,_39,_0.16)] cursor-pointer
-          [transition:transform_180ms_ease,_box-shadow_180ms_ease,_opacity_180ms_ease] p-0 rounded-full border border-solid
-          border-[color-mix(in_oklch,_var(--color-heading)_12%,_transparent)]
-          [&:hover:not(:disabled)]:[transform:translateY(-50%)_scale(1.04)]
-          [&:hover:not(:disabled)]:shadow-[0_20px_42px_rgba(15,_23,_39,_0.2)] [&_svg]:w-5 [&_svg]:h-5 disabled:opacity-35
-          disabled:cursor-default max-[640.001px]:hidden [&&]:right-5"
+          transition-[transform,translate,scale,box-shadow,opacity] duration-180 ease-[ease] p-0 rounded-full border border-solid
+          border-heading/12 enabled:hover:scale-[1.04]
+          enabled:hover:shadow-[0_20px_42px_rgba(15,_23,_39,_0.2)] disabled:opacity-35
+          disabled:cursor-default max-[640.001px]:hidden right-5"
         aria-label={`Scroll ${label} right`}
         onClick={() => scrollByDirection(1)}
         disabled={!canScrollNext}
       >
-        <ArrowRightIcon />
+        <ArrowRightIcon className="size-5" />
       </button>
     </div>
   );

@@ -31,14 +31,14 @@ export default function PhotoTour({ groups, title }: { groups: TourGroup[]; titl
           nothing above it and read as leftover filter chips. Still no photo
           count: that number was taken off the mobile opener for the same
           reason it does not belong here. */}
-      <h2 className="mt-0 mb-7 text-heading text-[clamp(30px,_3vw,_38px)] leading-[1.1] mx-0 [&::before]:content-[''] [&::before]:block
-        [&::before]:w-11.5 [&::before]:h-1 [&::before]:bg-button-bg [&::before]:mb-3.5 [&::before]:rounded-full">Photo tour</h2>
+      <h2 className="mt-0 mb-7 text-heading text-[clamp(30px,_3vw,_38px)] leading-[1.1] mx-0 before:block
+        before:w-11.5 before:h-1 before:bg-button-bg before:mb-3.5 before:rounded-full">Photo tour</h2>
       {groups.length > 1 && (
-        <nav className="first:mt-0 sticky top-0 z-[10] flex mt-4.5 mb-0 overflow-x-auto bg-[color-mix(in_srgb,_var(--color-background)_94%,_transparent)]
+        <nav className="sticky top-0 z-10 flex mt-4.5 mb-0 overflow-x-auto bg-background/94
           [scrollbar-width:thin] mx-0 px-0 py-2.5 gap-2" aria-label="Jump to a room">
           {groups.map((group) => (
-            <a key={group.label} className="inline-flex items-center flex-none bg-background [font-family:inherit] text-[14px] [font-weight:inherit] [font-style:inherit]
-              leading-[inherit] [font-variant:inherit] text-body-text no-underline px-3.5 py-1.75 rounded-full border border-solid border-border
+            <a key={group.label} className="inline-flex items-center flex-none bg-background text-[14px]
+              leading-[inherit] text-body-text no-underline px-3.5 py-1.75 rounded-full border border-border
               hover:text-heading hover:border-[rgba(15,_23,_39,_0.85)] focus-visible:text-heading focus-visible:border-[rgba(15,_23,_39,_0.85)]" href={`#${sectionId(group.label)}`}>
               {group.label}
             </a>

@@ -25,12 +25,12 @@ export default function ListingVideo({ url, title }: { url: string | null | unde
   if (!id) return null;
 
   return (
-    <section className="max-[960.001px]:col-auto max-[960.001px]:row-auto mt-10 mb-0 scroll-mt-20 mx-0 [&>h2]:mt-0 [&>h2]:mb-3.5 [&>h2]:text-[28px]
-      [&>h2]:leading-[1.2] [&>h2]:mx-0 min-[961px]:col-span-full min-[961px]:row-2" id="video">
-      <h2>Video tour</h2>
-      <div className="relative aspect-[16_/_9] overflow-hidden bg-[#0f1727] rounded-[12px] [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-0">
+    <section className="max-[960.001px]:col-auto max-[960.001px]:row-auto mt-10 mb-0 scroll-mt-20 mx-0 min-[961px]:col-span-full min-[961px]:row-2" id="video">
+      <h2 className="mt-0 mb-3.5 text-[28px] leading-[1.2] mx-0">Video tour</h2>
+      <div className="relative aspect-video overflow-hidden bg-text rounded-xl">
         {playing ? (
           <iframe
+            className="size-full border-0"
             /* nocookie, and autoplay because the click that mounted this WAS
                the play. Without it the guest has to press play twice. */
             src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`}
@@ -39,9 +39,9 @@ export default function ListingVideo({ url, title }: { url: string | null | unde
             allowFullScreen
           />
         ) : (
-          <button type="button" className="listing-video__play block w-full h-full bg-transparent cursor-pointer p-0 border-0 [&_img]:block [&_img]:w-full [&_img]:h-full
-            [&_img]:object-cover" onClick={() => setPlaying(true)}>
+          <button type="button" className="group block size-full bg-transparent cursor-pointer p-0 border-0" onClick={() => setPlaying(true)}>
             <Image
+              className="block size-full object-cover"
               src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
               fill
               sizes="(max-width: 960px) 100vw, 900px"
@@ -52,12 +52,12 @@ export default function ListingVideo({ url, title }: { url: string | null | unde
                  twice. */
               aria-hidden="true"
             />
-            <span className="absolute top-[50%] left-[50%] flex items-center justify-center w-16 h-16 [transform:translate(-50%,_-50%)]
-              bg-[rgba(255,_255,_255,_0.94)] text-[#0f1727] shadow-[0_2px_14px_rgba(15,_23,_39,_0.35)] rounded-full
-              [.listing-video\_\_play:hover_&]:bg-white [.listing-video\_\_play:focus-visible_&]:bg-white" aria-hidden="true">
+            <span className="absolute top-1/2 left-1/2 flex items-center justify-center size-16 -translate-1/2
+              bg-white/94 text-text shadow-[0_2px_14px_rgba(15,_23,_39,_0.35)] rounded-full
+              group-hover:bg-white group-focus-visible:bg-white" aria-hidden="true">
               <Play size={22} fill="currentColor" />
             </span>
-            <span className="absolute w-0.25 h-0.25 overflow-hidden [clip:rect(0,_0,_0,_0)] whitespace-nowrap m-[-1px] p-0 border-0">Play the video of {title}</span>
+            <span className="sr-only">Play the video of {title}</span>
           </button>
         )}
       </div>

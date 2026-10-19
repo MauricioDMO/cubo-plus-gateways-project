@@ -221,18 +221,15 @@ export default function CheckoutExtras({
         </p>
       )}
 
-      <div className="flex flex-col mb-4.5 gap-1.5 [&>label]:inline-flex [&>label]:items-center [&>label]:text-[14px] [&>label]:font-semibold
-        [&>label]:text-heading [&>label]:gap-1.75 [&_small]:text-[13px] [&_small]:text-body-text">
-        <label htmlFor="checkout-guests">
+      <div className="flex flex-col mb-4.5 gap-1.5">
+        <label className="inline-flex items-center text-[14px] font-semibold text-heading gap-1.75" htmlFor="checkout-guests">
           <Users size={16} aria-hidden="true" /> How many guests?
         </label>
         <select
           className="min-h-11.5 bg-background text-[15px]
           text-text [transition:border-color_160ms_ease,box-shadow_160ms_ease] px-3.5 py-0 rounded-lg border
-            border-solid border-input [select&]:appearance-none [select&]:pr-10
-            [select&]:bg-[url('/icons/chevron-down.svg')]
-            [select&]:bg-no-repeat [select&]:[background-position:right_14px_center] [select&]:cursor-pointer
-            placeholder:text-[rgba(15,23,39,0.32)] [&::placeholder]:tracking-[0.5px] focus:[outline:none]
+            border-input appearance-none pr-10 bg-[url('/icons/chevron-down.svg')]
+            bg-no-repeat bg-position-[right_14px_center] cursor-pointer focus:outline-none
             focus:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.18)] focus:border-link focus-visible:[outline:none]
             focus-visible:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.18)] focus-visible:border-link"
           id="checkout-guests"
@@ -247,7 +244,7 @@ export default function CheckoutExtras({
           ))}
         </select>
         {data && data.extraGuestFeeCents > 0 && (
-          <small>
+          <small className="text-[13px] text-body-text">
             The rate covers {data.baseGuests}. Each guest above that is{" "}
             {money(data.extraGuestFeeCents)} a night.
           </small>
@@ -255,8 +252,7 @@ export default function CheckoutExtras({
       </div>
 
       {data?.petsAllowed && (
-        <div className="flex flex-col mb-4.5 gap-1.5 [&>label]:inline-flex [&>label]:items-center [&>label]:text-[14px] [&>label]:font-semibold
-          [&>label]:text-heading [&>label]:gap-1.75 [&_small]:text-[13px] [&_small]:text-body-text">
+        <div className="flex flex-col mb-4.5 gap-1.5">
           <span className="inline-flex items-center text-[14px] font-semibold text-heading gap-1.75">
             <PawPrint size={16} aria-hidden="true" /> Bringing a pet?
           </span>
@@ -267,11 +263,10 @@ export default function CheckoutExtras({
             ].map((option) => (
               <label
                 key={String(option.value)}
-                className={`relative inline-flex items-center min-h-11 text-[14px] font-medium text-body-text cursor-pointer px-4 py-0 rounded-full
-                  border border-solid border-border [&_input]:absolute [&_input]:top-0 [&_input]:right-0 [&_input]:bottom-0
-                  [&_input]:left-0 [&_input]:opacity-0 [&_input]:cursor-pointer ${withPet === option.value ? " [&&]:bg-heading [&&]:text-white [&&]:border-heading" : ""}`}
+                className={`relative inline-flex items-center min-h-11 text-[14px] font-medium cursor-pointer px-4 py-0 rounded-full border ${withPet === option.value ? "bg-heading text-white border-heading" : "text-body-text border-border"}`}
               >
                 <input
+                  className="absolute inset-0 opacity-0 cursor-pointer"
                   type="radio"
                   name="with-pet"
                   checked={withPet === option.value}
@@ -282,14 +277,13 @@ export default function CheckoutExtras({
               </label>
             ))}
           </div>
-          {data.petFeeCents > 0 && <small>{money(data.petFeeCents)} once for the stay.</small>}
+          {data.petFeeCents > 0 && <small className="text-[13px] text-body-text">{money(data.petFeeCents)} once for the stay.</small>}
         </div>
       )}
 
-      <div className="flex flex-col mb-4.5 gap-1.5 [&>label]:inline-flex [&>label]:items-center [&>label]:text-[14px] [&>label]:font-semibold
-        [&>label]:text-heading [&>label]:gap-1.75 [&_small]:text-[13px] [&_small]:text-body-text pt-4 pb-4.5 bg-[rgba(15,_23,_39,_0.02)]
+      <div className="flex flex-col mb-4.5 pt-4 pb-4.5 bg-[rgba(15,_23,_39,_0.02)]
         px-4 gap-2 rounded-[10px] border border-solid border-border">
-        <label htmlFor="checkout-coupon">
+        <label className="inline-flex items-center text-[14px] font-semibold text-heading gap-1.75" htmlFor="checkout-coupon">
           <Tag size={16} aria-hidden="true" /> Coupon code
         </label>
 
@@ -298,11 +292,9 @@ export default function CheckoutExtras({
             spent reads as "not applied yet", and the discount is on the bill
             below either way. */}
         {appliedCode && !data?.couponError ? (
-          <p className="flex items-center min-h-11.5 bg-[rgba(28,_107,_63,_0.07)] text-[14px] text-[#1c6b3f] m-0 px-3.5 py-0 gap-2 rounded-[8px] border
-            border-solid border-[rgba(28,_107,_63,_0.28)] [&_svg]:flex-none [&_strong]:font-heading [&_strong]:font-bold
-            [&_strong]:tracking-[1px]">
-            <BadgeCheck size={17} aria-hidden="true" />
-            <strong>{appliedCode}</strong>
+          <p className="flex items-center min-h-11.5 bg-[rgba(28,_107,_63,_0.07)] text-[14px] text-[#1c6b3f] m-0 px-3.5 py-0 gap-2 rounded-lg border border-[rgba(28,_107,_63,_0.28)]">
+            <BadgeCheck className="flex-none" size={17} aria-hidden="true" />
+            <strong className="font-heading font-bold tracking-[1px]">{appliedCode}</strong>
             <span>applied</span>
             <button
               type="button"
@@ -321,15 +313,11 @@ export default function CheckoutExtras({
         ) : (
           <div className="grid grid-cols-[minmax(0,_1fr)_auto] gap-2 max-[560.001px]:grid-cols-1">
             <input
-              className="min-h-11.5 bg-background [font-family:inherit] text-[15px] [font-weight:inherit] [font-style:inherit] leading-[inherit]
-                [font-variant:inherit] text-text [transition:border-color_160ms_ease,_box-shadow_160ms_ease] px-3.5 py-0 rounded-[8px] border
-                border-solid border-[rgba(15,_23,_39,_0.14)] [select&]:appearance-none [select&]:pr-10
-                [select&]:bg-[url('/icons/chevron-down.svg')]
-                [select&]:bg-no-repeat [select&]:[background-position:right_14px_center] [select&]:cursor-pointer
-                [&::placeholder]:text-[rgba(15,_23,_39,_0.32)] [&::placeholder]:tracking-[0.5px] focus:[outline:none]
+              className="min-h-11.5 bg-background font-heading text-[14px] font-semibold tracking-[1.2px] uppercase [font-style:inherit] leading-[inherit]
+                [font-variant:inherit] text-text [transition:border-color_160ms_ease,_box-shadow_160ms_ease] px-3.5 py-0 rounded-lg border border-input
+                placeholder:text-[rgba(15,_23,_39,_0.32)] placeholder:tracking-[0.5px] focus:outline-none
                 focus:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.18)] focus:border-link focus-visible:[outline:none]
-                focus-visible:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.18)] focus-visible:border-link [&&]:font-heading [&&]:text-[14px]
-                [&&]:font-semibold [&&]:tracking-[1.2px] [&&]:uppercase"
+                focus-visible:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.18)] focus-visible:border-link"
               id="checkout-coupon"
               value={code}
               onChange={(event) => setCode(event.target.value.toUpperCase())}
@@ -363,9 +351,8 @@ export default function CheckoutExtras({
         )}
 
         {data?.couponError && (
-          <small className="[small&]:flex [small&]:items-start [small&]:text-[13px] [small&]:leading-[1.45] [small&]:text-[#8a1c2b] [small&]:gap-1.5
-            [&_svg]:flex-none [&_svg]:mt-0.75">
-            <AlertCircle size={14} aria-hidden="true" />
+          <small className="flex items-start text-[13px] leading-[1.45] text-[#8a1c2b] gap-1.5">
+            <AlertCircle className="flex-none mt-0.75" size={14} aria-hidden="true" />
             <span>{data.couponError}</span>
           </small>
         )}
@@ -438,26 +425,14 @@ export default function CheckoutExtras({
       {!confirmed && (loading || quote) && (
         <button
           type="button"
-          className="checkout-page__button [&[aria-busy=true]]:cursor-progress [&[aria-busy=true]]:opacity-75 [&[aria-busy=true]:hover]:[transform:none]
-            [.checkout-page_[data-slot=button]&]:flex [.checkout-page_[data-slot=button]&]:items-center
-            [.checkout-page_[data-slot=button]&]:justify-center [.checkout-page_[data-slot=button]&]:w-full
-            [.checkout-page_[data-slot=button]&]:min-h-13 [.checkout-page_[data-slot=button]&]:bg-button-bg
-            [.checkout-page_[data-slot=button]&]:text-button-text [.checkout-page_[data-slot=button]&]:font-heading
-            [.checkout-page_[data-slot=button]&]:text-[15px] [.checkout-page_[data-slot=button]&]:font-bold
-            [.checkout-page_[data-slot=button]&]:no-underline [.checkout-page_[data-slot=button]&]:cursor-pointer
-            [.checkout-page_[data-slot=button]&]:[transition:background-color_200ms_ease] [.checkout-page_[data-slot=button]&]:px-5
-            [.checkout-page_[data-slot=button]&]:py-0 [.checkout-page_[data-slot=button]&]:gap-2.5
-            [.checkout-page_[data-slot=button]&]:rounded-[8px] [.checkout-page_[data-slot=button]&]:border-0 flex items-center justify-center
-            w-full min-h-13 bg-button-bg text-button-text font-heading text-[15px] font-bold no-underline cursor-pointer
-            [transition:background-color_200ms_ease] px-5 py-0 gap-2.5 rounded-[8px] border-0
-            [.checkout-page_[data-slot=button]&:hover:not(:disabled)]:bg-[#2b3433] hover:bg-[#2b3433] disabled:opacity-75
-            disabled:cursor-progress checkout-extras__confirm [.checkout-extras\_\_confirm&]:min-h-13.5
-            [.checkout-extras\_\_confirm&]:text-[16px]"
+          className="flex items-center justify-center w-full min-h-13.5 bg-button-bg text-button-text font-heading text-[16px] font-bold cursor-pointer
+            transition-colors duration-200 ease-[ease] px-5 py-0 gap-2.5 rounded-lg border-0 hover:bg-[#2b3433] disabled:opacity-75
+            disabled:cursor-progress aria-busy:cursor-progress aria-busy:opacity-75"
           onClick={() => setConfirmed(true)}
           disabled={loading || !quote}
           aria-busy={loading}
         >
-          {loading ? <Loader2 size={16} className="grow-0 shrink-0 basis-5.5 w-5.5 [animation:booking-spin_0.9s_linear_infinite] motion-reduce:[animation-duration:2.4s]" aria-hidden="true" /> : null}
+          {loading ? <Loader2 size={16} className="flex-none basis-5.5 w-5.5 animate-spin [animation-duration:900ms] motion-reduce:[animation-duration:2.4s]" aria-hidden="true" /> : null}
           {loading || !quote ? "Working out the price" : `Confirm ${money(quote.totalCents)} and choose payment`}
         </button>
       )}

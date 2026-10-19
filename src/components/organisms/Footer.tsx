@@ -51,7 +51,7 @@ export default async function Footer() {
     <footer className="border-t border-solid border-t-border bg-background mt-auto">
       <div className="max-w-301 mx-auto my-0 px-6 py-8">
         <div className="grid grid-cols-4 pb-12 border-b border-solid border-b-border gap-8 max-[900.001px]:grid-cols-2 max-[560.001px]:grid-cols-1">
-          <div className="site-footer__brand">
+          <div>
             {/* Not a link: the live footer logo sits in a text
                 widget and is not wrapped in an anchor (unlike the header's
                 custom-logo-link). */}
@@ -99,9 +99,7 @@ export default async function Footer() {
             </address>
           </div>
 
-          <div className="[&_ul]:list-none [&_ul]:m-0 [&_ul]:p-0 [&_li:not(:last-child)]:mb-2 [&_a]:text-body-text [&_a]:text-[16px]
-            [&_a]:[transition:color_0.25s] [&_a:hover]:text-accent [&_a]:max-[560.001px]:inline-flex [&_a]:max-[560.001px]:items-center
-            [&_a]:max-[560.001px]:min-h-10">
+          <div>
             <h5 className="font-heading font-medium text-[18px] leading-[1.25] text-heading mt-0 mb-4 mx-0" {...edit("footer.properties.title", "Properties column")}>
               {text("footer.properties.title")}
             </h5>
@@ -109,24 +107,22 @@ export default async function Footer() {
                 be Villas and Apartments; the Villas page 404s the moment its
                 last property is deactivated, and a footer link to a 404 is on
                 every page of the site. */}
-            <ul>
+            <ul className="list-none m-0 p-0">
               {categories.length === 0 ? (
-                <li>
-                  <Link href="/properties">All properties</Link>
+                <li className="not-last:mb-2">
+                  <Link className="text-body-text text-[16px] [transition:color_0.25s] hover:text-accent max-[560.001px]:inline-flex max-[560.001px]:items-center max-[560.001px]:min-h-10" href="/properties">All properties</Link>
                 </li>
               ) : (
                 categories.map((category) => (
-                  <li key={category.slug}>
-                    <Link href={`/listing-category/${category.slug}`}>{category.name}</Link>
+                  <li key={category.slug} className="not-last:mb-2">
+                    <Link className="text-body-text text-[16px] [transition:color_0.25s] hover:text-accent max-[560.001px]:inline-flex max-[560.001px]:items-center max-[560.001px]:min-h-10" href={`/listing-category/${category.slug}`}>{category.name}</Link>
                   </li>
                 ))
               )}
             </ul>
           </div>
 
-          <div className="[&_ul]:list-none [&_ul]:m-0 [&_ul]:p-0 [&_li:not(:last-child)]:mb-2 [&_a]:text-body-text [&_a]:text-[16px]
-            [&_a]:[transition:color_0.25s] [&_a:hover]:text-accent [&_a]:max-[560.001px]:inline-flex [&_a]:max-[560.001px]:items-center
-            [&_a]:max-[560.001px]:min-h-10">
+          <div>
             <h5 className="font-heading font-medium text-[18px] leading-[1.25] text-heading mt-0 mb-4 mx-0" {...edit("footer.journal.title", "Journal column")}>
               {text("footer.journal.title")}
             </h5>
@@ -134,21 +130,19 @@ export default async function Footer() {
                 These were two hard-coded links, so renaming a category in the
                 admin left the old name in the footer of every page -- and an
                 empty category was listed as though it had something in it. */}
-            <ul>
+            <ul className="list-none m-0 p-0">
               {journalCategories.map((category) => (
-                <li key={category.slug}>
-                  <Link href={`/category/${category.slug}`}>{category.name}</Link>
+                <li key={category.slug} className="not-last:mb-2">
+                  <Link className="text-body-text text-[16px] [transition:color_0.25s] hover:text-accent max-[560.001px]:inline-flex max-[560.001px]:items-center max-[560.001px]:min-h-10" href={`/category/${category.slug}`}>{category.name}</Link>
                 </li>
               ))}
-              <li>
-                <Link href="/blog">All posts</Link>
+              <li className="not-last:mb-2">
+                <Link className="text-body-text text-[16px] [transition:color_0.25s] hover:text-accent max-[560.001px]:inline-flex max-[560.001px]:items-center max-[560.001px]:min-h-10" href="/blog">All posts</Link>
               </li>
             </ul>
           </div>
 
-          <div className="[&_ul]:list-none [&_ul]:m-0 [&_ul]:p-0 [&_li:not(:last-child)]:mb-2 [&_a]:text-body-text [&_a]:text-[16px]
-            [&_a]:[transition:color_0.25s] [&_a:hover]:text-accent [&_a]:max-[560.001px]:inline-flex [&_a]:max-[560.001px]:items-center
-            [&_a]:max-[560.001px]:min-h-10">
+          <div>
             <h5 className="font-heading font-medium text-[18px] leading-[1.25] text-heading mt-0 mb-4 mx-0" {...edit("footer.social.title", "Social column")}>
               {text("footer.social.title")}
             </h5>
@@ -156,9 +150,10 @@ export default async function Footer() {
                 behind (the live links do not, but that is a plain oversight
                 rather than a design decision worth reproducing).
                 rel="noopener noreferrer" is the standard pairing. */}
-            <ul>
-              <li>
+            <ul className="list-none m-0 p-0">
+              <li className="not-last:mb-2">
                 <a
+                  className="text-body-text text-[16px] [transition:color_0.25s] hover:text-accent max-[560.001px]:inline-flex max-[560.001px]:items-center max-[560.001px]:min-h-10"
                   href="https://www.instagram.com/getawayselsalvador/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -166,16 +161,16 @@ export default async function Footer() {
                   Instagram
                 </a>
               </li>
-              <li>
-                <a href="https://x.com/getaways_sv" target="_blank" rel="noopener noreferrer">
+              <li className="not-last:mb-2">
+                <a className="text-body-text text-[16px] [transition:color_0.25s] hover:text-accent max-[560.001px]:inline-flex max-[560.001px]:items-center max-[560.001px]:min-h-10" href="https://x.com/getaways_sv" target="_blank" rel="noopener noreferrer">
                   Twitter
                 </a>
               </li>
               {/* href="#" is what the live site itself ships for Youtube -- a
                   placeholder the site owner never filled in. Kept as-is
                   rather than inventing a channel URL. */}
-              <li>
-                <a href="#">Youtube</a>
+              <li className="not-last:mb-2">
+                <a className="text-body-text text-[16px] [transition:color_0.25s] hover:text-accent max-[560.001px]:inline-flex max-[560.001px]:items-center max-[560.001px]:min-h-10" href="#">Youtube</a>
               </li>
             </ul>
           </div>
@@ -190,27 +185,25 @@ export default async function Footer() {
           <p className="text-muted-text m-0">
             &copy; {new Date().getFullYear()} Getaways El Salvador
           </p>
-          <nav className="[&_ul]:flex [&_ul]:flex-wrap [&_ul]:list-none [&_ul]:m-0 [&_ul]:p-0 [&_ul]:gap-8 [&_a]:text-muted-text
-            [&_a]:[transition:color_0.25s] [&_a:hover]:text-body-text [&_ul]:max-[560.001px]:justify-center [&_ul]:max-[560.001px]:gap-y-1
-            [&_ul]:max-[560.001px]:gap-x-5 [&_a]:max-[560.001px]:inline-flex [&_a]:max-[560.001px]:items-center [&_a]:max-[560.001px]:min-h-10" aria-label="Footer">
-            <ul>
+          <nav aria-label="Footer">
+            <ul className="flex flex-wrap list-none m-0 p-0 gap-8 max-[560.001px]:justify-center max-[560.001px]:gap-y-1 max-[560.001px]:gap-x-5">
               <li>
-                <Link href="/about">About Us</Link>
+                <Link className="text-muted-text [transition:color_0.25s] hover:text-body-text max-[560.001px]:inline-flex max-[560.001px]:items-center max-[560.001px]:min-h-10" href="/about">About Us</Link>
               </li>
               <li>
-                <Link href="/blog">Journal</Link>
+                <Link className="text-muted-text [transition:color_0.25s] hover:text-body-text max-[560.001px]:inline-flex max-[560.001px]:items-center max-[560.001px]:min-h-10" href="/blog">Journal</Link>
               </li>
               <li>
-                <Link href="/concierge">Concierge</Link>
+                <Link className="text-muted-text [transition:color_0.25s] hover:text-body-text max-[560.001px]:inline-flex max-[560.001px]:items-center max-[560.001px]:min-h-10" href="/concierge">Concierge</Link>
               </li>
               <li>
-                <Link href="/contact-us">Contact Us</Link>
+                <Link className="text-muted-text [transition:color_0.25s] hover:text-body-text max-[560.001px]:inline-flex max-[560.001px]:items-center max-[560.001px]:min-h-10" href="/contact-us">Contact Us</Link>
               </li>
               <li>
-                <Link href="/">Home</Link>
+                <Link className="text-muted-text [transition:color_0.25s] hover:text-body-text max-[560.001px]:inline-flex max-[560.001px]:items-center max-[560.001px]:min-h-10" href="/">Home</Link>
               </li>
               <li>
-                <Link href="/properties">Properties</Link>
+                <Link className="text-muted-text [transition:color_0.25s] hover:text-body-text max-[560.001px]:inline-flex max-[560.001px]:items-center max-[560.001px]:min-h-10" href="/properties">Properties</Link>
               </li>
             </ul>
           </nav>

@@ -21,31 +21,23 @@ function Calendar({
         month: "w-full",
         month_caption: "flex items-center justify-center min-h-8.5 relative",
         caption_label: "text-heading font-[750]",
-        nav: "top-0 right-0 bottom-0 left-0 pointer-events-none absolute",
-        button_previous: `inline-flex items-center justify-center w-8 h-8 bg-background text-heading cursor-pointer pointer-events-auto p-0
-          rounded-[8px] border border-solid border-[rgba(15,_23,_39,_0.1)] [&&]:left-0 [&&]:absolute`,
-        button_next: `inline-flex items-center justify-center w-8 h-8 bg-background text-heading cursor-pointer pointer-events-auto p-0
-          rounded-[8px] border border-solid border-[rgba(15,_23,_39,_0.1)] [&&]:right-0 [&&]:absolute`,
+        nav: "pointer-events-none absolute inset-0",
+        button_previous: `absolute left-0 inline-flex size-8 items-center justify-center bg-background text-heading cursor-pointer pointer-events-auto p-0
+          rounded-lg border border-text/10`,
+        button_next: `absolute right-0 inline-flex size-8 items-center justify-center bg-background text-heading cursor-pointer pointer-events-auto p-0
+          rounded-lg border border-text/10`,
         month_grid: "w-full border-separate border-spacing-x-0 border-spacing-y-1 mt-2",
         weekdays: "grid grid-cols-7",
         weekday: "text-muted-text text-[11px] font-extrabold tracking-[0.04em] leading-[26px] text-center uppercase",
         week: "grid grid-cols-7",
         day: "grid min-w-0 place-items-center",
-        day_button: String.raw`grid w-8.5 h-8.5 bg-transparent text-heading cursor-pointer [font-family:inherit] [font-size:inherit]
+        day_button: `grid size-8.5 bg-transparent text-heading cursor-pointer [font-family:inherit] [font-size:inherit]
           [font-weight:inherit] [font-style:inherit] leading-none [font-variant:inherit] place-items-center rounded-full border-0
-          hover:bg-[rgba(15,_23,_39,_0.06)] [.ui-calendar\_\_day--today_&]:border [.ui-calendar\_\_day--today_&]:border-solid
-          [.ui-calendar\_\_day--today_&]:border-[rgba(3,_155,_229,_0.4)] [.ui-calendar\_\_day--selected_&]:bg-button-bg
-          [.ui-calendar\_\_day--selected_&]:text-button-text [.ui-calendar\_\_day--outside_&]:text-[rgba(15,_23,_39,_0.28)]
-          [.ui-calendar\_\_day--disabled_&]:text-[rgba(15,_23,_39,_0.22)] [.ui-calendar\_\_day--disabled_&]:cursor-not-allowed
-          [.ui-calendar\_\_day--disabled_&]:line-through [.ui-calendar\_\_day--disabled_&:hover]:bg-transparent`,
-        today: "ui-calendar__day--today",
-        selected: "ui-calendar__day--selected",
-        range_start: "ui-calendar__day--range-start",
-        range_middle: "ui-calendar__day--range-middle",
-        range_end: "ui-calendar__day--range-end",
-        outside: "ui-calendar__day--outside",
-        disabled: "ui-calendar__day--disabled",
-        hidden: "ui-calendar__day--hidden",
+          hover:bg-text/6`,
+        today: "[&>button]:border [&>button]:border-link/40",
+        selected: "[&>button]:bg-button-bg [&>button:hover]:bg-button-bg [&>button]:text-button-text",
+        outside: "[&>button]:text-text/28",
+        disabled: "[&>button]:text-text/22 [&>button]:cursor-not-allowed [&>button]:line-through [&>button:hover]:bg-transparent",
         ...classNames,
       }}
       components={{

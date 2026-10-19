@@ -129,25 +129,23 @@ export default function BitcoinPanel({
   }
 
   return (
-    <section className="flex flex-col items-center mb-6 text-center gap-3.5 [&_h2]:font-heading [&_h2]:text-[19px] [&_h2]:m-0 [&_.pay-card]:w-full
-      [&_.pay-card]:text-left" aria-label="Bitcoin payment">
+    <section className="flex flex-col items-center mb-6 text-center gap-3.5" aria-label="Bitcoin payment">
       <button type="button" className="self-start inline-flex items-center bg-transparent text-body-text text-[13px] cursor-pointer p-0 gap-1.5 border-0
         hover:text-heading" onClick={onBack}>
         <ArrowLeft size={15} aria-hidden="true" />
         <span>Other method</span>
       </button>
 
-      <h2>Pay with bitcoin</h2>
-      <p className="flex flex-col m-0 gap-0.5 [&_strong]:text-[26px] [&_strong]:text-heading [&_span]:text-[13px] [&_span]:text-body-text">
-        <strong>{money(totalAmountCents)}</strong>
-        {payment.btc?.amountSats != null && <span>{payment.btc.amountSats.toLocaleString("en-US")} sats</span>}
+      <h2 className="font-heading text-[19px] m-0">Pay with bitcoin</h2>
+      <p className="flex flex-col m-0 gap-0.5">
+        <strong className="text-[26px] text-heading">{money(totalAmountCents)}</strong>
+        {payment.btc?.amountSats != null && <span className="text-[13px] text-body-text">{payment.btc.amountSats.toLocaleString("en-US")} sats</span>}
       </p>
 
-      <div className="grid place-items-center w-72 max-w-full aspect-[1] bg-white p-2.5 rounded-[12px] border border-solid border-border [&_img]:w-full
-        [&_img]:h-auto [&_img]:block">
+      <div className="grid place-items-center w-72 max-w-full aspect-square bg-white p-2.5 rounded-xl border border-border">
         {qrUrl && !expired ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={qrUrl} alt="Bitcoin payment QR code" width={240} height={240} />
+          <img className="block w-full h-auto" src={qrUrl} alt="Bitcoin payment QR code" width={240} height={240} />
         ) : (
           <div className="text-body-text text-[13px]">{expired ? "This payment expired" : "Waiting for a payment address"}</div>
         )}
@@ -158,15 +156,9 @@ export default function BitcoinPanel({
       )}
 
       {copyable && !expired && (
-        <div className="flex items-stretch w-full gap-2 [&_code]:flex-1 [&_code]:min-w-0 [&_code]:bg-[rgba(15,_23,_39,_0.03)] [&_code]:text-[11px]
-          [&_code]:leading-[1.5] [&_code]:text-left [&_code]:[overflow-wrap:anywhere] [&_code]:max-h-[4.6em] [&_code]:overflow-hidden
-          [&_code]:px-3 [&_code]:py-2.5 [&_code]:rounded-[8px] [&_code]:border [&_code]:border-solid [&_code]:border-border
-          [&_button]:inline-flex [&_button]:flex-none [&_button]:items-center [&_button]:bg-white [&_button]:text-[13px]
-          [&_button]:cursor-pointer [&_button]:px-3.5 [&_button]:py-0 [&_button]:gap-1.5 [&_button]:rounded-[8px] [&_button]:border
-          [&_button]:border-solid [&_button]:border-border max-[560.001px]:flex-col [&_button]:max-[560.001px]:justify-center
-          [&_button]:max-[560.001px]:p-2.5">
-          <code>{copyable}</code>
-          <button type="button" onClick={copyPayload} aria-label="Copy">
+        <div className="flex items-stretch w-full gap-2 max-[560.001px]:flex-col">
+          <code className="flex-1 min-w-0 bg-[rgba(15,_23,_39,_0.03)] text-[11px] leading-[1.5] text-left wrap-anywhere max-h-[4.6em] overflow-hidden px-3 py-2.5 rounded-lg border border-border">{copyable}</code>
+          <button className="inline-flex flex-none items-center bg-white text-[13px] cursor-pointer px-3.5 py-0 gap-1.5 rounded-lg border border-border max-[560.001px]:justify-center max-[560.001px]:p-2.5" type="button" onClick={copyPayload} aria-label="Copy">
             {copied ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}
             <span>{copied ? "Copied" : "Copy"}</span>
           </button>
@@ -175,23 +167,19 @@ export default function BitcoinPanel({
 
       {!expired && (
         <p className="inline-flex items-center text-[13px] text-body-text m-0 gap-2">
-          <Loader2 size={14} className="grow-0 shrink-0 basis-5.5 w-5.5 [animation:booking-spin_0.9s_linear_infinite] motion-reduce:[animation-duration:2.4s]" aria-hidden="true" />
+          <Loader2 size={14} className="flex-none basis-5.5 w-5.5 animate-spin [animation-duration:900ms] motion-reduce:[animation-duration:2.4s]" aria-hidden="true" />
           <span>Waiting for payment…</span>
         </p>
       )}
 
       {demo && (
-        <div className="w-full bg-[rgba(255,_193,_7,_0.08)] text-left p-3.5 rounded-[10px] border border-dashed border-[rgba(178,_122,_12,_0.45)]
-          [&_p]:mt-0 [&_p]:mb-2.5 [&_p]:text-[12.5px] [&_p]:leading-[1.55] [&_p]:text-[#6b4a08] [&_p]:mx-0 [&_button]:bg-[#7a5206]
-          [&_button]:text-white [&_button]:text-[13px] [&_button]:font-semibold [&_button]:cursor-pointer [&_button]:px-3.5 [&_button]:py-2
-          [&_button]:rounded-[8px] [&_button]:border [&_button]:border-solid [&_button]:border-[#7a5206] [&_button:disabled]:opacity-[0.55]
-          [&_button:disabled]:cursor-not-allowed">
-          <p>
+        <div className="w-full bg-[rgba(255,_193,_7,_0.08)] text-left p-3.5 rounded-[10px] border border-dashed border-[rgba(178,_122,_12,_0.45)]">
+          <p className="mt-0 mb-2.5 mx-0 text-[12.5px] leading-[1.55] text-[#6b4a08]">
             <strong>Student mock.</strong> No real bitcoin moves here. This button marks the payment as paid so
             you can test the confirmation page. It is removed in production.
           </p>
           <div className="flex flex-wrap gap-2">
-            <button type="button" onClick={simulatePaid} disabled={simulating}>
+            <button className="bg-[#7a5206] text-white text-[13px] font-semibold cursor-pointer px-3.5 py-2 rounded-lg border border-[#7a5206] disabled:opacity-55 disabled:cursor-not-allowed" type="button" onClick={simulatePaid} disabled={simulating}>
               {simulating ? "Simulating…" : "Simulate payment"}
             </button>
           </div>
@@ -199,8 +187,8 @@ export default function BitcoinPanel({
       )}
 
       {message && (
-        <p className="flex items-start mt-3 mb-0 text-[13px] leading-[1.5] text-[#8a1c2b] mx-0 gap-2 [&_svg]:flex-none [&_svg]:mt-0.5" role="alert">
-          <AlertCircle size={15} aria-hidden="true" />
+        <p className="flex items-start mt-3 mb-0 text-[13px] leading-[1.5] text-[#8a1c2b] mx-0 gap-2" role="alert">
+          <AlertCircle className="flex-none mt-0.5" size={15} aria-hidden="true" />
           <span>{message}</span>
         </p>
       )}

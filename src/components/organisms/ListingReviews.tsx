@@ -213,16 +213,16 @@ export default function ListingReviews({ reviews }: { reviews: ListingReview[] }
       mb-[clamp(44px,_5vw,_64px)] pt-[clamp(38px,_4vw,_54px)] border-t border-solid border-t-border mx-0" aria-labelledby="reviews-title">
       <div className="flex items-end justify-between mb-5.5 gap-6 max-[760.001px]:block">
         <div>
-          <h2 className="mt-0 mb-1.5 text-heading text-[clamp(30px,_3vw,_38px)] leading-[1.1] mx-0 [&::before]:content-[''] [&::before]:block
-            [&::before]:w-11.5 [&::before]:h-1 [&::before]:mb-3.5 [&::before]:bg-button-bg [&::before]:rounded-full" id="reviews-title">
+          <h2 className="mt-0 mb-1.5 text-heading text-[clamp(30px,_3vw,_38px)] leading-[1.1] mx-0 before:block
+            before:w-11.5 before:h-1 before:mb-3.5 before:bg-button-bg before:rounded-full" id="reviews-title">
             Reviews
           </h2>
           <p className="mt-0 mb-2.5 max-w-[52ch] text-body-text text-[15px] leading-[1.5] mx-0">
             Here&rsquo;s what guests are saying about this stay.
           </p>
           <p className="flex items-center flex-wrap gap-y-1 gap-x-2.5 text-body-text text-[14px] m-0">
-            <span className="inline-flex items-center font-heading text-[16px] font-semibold text-heading gap-1.25 [&_svg]:fill-accent [&_svg]:text-accent">
-              <Star size={16} aria-hidden="true" />
+            <span className="inline-flex items-center font-heading text-[16px] font-semibold text-heading gap-1.25">
+              <Star size={16} className="fill-accent text-accent" aria-hidden="true" />
               {average.toFixed(1)}
             </span>
             {/* The middot keeps "4.8" from reading as part of "6 reviews". */}
@@ -238,10 +238,10 @@ export default function ListingReviews({ reviews }: { reviews: ListingReview[] }
         <div className="flex flex-none gap-2 max-[760.001px]:hidden" hidden={!looping}>
           <button
             type="button"
-            className="grid place-items-center w-9.5 h-9.5 bg-background text-heading cursor-pointer
+            className="grid place-items-center size-9.5 bg-background text-heading cursor-pointer
               [transition:border-color_160ms_ease,_background-color_160ms_ease] p-0 rounded-full border border-solid border-border
-              hover:bg-[rgba(15,_23,_39,_0.04)] hover:border-heading focus-visible:[outline:2px_solid_var(--color-heading)]
-              focus-visible:outline-offset-[2px]"
+              hover:bg-text/4 hover:border-heading focus-visible:outline-2 focus-visible:outline-heading
+              focus-visible:outline-offset-2"
             onClick={() => scrollByCards(-1)}
             aria-label="Previous reviews"
           >
@@ -249,10 +249,10 @@ export default function ListingReviews({ reviews }: { reviews: ListingReview[] }
           </button>
           <button
             type="button"
-            className="grid place-items-center w-9.5 h-9.5 bg-background text-heading cursor-pointer
+            className="grid place-items-center size-9.5 bg-background text-heading cursor-pointer
               [transition:border-color_160ms_ease,_background-color_160ms_ease] p-0 rounded-full border border-solid border-border
-              hover:bg-[rgba(15,_23,_39,_0.04)] hover:border-heading focus-visible:[outline:2px_solid_var(--color-heading)]
-              focus-visible:outline-offset-[2px]"
+              hover:bg-text/4 hover:border-heading focus-visible:outline-2 focus-visible:outline-heading
+              focus-visible:outline-offset-2"
             onClick={() => scrollByCards(1)}
             aria-label="Next reviews"
           >
@@ -276,27 +276,26 @@ export default function ListingReviews({ reviews }: { reviews: ListingReview[] }
           {strip.map(({ review, copy }) => (
             <article
               key={`${review.guest}-${review.stayed}-${copy}`}
-              className="listing-reviews__card flex flex-col grow-0 shrink-0 basis-[clamp(280px,_27vw,_360px)] bg-[#f7f4ed] p-6.5 gap-3 rounded-[14px]
-                max-[760.001px]:grow-0 max-[760.001px]:shrink-0 max-[760.001px]:basis-[84%] max-[760.001px]:px-5 max-[760.001px]:py-5.5"
+              className="listing-reviews__card flex flex-col flex-none basis-[clamp(280px,_27vw,_360px)] bg-secondary p-6.5 gap-3 rounded-[14px]
+                max-[760.001px]:basis-[84%] max-[760.001px]:px-5 max-[760.001px]:py-5.5"
               aria-hidden={copy === 1 ? "true" : undefined}
             >
-              <p className="listing-reviews__stars flex text-[rgba(57,_67,_66,_0.22)] m-0 gap-0.75" aria-label={`${review.rating} out of 5`}>
+              <p className="flex text-button-bg/22 m-0 gap-0.75" aria-label={`${review.rating} out of 5`}>
                 {Array.from({ length: 5 }, (_, i) => (
                   <Star
                     key={i}
                     size={13}
                     aria-hidden="true"
-                    className={i < review.rating ? String.raw`[.listing-reviews\_\_stars_&]:text-accent [.listing-reviews\_\_stars_&]:fill-accent` : undefined}
+                    className={i < review.rating ? "text-accent fill-accent" : undefined}
                   />
                 ))}
               </p>
               <p className="text-body-text text-[14.5px] leading-[1.6] m-0" lang={review.lang}>
                 {review.body}
               </p>
-              <footer className="mt-auto pt-1.5 [&_strong]:block [&_strong]:font-heading [&_strong]:text-[15px] [&_strong]:font-medium [&_strong]:text-heading
-                [&_span]:block [&_span]:mt-0.5 [&_span]:text-muted-text [&_span]:text-[12.5px]">
-                <strong>{review.guest}</strong>
-                <span>
+              <footer className="mt-auto pt-1.5">
+                <strong className="block font-heading text-[15px] font-medium text-heading">{review.guest}</strong>
+                <span className="block mt-0.5 text-muted-text text-[12.5px]">
                   {/* Airbnb shows tenure ("11 years on Airbnb") when a guest
                       has set no city. That is not a place, so it is left out
                       and the date stands alone. */}

@@ -99,7 +99,7 @@ export default function MobileNav({ items = NAV_ITEMS }: { items?: NavItem[] }) 
       </button>
 
       {open && (
-        <div className="fixed top-0 right-0 bottom-0 left-0 z-[10000] overflow-x-hidden overflow-y-auto bg-background px-8 py-6 max-[767.981px]:p-6">
+        <div className="fixed inset-0 z-10000 overflow-x-hidden overflow-y-auto bg-background px-8 py-6 max-[767.981px]:p-6">
           <div className="flex justify-end mb-4">
             <button
               ref={closeRef}
@@ -114,21 +114,22 @@ export default function MobileNav({ items = NAV_ITEMS }: { items?: NavItem[] }) 
           </div>
 
           <nav aria-label="Primary">
-            <ul className="mobile-nav__list list-none m-0 p-0 [&>li]:relative [&>li]:p-0">
+            <ul className="list-none m-0 p-0">
               {/* The live "Sign In" item has been removed: the site no longer
                   has user accounts or auth. */}
               {items.map((item) => (
-                <li key={item.href}>
-                  <NavLink href={item.href} className="mobile-nav__link flex items-center min-h-11 text-body-text [transition:color_0.25s] gap-2 hover:text-accent
-                    [.mobile-nav\_\_list>li>&]:text-[18px]" onNavigate={close}>
+                <li key={item.href} className="relative p-0">
+                  <NavLink href={item.href} className="flex items-center min-h-11 text-[18px] text-body-text [transition:color_0.25s] gap-2 not-aria-[current=page]:hover:text-accent
+                    aria-[current=page]:text-button-bg aria-[current=page]:before:absolute aria-[current=page]:before:inset-y-0
+                    aria-[current=page]:before:-left-8 aria-[current=page]:before:w-1 aria-[current=page]:before:rounded-r-full
+                    aria-[current=page]:before:bg-accent max-[767.981px]:aria-[current=page]:before:-left-6" onNavigate={close}>
                     {item.label}
                   </NavLink>
                   {item.children && (
-                    <ul className="mobile-nav__submenu list-none pr-0 pl-8 m-0 py-0 [&_li:not(:last-child)]:mb-0">
+                    <ul className="list-none pr-0 pl-8 m-0 py-0">
                       {item.children.map((child) => (
                         <li key={child.href}>
-                          <NavLink href={child.href} className="mobile-nav__link flex items-center min-h-11 text-body-text [transition:color_0.25s] gap-2 hover:text-accent
-                            [.mobile-nav\_\_list>li>&]:text-[18px]" onNavigate={close}>
+                          <NavLink href={child.href} className="flex items-center min-h-11 text-body-text [transition:color_0.25s] gap-2 not-aria-[current=page]:hover:text-accent aria-[current=page]:text-button-bg" onNavigate={close}>
                             {child.label}
                           </NavLink>
                         </li>

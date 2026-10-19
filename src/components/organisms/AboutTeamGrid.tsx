@@ -29,7 +29,7 @@ export default function AboutTeamGrid({ members }: { members: AboutTeamMember[] 
         const open = revealedKey === member.key;
         return (
           <figure
-            className={`about-team__card relative grow shrink basis-[18%] min-w-31 aspect-[3_/_4] overflow-hidden bg-[#394342]
+            className={`relative grow shrink basis-[18%] min-w-31 aspect-[3/4] overflow-hidden bg-[#394342]
               shadow-[0_3px_14px_rgba(57,_67,_66,_0.15)] [transition:transform_0.5s_cubic-bezier(0.2,_0.8,_0.2,_1),_box-shadow_0.5s]
               rounded-[6px] [&:nth-child(10n+1)]:[transform:rotate(-3deg)_translateY(8px)]
               [&:nth-child(10n+2)]:[transform:rotate(2deg)_translateY(-10px)]
@@ -42,13 +42,13 @@ export default function AboutTeamGrid({ members }: { members: AboutTeamMember[] 
               [&:nth-child(10n+9)]:[transform:rotate(-2deg)_translateY(8px)]
               [&:nth-child(10n)]:[transform:rotate(3deg)_translateY(-10px)]
               hover:[transform:rotate(0deg)_translateY(-6px)_scale(1.06)] hover:shadow-[0_20px_40px_rgba(57,_67,_66,_0.28)]
-              hover:z-[5] max-[640.001px]:basis-[calc(50%_-_8px)] max-[640.001px]:min-w-0 ${hasQuote ? " [&&]:cursor-pointer" : ""}`}
+              hover:z-5 max-[640.001px]:basis-[calc(50%_-_8px)] max-[640.001px]:min-w-0 ${hasQuote ? "cursor-pointer" : ""}`}
             key={member.key}
             onClick={hasQuote ? () => toggle(member.key) : undefined}
           >
             {member.photoUrl ? (
               <Image
-                className="block w-full h-full object-cover"
+                className="block size-full object-cover"
                 src={member.photoUrl}
                 fill
                 sizes="(max-width: 640px) 50vw, (max-width: 960px) 33vw, 20vw"
@@ -57,17 +57,16 @@ export default function AboutTeamGrid({ members }: { members: AboutTeamMember[] 
                 style={member.photoFocus ? { objectPosition: member.photoFocus } : undefined}
               />
             ) : null}
-            <figcaption className="absolute right-0 bottom-0 left-0 pt-7 pb-3.5 [background:linear-gradient(180deg,_transparent,_rgba(20,_24,_24,_0.88))]
-              pointer-events-none text-center [transition:opacity_0.2s_ease] px-3.5
-              [.about-team\_\_card:has(.about-team\_\_reveal.is-open)_&]:opacity-0">
+            <figcaption className={`absolute inset-x-0 bottom-0 pt-7 pb-3.5 [background:linear-gradient(180deg,_transparent,_rgba(20,_24,_24,_0.88))]
+              pointer-events-none text-center [transition:opacity_0.2s_ease] px-3.5 ${hasQuote && open ? "opacity-0" : ""}`}>
               <p className="text-white [font-family:'Courier_New',_monospace] text-[clamp(18px,_1.6vw,_24px)] font-bold tracking-[0.02em] leading-[1.2] m-0">{member.name}</p>
               <p className="mt-0.25 mb-0 text-[rgba(255,_255,_255,_0.85)] [font-family:'Courier_New',_monospace] text-[clamp(13px,_1.1vw,_16px)]
                 tracking-[0.02em] leading-[1.3] mx-0">{member.role}</p>
             </figcaption>
             {hasQuote && (
-              <div className={`about-team__reveal absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-[rgba(35,_42,_41,_0.93)]
-                opacity-0 overflow-y-auto [transition:opacity_0.2s_ease] pointer-events-none p-5 max-[640.001px]:px-2.5
-                max-[640.001px]:py-3.5 ${open ? String.raw` is-open [.about-team\_\_reveal&]:opacity-100 [.about-team\_\_reveal&]:pointer-events-auto` : ""}`}>
+              <div className={`absolute inset-0 flex items-center justify-center bg-[rgba(35,_42,_41,_0.93)]
+                overflow-y-auto [transition:opacity_0.2s_ease] p-5 max-[640.001px]:px-2.5
+                max-[640.001px]:py-3.5 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
                 <p className="text-white [font-family:'Courier_New',_monospace] text-[clamp(14px,_1.3vw,_17px)] leading-[1.5] text-center m-0
                   max-[640.001px]:text-[10px] max-[640.001px]:leading-[1.3]">&ldquo;{member.quote}&rdquo;</p>
               </div>
