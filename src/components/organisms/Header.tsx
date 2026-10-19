@@ -53,9 +53,10 @@ export default async function Header() {
   const navItems = navItemsWithCategories(visibleListingCategories(categories));
 
   return (
-    <header className="site-header">
-      <div className="site-header__inner">
-        <Link href="/" className="site-header__logo" aria-label="Getaways El Salvador — Home">
+    <header className="border-b border-solid border-b-border bg-background">
+      <div className="flex items-center justify-between px-8 py-4 gap-6 max-[767.981px]:px-5 max-[767.981px]:py-3.5">
+        <Link href="/" className="block min-w-0 leading-[0] [&_img]:block [&_img]:w-69.75 [&_img]:max-w-full [&_img]:h-auto
+          [&_img]:max-[767.981px]:w-[clamp(150px,_50vw,_220px)]" aria-label="Getaways El Salvador — Home">
           <Image
             src={mediaPublicUrl(LOGO_STORAGE_PATH)}
             alt="Getaways El Salvador"
@@ -68,16 +69,22 @@ export default async function Header() {
 
         {/* Hidden below 1199.84px, where MobileNav's burger takes over -- the
             live breakpoint, `max-width: 74.99em` in the RentalHive stylesheet. */}
-        <nav className="site-nav" aria-label="Primary">
-          <ul className="site-nav__list">
+        <nav className="flex self-stretch items-stretch mx-0 my-[-16px] max-[1199.981px]:hidden" aria-label="Primary">
+          <ul className="site-nav__list flex items-stretch list-none m-0 p-0 [&>li]:relative [&>li]:flex [&>li]:items-center [&>li]:px-4 [&>li]:py-0
+            [&_a]:text-body-text [&_a]:text-[16px] [&_a]:whitespace-nowrap [&_a]:[transition:color_0.25s] [&_a:hover]:text-accent">
             {navItems.map((item) => (
-              <li key={item.href} className={item.children ? "site-nav__item--has-children" : undefined}>
+              <li key={item.href} className={item.children ? `site-nav__item--has-children [&>a::after]:content-[''] [&>a::after]:inline-block [&>a::after]:[vertical-align:middle]
+                [&>a::after]:ml-2 [&>a::after]:border-l-[4px] [&>a::after]:border-solid [&>a::after]:border-l-[transparent]
+                [&>a::after]:border-r-[4px] [&>a::after]:border-r-[transparent] [&>a::after]:border-t-[5px]
+                [&>a::after]:border-t-[currentColor] [&>a::after]:opacity-40` : undefined}>
                 <NavLink href={item.href}>{item.label}</NavLink>
                 {/* Hover/focus dropdown, matching the live menu item's own
                     `menu-item-has-children` + `ul.sub-menu` pair. CSS-only: see
-                    .site-nav__submenu in globals.css. */}
+                    the submenu's hover/focus-within Tailwind variants. */}
                 {item.children && (
-                  <ul className="site-nav__submenu">
+                  <ul className="site-nav__submenu hidden absolute z-[1000] top-[100%] left-0 min-w-[14rem] list-none bg-background
+                    shadow-[0_2px_4px_0_rgba(7,_36,_86,_0.075)] m-0 px-0 py-4 border border-solid border-border
+                    [.site-nav\_\_item--has-children:hover>&]:block [.site-nav\_\_item--has-children:focus-within>&]:block [&_li]:px-6 [&_li]:py-1">
                     {item.children.map((child) => (
                       <li key={child.href}>
                         <NavLink href={child.href}>{child.label}</NavLink>
@@ -92,25 +99,24 @@ export default async function Header() {
           </ul>
         </nav>
 
-        <div className="site-header__actions">
+        <div className="flex items-center shrink-0 max-[1199.981px]:gap-6">
           <MobileNav items={navItems} />
           {/* Live markup is a <button data-url="/submit-listing/">, i.e. a
               link wearing a button, for HivePress's submit-a-listing flow.
               Rendered as a real link here for the same reason the homepage's
               "List a Property" CTA does (see app/page.tsx): there is no
               submit-listing flow in a read-only migration, and a dead <button>
-              would look present but do nothing. Geometry comes from .btn-cta,
-              which already matches the live pill exactly (#394342, 9999px
-              radius, 9px/28px padding, 16px/500 label). */}
+               would look present but do nothing. The utilities keep the live
+               pill's geometry: 9px/28px padding and a 16px/500 label. */}
           <Link
             href={c.text("header.cta.href") || SUBMIT_LISTING_HREF}
             {...c.edit("header.cta.label", "Menu button", "link", {
               hrefSlot: "header.cta.href",
-              className: "btn-cta site-header__submit",
+              className: "inline-flex items-center justify-center gap-2 rounded-full bg-button-bg px-7 py-2.25 font-body text-[16px] font-medium whitespace-nowrap text-button-text no-underline max-[767.981px]:gap-0 max-[767.981px]:p-3.5",
             })}
           >
-            <PlusIcon />
-            <span className="site-header__submit-label">{c.text("header.cta.label")}</span>
+            <PlusIcon className="hidden size-4 shrink-0 max-[767.981px]:block" />
+            <span className="max-[767.981px]:hidden">{c.text("header.cta.label")}</span>
           </Link>
         </div>
       </div>

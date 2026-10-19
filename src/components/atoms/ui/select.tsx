@@ -26,7 +26,10 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       className={cn(
-        "flex h-9 w-full items-center justify-between gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:min-w-0 [&>span]:truncate",
+        `flex h-9 w-full items-center justify-between gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm
+          leading-[normal] shadow-xs outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring
+          focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:min-w-0
+          [&>span]:truncate`,
         className,
       )}
       {...props}
@@ -50,7 +53,8 @@ function SelectContent({
       <SelectPrimitive.Content
         data-slot="select-content"
         className={cn(
-          "relative z-50 max-h-80 min-w-32 overflow-hidden rounded-md border bg-background text-foreground shadow-md",
+          `relative z-70 max-h-80 min-w-32 max-w-[min(520px,calc(100vw_-_32px))] overflow-hidden rounded-[10px] border
+            border-[rgba(15,23,39,0.12)] bg-[rgb(253,253,252)] p-1.5 text-heading shadow-[0_18px_42px_rgba(15,23,39,0.16)]`,
           position === "popper" && "data-[side=bottom]:translate-y-1 data-[side=top]:-translate-y-1",
           className,
         )}
@@ -78,12 +82,14 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex w-full cursor-default select-none items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground",
+          `relative flex min-h-9.5 w-full cursor-default select-none items-center gap-2 rounded-[7px] py-2 pr-8.5 pl-2.5
+            text-[13px] leading-[18px] text-heading outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50
+            data-[highlighted]:bg-[rgba(3,155,229,0.09)] data-[state=checked]:font-[750]`,
         className,
       )}
       {...props}
     >
-      <span className="absolute right-2 flex size-3.5 items-center justify-center">
+      <span className="absolute right-2.5 flex size-3.5 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
           <Check size={16} aria-hidden="true" />
         </SelectPrimitive.ItemIndicator>

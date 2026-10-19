@@ -59,10 +59,12 @@ export default function PostCard({ post }: { post: PostCardPost }) {
   const category = post.categories[0];
 
   return (
-    <article className="post-card">
+    <article className="flex flex-col items-start shadow-[0_5px_30px_rgba(7,_36,_86,_0.075)] overflow-hidden p-5 rounded-[10px]">
       {post.featured_media ? (
-        <div className="post-card__media">
-          <Link href={href} className="post-card__media-link">
+        <div className="post-card__media relative block w-[calc(100%_+_40px)] mt-[-20px] mb-4 mx-[-20px] [&_img]:block [&_img]:w-full [&_img]:h-45
+          [&_img]:object-cover">
+          <Link href={href} className="block relative [&::after]:content-[''] [&::after]:absolute [&::after]:top-0 [&::after]:right-0 [&::after]:bottom-0
+            [&::after]:left-0 [&::after]:[background:linear-gradient(to_top,_rgba(15,_23,_39,_0.75)_0%,_rgba(15,_23,_39,_0)_45%)]">
             <Image
               src={mediaPublicUrl(post.featured_media.storage_path)}
               width={640}
@@ -73,7 +75,9 @@ export default function PostCard({ post }: { post: PostCardPost }) {
             />
           </Link>
           {category && (
-            <Link href={`/category/${category.slug}`} className="post-card__category-badge">
+            <Link href={`/category/${category.slug}`} className="inline-block bg-[rgba(255,_255,_255,_0.35)] text-white text-[11px] leading-[16.5px] uppercase tracking-[1px] px-3 py-1.5
+              rounded-full [.post-card\_\_media_&]:absolute [.post-card\_\_media_&]:left-6 [.post-card\_\_media_&]:bottom-6.5
+              [.post-card\_\_media_&]:z-[1]">
               {category.name}
             </Link>
           )}
@@ -85,16 +89,19 @@ export default function PostCard({ post }: { post: PostCardPost }) {
         category && (
           <Link
             href={`/category/${category.slug}`}
-            className="post-card__category-badge post-card__category-badge--standalone"
+            className="inline-block bg-[rgba(255,_255,_255,_0.35)] text-white text-[11px] leading-[16.5px] uppercase tracking-[1px] px-3 py-1.5
+              rounded-full [.post-card\_\_media_&]:absolute [.post-card\_\_media_&]:left-6 [.post-card\_\_media_&]:bottom-6.5
+              [.post-card\_\_media_&]:z-[1] [&&]:bg-button-bg [&&]:text-button-text [&&]:mt-0 [&&]:mb-2 [&&]:mx-0 [&&]:border-[transparent]"
           >
             {category.name}
           </Link>
         )
       )}
-      <h3 className="post-card__title">
+      <h3 className="text-[21px] leading-[26.25px] mt-3 mb-0 mx-0 [&_a]:text-heading">
         <Link href={href}>{post.title}</Link>
       </h3>
-      <p className="post-card__meta">
+      <p className="w-full text-[11px] font-normal leading-[16.5px] text-muted-text uppercase tracking-[1px] mt-4 mb-0 pt-5 border-t-[0.8px]
+        border-solid border-t-[rgba(7,_36,_86,_0.075)] mx-0">
         {formatPublishedDate(post.published_at)} • By {AUTHOR_DISPLAY_NAME} • No comments
       </p>
     </article>

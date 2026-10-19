@@ -48,15 +48,15 @@ export default async function Footer() {
   ]);
 
   return (
-    <footer className="site-footer">
-      <div className="site-footer__inner">
-        <div className="site-footer__columns">
+    <footer className="border-t border-solid border-t-border bg-background mt-auto">
+      <div className="max-w-301 mx-auto my-0 px-6 py-8">
+        <div className="grid grid-cols-4 pb-12 border-b border-solid border-b-border gap-8 max-[900.001px]:grid-cols-2 max-[560.001px]:grid-cols-1">
           <div className="site-footer__brand">
             {/* Not a link: the live footer logo sits in a text
                 widget and is not wrapped in an anchor (unlike the header's
                 custom-logo-link). */}
             <Image
-              className="site-footer__logo"
+              className="block w-65.25 max-w-full h-auto mb-4"
               src={mediaPublicUrl(LOGO_STORAGE_PATH)}
               alt="Getaways El Salvador"
               width={LOGO_INTRINSIC_WIDTH}
@@ -64,7 +64,7 @@ export default async function Footer() {
               sizes="261px"
               loading="lazy"
             />
-            <p className="site-footer__tagline" {...edit("footer.tagline", "Footer tagline")}>
+            <p className="m-0" {...edit("footer.tagline", "Footer tagline")}>
               {text("footer.tagline")}
             </p>
 
@@ -81,26 +81,28 @@ export default async function Footer() {
               crawled and copied into aggregators, and then contradicts the real
               listing forever.
             */}
-            <address className="site-footer__nap">
-              <span className="site-footer__nap-name">{BUSINESS.name}</span>
+            <address className="flex flex-col mt-3 not-italic text-[13px] leading-[1.5] gap-0.75">
+              <span className="font-semibold">{BUSINESS.name}</span>
               <span>
                 {street ? <span>{street}</span> : null}
                 {street ? ", " : ""}
                 {[BUSINESS.addressLocality, BUSINESS.addressRegion, "El Salvador"].filter(Boolean).join(", ")}
               </span>
               {phone ? (
-                <a href={`tel:${phone.replace(/[^\d+]/g, "")}`} className="site-footer__nap-link">
+                <a href={`tel:${phone.replace(/[^\d+]/g, "")}`} className="text-inherit no-underline hover:underline">
                   <span>{phone}</span>
                 </a>
               ) : null}
-              <a href={`mailto:${email}`} className="site-footer__nap-link">
+              <a href={`mailto:${email}`} className="text-inherit no-underline hover:underline">
                 <span>{email}</span>
               </a>
             </address>
           </div>
 
-          <div className="site-footer__column">
-            <h5 className="site-footer__title" {...edit("footer.properties.title", "Properties column")}>
+          <div className="[&_ul]:list-none [&_ul]:m-0 [&_ul]:p-0 [&_li:not(:last-child)]:mb-2 [&_a]:text-body-text [&_a]:text-[16px]
+            [&_a]:[transition:color_0.25s] [&_a:hover]:text-accent [&_a]:max-[560.001px]:inline-flex [&_a]:max-[560.001px]:items-center
+            [&_a]:max-[560.001px]:min-h-10">
+            <h5 className="font-heading font-medium text-[18px] leading-[1.25] text-heading mt-0 mb-4 mx-0" {...edit("footer.properties.title", "Properties column")}>
               {text("footer.properties.title")}
             </h5>
             {/* From the database, not a hardcoded pair. The two links used to
@@ -122,8 +124,10 @@ export default async function Footer() {
             </ul>
           </div>
 
-          <div className="site-footer__column">
-            <h5 className="site-footer__title" {...edit("footer.journal.title", "Journal column")}>
+          <div className="[&_ul]:list-none [&_ul]:m-0 [&_ul]:p-0 [&_li:not(:last-child)]:mb-2 [&_a]:text-body-text [&_a]:text-[16px]
+            [&_a]:[transition:color_0.25s] [&_a:hover]:text-accent [&_a]:max-[560.001px]:inline-flex [&_a]:max-[560.001px]:items-center
+            [&_a]:max-[560.001px]:min-h-10">
+            <h5 className="font-heading font-medium text-[18px] leading-[1.25] text-heading mt-0 mb-4 mx-0" {...edit("footer.journal.title", "Journal column")}>
               {text("footer.journal.title")}
             </h5>
             {/* Read from the terms behind the posts, not written out here.
@@ -142,8 +146,10 @@ export default async function Footer() {
             </ul>
           </div>
 
-          <div className="site-footer__column">
-            <h5 className="site-footer__title" {...edit("footer.social.title", "Social column")}>
+          <div className="[&_ul]:list-none [&_ul]:m-0 [&_ul]:p-0 [&_li:not(:last-child)]:mb-2 [&_a]:text-body-text [&_a]:text-[16px]
+            [&_a]:[transition:color_0.25s] [&_a:hover]:text-accent [&_a]:max-[560.001px]:inline-flex [&_a]:max-[560.001px]:items-center
+            [&_a]:max-[560.001px]:min-h-10">
+            <h5 className="font-heading font-medium text-[18px] leading-[1.25] text-heading mt-0 mb-4 mx-0" {...edit("footer.social.title", "Social column")}>
               {text("footer.social.title")}
             </h5>
             {/* The two real profiles open in a new tab so the site is not left
@@ -175,16 +181,18 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="site-footer__bottom">
+        <div className="flex flex-wrap items-center justify-between pt-8 gap-4 max-[560.001px]:justify-center max-[560.001px]:text-center">
           {/* The live footer leaves the theme's copyright slot
               (.footer-navbar__copyright, which the RentalHive stylesheet
               styles at rgba(15,23,39,.45)) empty, so this line has no
               counterpart on the real site. It is carried over from the
               previous footer rather than dropped, and placed in that slot. */}
-          <p className="site-footer__copyright">
+          <p className="text-muted-text m-0">
             &copy; {new Date().getFullYear()} Getaways El Salvador
           </p>
-          <nav className="site-footer__nav" aria-label="Footer">
+          <nav className="[&_ul]:flex [&_ul]:flex-wrap [&_ul]:list-none [&_ul]:m-0 [&_ul]:p-0 [&_ul]:gap-8 [&_a]:text-muted-text
+            [&_a]:[transition:color_0.25s] [&_a:hover]:text-body-text [&_ul]:max-[560.001px]:justify-center [&_ul]:max-[560.001px]:gap-y-1
+            [&_ul]:max-[560.001px]:gap-x-5 [&_a]:max-[560.001px]:inline-flex [&_a]:max-[560.001px]:items-center [&_a]:max-[560.001px]:min-h-10" aria-label="Footer">
             <ul>
               <li>
                 <Link href="/about">About Us</Link>

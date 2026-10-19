@@ -9,7 +9,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <Header />
-      <main className="site-main">{children}</main>
+      <main className="flex-1 w-full max-w-301 mx-auto my-0 px-6 py-10">{children}</main>
       <Footer />
     </>
   );

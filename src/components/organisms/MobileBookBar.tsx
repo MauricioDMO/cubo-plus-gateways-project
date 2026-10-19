@@ -129,25 +129,41 @@ export default function MobileBookBar({
   const summary = `${formatShort(checkIn)} – ${formatShort(checkOut)} · ${nights} night${nights === 1 ? "" : "s"}`;
 
   return (
-    <div className="listing-mobile-book" data-open={open ? "true" : undefined} ref={bar}>
+    <div className="listing-mobile-book hidden max-[900.001px]:fixed max-[900.001px]:right-0 max-[900.001px]:bottom-0 max-[900.001px]:left-0
+      max-[900.001px]:z-[40] max-[900.001px]:block max-[900.001px]:pt-2.5
+      max-[900.001px]:pb-[calc(10px_+_env(safe-area-inset-bottom,_0px))] max-[900.001px]:bg-background max-[900.001px]:border-t
+      max-[900.001px]:border-solid max-[900.001px]:border-t-border max-[900.001px]:shadow-[0_-2px_14px_rgba(15,_23,_39,_0.1)]
+      max-[900.001px]:px-4" data-open={open ? "true" : undefined} ref={bar}>
       {open && (
-        <div className="listing-mobile-book__dates" id={panelId}>
-          <div className="listing-mobile-book__dates-head">
+        <div className="max-[900.001px]:grid max-[900.001px]:grid-cols-[1fr_1fr] max-[900.001px]:mt-0 max-[900.001px]:mb-3 max-[900.001px]:mx-0
+          max-[900.001px]:gap-2.5" id={panelId}>
+          <div className="max-[900.001px]:col-span-full max-[900.001px]:flex max-[900.001px]:items-center max-[900.001px]:justify-between
+            max-[900.001px]:text-[11px] max-[900.001px]:font-extrabold max-[900.001px]:tracking-[1px] max-[900.001px]:uppercase
+            max-[900.001px]:text-muted-text max-[900.001px]:gap-3">
             <span>Your dates</span>
             <button
               type="button"
-              className="listing-mobile-book__done"
+              className="max-[900.001px]:inline-flex max-[900.001px]:items-center max-[900.001px]:min-h-8.5 max-[900.001px]:bg-background
+                max-[900.001px]:text-heading max-[900.001px]:[font-family:inherit] max-[900.001px]:text-[13px] max-[900.001px]:font-semibold
+                max-[900.001px]:[font-style:inherit] max-[900.001px]:leading-[inherit] max-[900.001px]:[font-variant:inherit]
+                max-[900.001px]:tracking-[0] max-[900.001px]:normal-case max-[900.001px]:cursor-pointer max-[900.001px]:px-3 max-[900.001px]:py-0
+                max-[900.001px]:gap-1.25 max-[900.001px]:rounded-full max-[900.001px]:border max-[900.001px]:border-solid
+                max-[900.001px]:border-border max-[900.001px]:active:bg-[rgba(15,_23,_39,_0.04)]"
               onClick={() => setOpen(false)}
             >
               Done
               <X size={15} aria-hidden="true" />
             </button>
           </div>
-          <div className="listing-mobile-book__field">
+          <div className="[&>label]:text-[11px] [&>label]:font-bold [&>label]:tracking-[0.06em] [&>label]:uppercase [&>label]:text-muted-text
+            max-[900.001px]:flex max-[900.001px]:min-w-0 max-[900.001px]:flex-col max-[900.001px]:text-[12px] max-[900.001px]:text-body-text
+            max-[900.001px]:gap-1">
             <label htmlFor="mobile-check-in">Check-in</label>
             <BookingDatePicker id="mobile-check-in" min={todayIso()} value={checkIn} onChange={setCheckIn} />
           </div>
-          <div className="listing-mobile-book__field">
+          <div className="[&>label]:text-[11px] [&>label]:font-bold [&>label]:tracking-[0.06em] [&>label]:uppercase [&>label]:text-muted-text
+            max-[900.001px]:flex max-[900.001px]:min-w-0 max-[900.001px]:flex-col max-[900.001px]:text-[12px] max-[900.001px]:text-body-text
+            max-[900.001px]:gap-1">
             <label htmlFor="mobile-check-out">Check-out</label>
             <BookingDatePicker
               id="mobile-check-out"
@@ -159,25 +175,32 @@ export default function MobileBookBar({
         </div>
       )}
 
-      <div className="listing-mobile-book__row">
+      <div className="max-[900.001px]:flex max-[900.001px]:items-center max-[900.001px]:justify-between max-[900.001px]:gap-3.5">
         <button
           type="button"
-          className="listing-mobile-book__dates-toggle"
+          className="max-[900.001px]:flex max-[900.001px]:flex-1 max-[900.001px]:flex-col max-[900.001px]:items-start max-[900.001px]:min-w-0
+            max-[900.001px]:min-h-11 max-[900.001px]:bg-transparent max-[900.001px]:text-left max-[900.001px]:cursor-pointer
+            max-[900.001px]:p-0 max-[900.001px]:gap-0.5 max-[900.001px]:border-0"
           aria-expanded={open}
           aria-controls={panelId}
           onClick={() => setOpen((current) => !current)}
         >
           {nightlyRate && (
-            <span className="listing-mobile-book__price">
+            <span className="max-[900.001px]:text-[13px] max-[900.001px]:text-body-text max-[900.001px]:m-0 [&_strong]:max-[900.001px]:text-[15px]
+              [&_strong]:max-[900.001px]:text-heading">
               <strong>{nightlyRate}</strong> per night
             </span>
           )}
-          <span className="listing-mobile-book__summary">
+          <span className="max-[900.001px]:flex max-[900.001px]:items-center max-[900.001px]:max-w-full max-[900.001px]:overflow-hidden
+            max-[900.001px]:whitespace-nowrap max-[900.001px]:text-ellipsis max-[900.001px]:text-[13px] max-[900.001px]:text-heading
+            max-[900.001px]:underline max-[900.001px]:underline-offset-[3px] max-[900.001px]:gap-1.25">
             <CalendarDays size={14} aria-hidden="true" />
             {summary}
             {/* So the strip reads as a control in both states, rather than as
                 a line of text that happens to be tappable. */}
-            <ChevronDown size={14} className="listing-mobile-book__caret" aria-hidden="true" />
+            <ChevronDown size={14} className="motion-reduce:transition-none max-[900.001px]:flex-none max-[900.001px]:ml-0.5 max-[900.001px]:text-muted-text
+              max-[900.001px]:[transition:transform_200ms_ease]
+              [.listing-mobile-book[data-open=true]_&]:max-[900.001px]:[transform:rotate(180deg)]" aria-hidden="true" />
           </span>
         </button>
 
@@ -198,7 +221,10 @@ export default function MobileBookBar({
           fire and point at the first one, which is the answer to "why can't I
           book", rather than another press that changes nothing.
         */}
-        <a className="listing-mobile-book__cta" href="#book" onClick={reserve}>
+        <a className="max-[900.001px]:flex-none max-[900.001px]:min-h-11.5 max-[900.001px]:bg-[#394342] max-[900.001px]:text-white
+          max-[900.001px]:[font-family:inherit] max-[900.001px]:text-[16px] max-[900.001px]:font-bold max-[900.001px]:[font-style:inherit]
+          max-[900.001px]:leading-[inherit] max-[900.001px]:[font-variant:inherit] max-[900.001px]:no-underline
+          max-[900.001px]:cursor-pointer max-[900.001px]:px-6.5 max-[900.001px]:py-3 max-[900.001px]:rounded-full max-[900.001px]:border-0" href="#book" onClick={reserve}>
           Reserve now
         </a>
       </div>

@@ -184,10 +184,44 @@ export default function BookingWidget({ listingId, listingTitle, listingSlug, pr
 
   return (
     <>
-    <Card className="booking-widget">
-      <CardHeader className="booking-widget__header">
+    <Card className="booking-widget @container border-0 bg-[rgb(253,_253,_252)] text-heading
+      shadow-[0_1px_2px_rgba(7,_36,_86,_0.06),_0_10px_34px_rgba(7,_36,_86,_0.11)] overflow-hidden rounded-[10px]
+      [&_[data-slot=card-header]]:p-5 [&_[data-slot=card-content]]:pt-4 [&_[data-slot=card-content]]:pb-5
+      [&_[data-slot=card-content]]:px-5 [&_[data-slot=card-description]]:text-body-text [&_[data-slot=card-description]]:text-[14px]
+      [&_[data-slot=card-description]]:leading-[22px] [&_[data-slot=badge]]:inline-flex [&_[data-slot=badge]]:items-center
+      [&_[data-slot=badge]]:min-h-7 [&_[data-slot=badge]]:bg-[rgba(255,_193,_7,_0.18)] [&_[data-slot=badge]]:text-heading
+      [&_[data-slot=badge]]:text-[12px] [&_[data-slot=badge]]:font-bold [&_[data-slot=badge]]:tabular-nums
+      [&_[data-slot=badge]]:leading-none [&_[data-slot=badge]]:whitespace-nowrap [&_[data-slot=badge]]:px-2.5 [&_[data-slot=badge]]:py-0
+      [&_[data-slot=badge]]:rounded-full [&_[data-slot=input]]:w-full [&_[data-slot=input]]:min-w-0 [&_[data-slot=input]]:min-h-11
+      [&_[data-slot=input]]:bg-background [&_[data-slot=input]]:text-heading [&_[data-slot=input]]:[font-family:inherit]
+      [&_[data-slot=input]]:text-[14px] [&_[data-slot=input]]:[font-weight:inherit] [&_[data-slot=input]]:[font-style:inherit]
+      [&_[data-slot=input]]:leading-[inherit] [&_[data-slot=input]]:[font-variant:inherit] [&_[data-slot=input]]:overflow-hidden
+      [&_[data-slot=input]]:text-ellipsis [&_[data-slot=input]]:[transition:border-color_0.14s,_box-shadow_0.14s]
+      [&_[data-slot=input]]:px-3 [&_[data-slot=input]]:py-2.5 [&_[data-slot=input]]:rounded-[8px] [&_[data-slot=input]]:border
+      [&_[data-slot=input]]:border-solid [&_[data-slot=input]]:border-[rgba(15,_23,_39,_0.14)] [&_[data-slot=select-trigger]]:w-full
+      [&_[data-slot=select-trigger]]:min-w-0 [&_[data-slot=select-trigger]]:min-h-11 [&_[data-slot=select-trigger]]:bg-background
+      [&_[data-slot=select-trigger]]:text-heading [&_[data-slot=select-trigger]]:[font-family:inherit]
+      [&_[data-slot=select-trigger]]:text-[14px] [&_[data-slot=select-trigger]]:[font-weight:inherit]
+      [&_[data-slot=select-trigger]]:[font-style:inherit] [&_[data-slot=select-trigger]]:leading-[inherit]
+      [&_[data-slot=select-trigger]]:[font-variant:inherit] [&_[data-slot=select-trigger]]:overflow-hidden
+      [&_[data-slot=select-trigger]]:text-ellipsis [&_[data-slot=select-trigger]]:[transition:border-color_0.14s,_box-shadow_0.14s]
+      [&_[data-slot=select-trigger]]:px-3 [&_[data-slot=select-trigger]]:py-2.5 [&_[data-slot=select-trigger]]:rounded-[8px]
+      [&_[data-slot=select-trigger]]:border [&_[data-slot=select-trigger]]:border-solid
+      [&_[data-slot=select-trigger]]:border-[rgba(15,_23,_39,_0.14)]
+      [&_[data-slot=input]:hover:not(:disabled)]:border-[rgba(15,_23,_39,_0.3)]
+      [&_[data-slot=select-trigger]:hover:not(:disabled)]:border-[rgba(15,_23,_39,_0.3)]
+      [&_[data-slot=input]:focus-visible]:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.18)] [&_[data-slot=input]:focus-visible]:[outline:none]
+      [&_[data-slot=input]:focus-visible]:border-link
+      [&_[data-slot=select-trigger]:focus-visible]:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.18)]
+      [&_[data-slot=select-trigger]:focus-visible]:[outline:none] [&_[data-slot=select-trigger]:focus-visible]:border-link
+      [&_[data-slot=input]:disabled]:bg-[rgba(15,_23,_39,_0.03)] [&_[data-slot=input]:disabled]:text-muted-text
+      [&_[data-slot=input]:disabled]:cursor-not-allowed [&_[data-slot=input]:disabled]:border-[rgba(15,_23,_39,_0.1)]
+      [&_[data-slot=select-trigger]:disabled]:bg-[rgba(15,_23,_39,_0.03)] [&_[data-slot=select-trigger]:disabled]:text-muted-text
+      [&_[data-slot=select-trigger]:disabled]:cursor-not-allowed [&_[data-slot=select-trigger]:disabled]:border-[rgba(15,_23,_39,_0.1)]
+      [&_::placeholder]:text-muted-text [&_::placeholder]:opacity-100">
+      <CardHeader className="flex items-start justify-between border-b border-solid border-b-border gap-4">
         <div>
-          <CardTitle className="booking-widget__title">{checkoutEnabled ? "Reserve your stay" : "Request your stay"}</CardTitle>
+          <CardTitle className="mt-0 mb-1 text-heading font-heading text-[22px] font-medium leading-[1.25] mx-0">{checkoutEnabled ? "Reserve your stay" : "Request your stay"}</CardTitle>
           <CardDescription>{listingTitle}</CardDescription>
         </div>
         {/* No price badge here. The nightly rate is already stated at the top
@@ -197,40 +231,49 @@ export default function BookingWidget({ listingId, listingTitle, listingSlug, pr
             again. */}
       </CardHeader>
       <CardContent>
-        <form className="booking-widget__form" onSubmit={submitBooking}>
-          <div className="booking-widget__dates">
-            <div className="booking-widget__field">
+        <form className="flex flex-col gap-4 [&_label]:flex [&_label]:flex-col [&_label]:text-heading [&_label]:text-[13px] [&_label]:font-semibold
+          [&_label]:leading-[1.35] [&_label]:min-w-0 [&_label]:gap-1.5" onSubmit={submitBooking}>
+          <div className="grid grid-cols-2 gap-3 [@container_(max-width:_300px)]:grid-cols-1 max-[560.001px]:grid-cols-1">
+            <div className="flex flex-col text-heading text-[13px] font-semibold leading-[1.35] min-w-0 gap-1.5">
               <Label htmlFor={`check-in-${listingId}`}>Check-in</Label>
               <BookingDatePicker id={`check-in-${listingId}`} min={todayIso()} value={checkIn} onChange={updateCheckIn} />
             </div>
-            <div className="booking-widget__field">
+            <div className="flex flex-col text-heading text-[13px] font-semibold leading-[1.35] min-w-0 gap-1.5">
               <Label htmlFor={`check-out-${listingId}`}>Check-out</Label>
               <BookingDatePicker id={`check-out-${listingId}`} min={addDaysIso(checkIn || todayIso(), minStay)} value={checkOut} onChange={setCheckOut} />
             </div>
           </div>
 
-          <div className="booking-widget__guest-grid">
-            <div className="booking-widget__field">
+          <div className="grid grid-cols-2 gap-3 [@container_(max-width:_300px)]:grid-cols-1 max-[560.001px]:grid-cols-1">
+            <div className="flex flex-col text-heading text-[13px] font-semibold leading-[1.35] min-w-0 gap-1.5">
               <Label htmlFor={`guest-first-name-${listingId}`}>First name</Label>
               <Input id={`guest-first-name-${listingId}`} value={guestFirstName} onChange={(event) => setGuestFirstName(event.target.value)} placeholder="First name" autoComplete="given-name" required />
             </div>
-            <div className="booking-widget__field">
+            <div className="flex flex-col text-heading text-[13px] font-semibold leading-[1.35] min-w-0 gap-1.5">
               <Label htmlFor={`guest-last-name-${listingId}`}>Last name</Label>
               <Input id={`guest-last-name-${listingId}`} value={guestLastName} onChange={(event) => setGuestLastName(event.target.value)} placeholder="Last name" autoComplete="family-name" required />
             </div>
           </div>
-          <div className="booking-widget__field">
+          <div className="flex flex-col text-heading text-[13px] font-semibold leading-[1.35] min-w-0 gap-1.5">
             <Label htmlFor={`guest-email-${listingId}`}>Email</Label>
             <Input id={`guest-email-${listingId}`} type="email" value={guestEmail} onChange={(event) => setGuestEmail(event.target.value)} placeholder="you@example.com" autoComplete="email" required />
           </div>
-          <div className="booking-widget__field">
+          <div className="flex flex-col text-heading text-[13px] font-semibold leading-[1.35] min-w-0 gap-1.5">
             <Label htmlFor={`guest-phone-${listingId}`}>Phone</Label>
             <PhoneNumberField id={`guest-phone-${listingId}`} value={guestPhone} onChange={setGuestPhone} />
           </div>
 
-          <p className="booking-widget__helper">Our concierge will follow up by email for arrival details and any special requests.</p>
+          <p className="text-muted-text text-[12px] leading-[18px] m-0">Our concierge will follow up by email for arrival details and any special requests.</p>
 
-          <div className="booking-widget__summary" aria-live="polite">
+          <div className="flex items-center justify-between bg-[rgba(15,_23,_39,_0.035)] p-3 gap-3 rounded-[8px] [&>div]:min-w-0 [&_span]:inline-flex
+            [&_span]:items-center [&_span]:text-heading [&_span]:text-[14px] [&_span]:font-semibold [&_span]:leading-[18px]
+            [&_span]:tabular-nums [&_span]:gap-1.75 [&_span_svg]:grow-0 [&_span_svg]:shrink-0 [&_span_svg]:basis-[auto]
+            [&_span_svg]:text-muted-text [&_small]:text-muted-text [&_small]:text-[12px] [&_small]:leading-[18px] [&_small]:block
+            [&_small]:mt-0.75 [&_small]:tabular-nums [&_strong]:text-heading [&_strong]:font-heading [&_strong]:text-[18px]
+            [&_strong]:font-semibold [&_strong]:tabular-nums [&_strong]:text-right [&_strong]:whitespace-nowrap
+            [@container_(max-width:_300px)]:items-start [@container_(max-width:_300px)]:flex-col
+            [&_strong]:[@container_(max-width:_300px)]:text-left max-[560.001px]:items-start max-[560.001px]:flex-col
+            [&_strong]:max-[560.001px]:text-left" aria-live="polite">
             <div>
               <span>
                 <CalendarDays size={16} aria-hidden="true" />
@@ -242,42 +285,49 @@ export default function BookingWidget({ listingId, listingTitle, listingSlug, pr
           </div>
           {/* Only when there is a checkout step to add them in. */}
           {pricePerNight && checkoutEnabled ? (
-            <p className="booking-widget__helper">Taxes (IVA and tourism tax) are added at checkout.</p>
+            <p className="text-muted-text text-[12px] leading-[18px] m-0">Taxes (IVA and tourism tax) are added at checkout.</p>
           ) : null}
 
           {/* Always rendered, with a reserved min-height in CSS, so the
               availability fetch resolving on mount does not shunt the button
               and the notices below it up the card. */}
-          <div className="booking-widget__status" aria-live="polite">
+          <div className="grid min-h-4.5 gap-3" aria-live="polite">
             {loadingAvailability ? (
-              <p className="booking-widget__note">
-                <Loader2 size={15} className="booking-widget__spin" aria-hidden="true" />
+              <p className="inline-flex items-center text-muted-text text-[12px] leading-[18px] m-0 gap-1.75">
+                <Loader2 size={15} className="grow-0 shrink-0 basis-5.5 w-5.5 [animation:booking-spin_0.9s_linear_infinite] motion-reduce:[animation-duration:2.4s]" aria-hidden="true" />
                 Checking availability
               </p>
             ) : availability === "failed" ? (
-              <p className="booking-widget__error" role="alert">
+              <p className="flex items-start text-[13px] leading-[20px] bg-[rgba(186,_26,_26,_0.08)] text-[rgb(143,_30,_24)] m-0 px-3 py-2.5 gap-2
+                rounded-[8px] [&_svg]:grow-0 [&_svg]:shrink-0 [&_svg]:basis-[auto] [&_svg]:mt-0.75" role="alert">
                 <AlertCircle size={15} aria-hidden="true" />
                 <span>We could not check which dates are free. Please try again.</span>
                 {/* The site's plain text-button style; this card has none of its own. */}
-                <button type="button" className="checkout-extras__coupon-remove" onClick={() => void reloadAvailability()}>
+                <button type="button" className="ml-auto bg-transparent [font-family:inherit] text-[13px] [font-weight:inherit] [font-style:inherit] leading-[inherit]
+                  [font-variant:inherit] text-body-text underline underline-offset-[3px] cursor-pointer px-0.5 py-1 border-0
+                  [&:hover:not(:disabled)]:text-text disabled:opacity-50 disabled:cursor-progress" onClick={() => void reloadAvailability()}>
                   Try again
                 </button>
               </p>
             ) : datesBlocked ? (
-              <p className="booking-widget__error">
+              <p className="flex items-start text-[13px] leading-[20px] bg-[rgba(186,_26,_26,_0.08)] text-[rgb(143,_30,_24)] m-0 px-3 py-2.5 gap-2
+                rounded-[8px] [&_svg]:grow-0 [&_svg]:shrink-0 [&_svg]:basis-[auto] [&_svg]:mt-0.75">
                 <AlertCircle size={15} aria-hidden="true" />
                 <span>Those dates are unavailable.</span>
               </p>
             ) : null}
             {message &&
               (checkoutUnavailable ? (
-                <p className="booking-widget__notice">
+                <p className="flex items-start text-[13px] leading-[20px] bg-[color-mix(in_oklch,_var(--color-accent)_10%,_var(--color-background))] text-heading
+                  m-0 px-3 py-2.5 gap-2 rounded-[8px] border border-solid border-[color-mix(in_oklch,_var(--color-accent)_34%,_transparent)]
+                  [&_svg]:grow-0 [&_svg]:shrink-0 [&_svg]:basis-[auto] [&_svg]:mt-0.75 [&_a]:text-link-strong [&_a]:font-[850]">
                   <span>
                     We will confirm your stay personally. <Link href="/contact-us">Contact us</Link>
                   </span>
                 </p>
               ) : (
-                <p className="booking-widget__error" role="alert">
+                <p className="flex items-start text-[13px] leading-[20px] bg-[rgba(186,_26,_26,_0.08)] text-[rgb(143,_30,_24)] m-0 px-3 py-2.5 gap-2
+                  rounded-[8px] [&_svg]:grow-0 [&_svg]:shrink-0 [&_svg]:basis-[auto] [&_svg]:mt-0.75" role="alert">
                   <AlertCircle size={15} aria-hidden="true" />
                   <span>{message}</span>
                 </p>
@@ -286,22 +336,39 @@ export default function BookingWidget({ listingId, listingTitle, listingSlug, pr
 
           {/* No demo notice here. The checkout page carries the student-mock banner. */}
           {checkoutMode === "contact" && (
-            <p className="booking-widget__notice">
+            <p className="flex items-start text-[13px] leading-[20px] bg-[color-mix(in_oklch,_var(--color-accent)_10%,_var(--color-background))] text-heading
+              m-0 px-3 py-2.5 gap-2 rounded-[8px] border border-solid border-[color-mix(in_oklch,_var(--color-accent)_34%,_transparent)]
+              [&_svg]:grow-0 [&_svg]:shrink-0 [&_svg]:basis-[auto] [&_svg]:mt-0.75 [&_a]:text-link-strong [&_a]:font-[850]">
               <span>Send your dates and our team will confirm availability personally.</span>
             </p>
           )}
 
           <Button
             type="submit"
-            className="booking-widget__submit"
+            className="booking-widget__submit [.booking-widget_[data-slot=button]&]:inline-flex [.booking-widget_[data-slot=button]&]:items-center
+              [.booking-widget_[data-slot=button]&]:justify-center [.booking-widget_[data-slot=button]&]:w-full
+              [.booking-widget_[data-slot=button]&]:min-h-12 [.booking-widget_[data-slot=button]&]:bg-button-bg
+              [.booking-widget_[data-slot=button]&]:text-button-text [.booking-widget_[data-slot=button]&]:cursor-pointer
+              [.booking-widget_[data-slot=button]&]:[font-family:inherit] [.booking-widget_[data-slot=button]&]:text-[15px]
+              [.booking-widget_[data-slot=button]&]:font-bold [.booking-widget_[data-slot=button]&]:[font-style:inherit]
+              [.booking-widget_[data-slot=button]&]:leading-[inherit] [.booking-widget_[data-slot=button]&]:[font-variant:inherit]
+              [.booking-widget_[data-slot=button]&]:[transition:background_0.16s,_box-shadow_0.16s,_opacity_0.16s,_transform_0.16s]
+              [.booking-widget_[data-slot=button]&]:gap-1.75 [.booking-widget_[data-slot=button]&]:rounded-full
+              [.booking-widget_[data-slot=button]&]:border-0 [.booking-widget_[data-slot=button]&:hover:not(:disabled)]:bg-[rgb(28,_36,_35)]
+              [.booking-widget_[data-slot=button]&:hover:not(:disabled)]:[transform:translateY(-1px)]
+              [.booking-widget_[data-slot=button]&:focus-visible]:[outline:none]
+              [.booking-widget_[data-slot=button]&:focus-visible]:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.35)]
+              [.booking-widget_[data-slot=button]&:active:not(:disabled)]:[transform:translateY(0)]
+              [.booking-widget_[data-slot=button]&:disabled]:cursor-not-allowed [.booking-widget_[data-slot=button]&:disabled]:opacity-[0.55]
+              [&[aria-busy=true]]:cursor-progress [&[aria-busy=true]:hover]:[transform:none]"
             aria-busy={submitting}
             disabled={submitting || (checkoutEnabled && availability !== "ready") || (checkoutEnabled && !canReserve)}
           >
-            {submitting ? <Loader2 size={16} className="booking-widget__spin" aria-hidden="true" /> : <PaymentButtonIcon />}
+            {submitting ? <Loader2 size={16} className="grow-0 shrink-0 basis-5.5 w-5.5 [animation:booking-spin_0.9s_linear_infinite] motion-reduce:[animation-duration:2.4s]" aria-hidden="true" /> : <PaymentButtonIcon />}
             <span>{submitting ? "Starting checkout" : checkoutEnabled ? (pricePerNight ? "Reserve now" : "Price unavailable") : "Request booking"}</span>
           </Button>
 
-          <p className="booking-widget__secure">
+          <p className="inline-flex items-center text-muted-text text-[12px] leading-[18px] m-0 gap-1.75">
             <ShieldCheck size={15} aria-hidden="true" />
             {checkoutMode === "checkout" ? "Bitcoin or card, on the next step" : "Concierge follow-up"}
           </p>

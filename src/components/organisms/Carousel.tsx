@@ -91,10 +91,16 @@ export default function Carousel({
   };
 
   return (
-    <div className="carousel">
+    <div className="relative max-w-340 mx-auto my-0">
       <button
         type="button"
-        className="carousel__arrow carousel__arrow--prev"
+        className="absolute top-[38%] z-[1] flex items-center justify-center w-12 h-12 [transform:translateY(-50%)] bg-background text-heading
+          shadow-[0_16px_36px_rgba(15,_23,_39,_0.16)] cursor-pointer
+          [transition:transform_180ms_ease,_box-shadow_180ms_ease,_opacity_180ms_ease] p-0 rounded-full border border-solid
+          border-[color-mix(in_oklch,_var(--color-heading)_12%,_transparent)]
+          [&:hover:not(:disabled)]:[transform:translateY(-50%)_scale(1.04)]
+          [&:hover:not(:disabled)]:shadow-[0_20px_42px_rgba(15,_23,_39,_0.2)] [&_svg]:w-5 [&_svg]:h-5 disabled:opacity-35
+          disabled:cursor-default max-[640.001px]:hidden [&&]:left-5"
         aria-label={`Scroll ${label} left`}
         onClick={() => scrollByDirection(-1)}
         disabled={!canScrollPrev}
@@ -102,14 +108,23 @@ export default function Carousel({
         <ArrowLeftIcon />
       </button>
       <div
-        className={["carousel__track", trackClassName].filter(Boolean).join(" ")}
+        className={[`flex overflow-x-auto [scroll-snap-type:x_mandatory] scroll-smooth
+          [mask-image:linear-gradient(to_right,_transparent_0,_black_30px,_black_calc(100%_-_72px),_transparent_100%)]
+          [scrollbar-width:none] [-ms-overflow-style:none] gap-5.5 [&::-webkit-scrollbar]:hidden
+          max-[640.001px]:[mask-image:none]`, trackClassName].filter(Boolean).join(" ")}
         ref={trackRef}
       >
         {children}
       </div>
       <button
         type="button"
-        className="carousel__arrow carousel__arrow--next"
+        className="absolute top-[38%] z-[1] flex items-center justify-center w-12 h-12 [transform:translateY(-50%)] bg-background text-heading
+          shadow-[0_16px_36px_rgba(15,_23,_39,_0.16)] cursor-pointer
+          [transition:transform_180ms_ease,_box-shadow_180ms_ease,_opacity_180ms_ease] p-0 rounded-full border border-solid
+          border-[color-mix(in_oklch,_var(--color-heading)_12%,_transparent)]
+          [&:hover:not(:disabled)]:[transform:translateY(-50%)_scale(1.04)]
+          [&:hover:not(:disabled)]:shadow-[0_20px_42px_rgba(15,_23,_39,_0.2)] [&_svg]:w-5 [&_svg]:h-5 disabled:opacity-35
+          disabled:cursor-default max-[640.001px]:hidden [&&]:right-5"
         aria-label={`Scroll ${label} right`}
         onClick={() => scrollByDirection(1)}
         disabled={!canScrollNext}

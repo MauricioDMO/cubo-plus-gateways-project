@@ -3,8 +3,7 @@
  * `fa-bars`, plus an X to dismiss the burger overlay). The icon font was never
  * migrated with the theme -- the same gap the homepage's step tiles work around
  * -- so the four glyphs the header needs are redrawn as inline currentColor
- * SVGs. Sized by the .site-nav__icon / .mobile-nav__icon classes in
- * globals.css, not by width/height attributes, so one icon can appear at
+ * SVGs. Sized by Tailwind utilities, not by width/height attributes, so one icon can appear at
  * different sizes in the desktop nav and the burger overlay.
  *
  * Plain presentational components with no state, shared by the server-rendered
@@ -24,7 +23,7 @@ const strokeProps: React.SVGProps<SVGSVGElement> = {
   viewBox: "0 0 24 24",
 };
 
-export function PlusIcon({ className = "site-nav__icon" }: IconProps) {
+export function PlusIcon({ className = "site-nav__icon size-4 shrink-0" }: IconProps) {
   return (
     <svg className={className} {...strokeProps}>
       <path d="M12 5v14" />
@@ -33,7 +32,7 @@ export function PlusIcon({ className = "site-nav__icon" }: IconProps) {
   );
 }
 
-export function BurgerIcon({ className = "mobile-nav__icon" }: IconProps) {
+export function BurgerIcon({ className = "block size-6" }: IconProps) {
   return (
     <svg className={className} {...strokeProps}>
       <path d="M3 6h18" />
@@ -43,7 +42,7 @@ export function BurgerIcon({ className = "mobile-nav__icon" }: IconProps) {
   );
 }
 
-export function CloseIcon({ className = "mobile-nav__icon" }: IconProps) {
+export function CloseIcon({ className = "block size-6" }: IconProps) {
   return (
     <svg className={className} {...strokeProps}>
       <path d="M6 6l12 12" />
@@ -127,7 +126,7 @@ export type AmenityIconKey =
 // `title="Verified"` tooltip on its own badge. So it is deliberately NOT
 // aria-hidden: `role="img"` + an SVG <title> gives it an accessible name
 // ("Verified") instead of disappearing from the accessibility tree.
-export function VerifiedIcon({ className = "verified-badge__icon" }: IconProps) {
+export function VerifiedIcon({ className = "inline-block align-middle size-5 ml-2 text-success [&_path]:stroke-background" }: IconProps) {
   return (
     <svg
       className={className}
@@ -138,11 +137,6 @@ export function VerifiedIcon({ className = "verified-badge__icon" }: IconProps) 
     >
       <title>Verified</title>
       <circle cx="12" cy="12" r="10" fill="currentColor" />
-      {/* Stroke color lives in globals.css (.verified-badge__icon path), not
-          here as an inline var(--color-background) -- SVG presentation
-          attributes don't reliably resolve custom properties the way a real
-          CSS rule does, and every other icon in this file already gets its
-          color from a CSS class rather than an inline attribute. */}
       <path
         d="M7.5 12.5l3 3 6-6.5"
         fill="none"
@@ -164,7 +158,7 @@ export function HeartIcon({ className = "card-favorite__icon" }: IconProps) {
 
 export function AmenityIcon({
   type,
-  className = "amenity-checklist__icon",
+  className = "shrink-0 size-4.5 text-[rgba(7,36,86,0.35)]",
 }: IconProps & { type: AmenityIconKey }) {
   switch (type) {
     case "beachaccess":

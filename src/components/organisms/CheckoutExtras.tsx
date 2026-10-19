@@ -8,16 +8,6 @@ import CheckoutMethods, { type CheckoutMethod } from "@/components/organisms/Che
 import type { Quote } from "@/modules/bookings/booking-quote";
 
 /*
- * Plain <input>, <button> and <label>, not components/atoms/ui: this page loads
- * app/globals.css and nothing else. Tailwind is not loaded on the public site,
- * so every utility class on those primitives therefore
- * generates no CSS on the public site, which is why the coupon field rendered
- * as a bare browser control -- black hairline, wrong height, a grey system
- * button beside it -- while everything around it was branded. The styling
- * lives in globals.css with the rest of the site's own CSS.
- */
-
-/*
  * The two questions that change the price, and the bill they produce.
  *
  * A booking is created from dates alone, so the total on the checkout was the
@@ -110,11 +100,11 @@ export default function CheckoutExtras({
           body: JSON.stringify(
             answers
               ? {
-                  session_id: sessionId,
-                  guests: answers.guests,
-                  with_pet: answers.withPet,
-                  coupon_code: answers.couponCode,
-                }
+                session_id: sessionId,
+                guests: answers.guests,
+                with_pet: answers.withPet,
+                coupon_code: answers.couponCode,
+              }
               : { session_id: sessionId }
           ),
         });
@@ -222,21 +212,29 @@ export default function CheckoutExtras({
   const locked = loading || paying || !data;
 
   return (
-    <section className="checkout-extras" aria-label="Your stay">
+    <section className="mt-6.5 [&_h2]:mt-0 [&_h2]:mb-4 [&_h2]:font-heading [&_h2]:text-[19px] [&_h2]:mx-0" aria-label="Your stay">
       <h2>Before you pay</h2>
 
       {paying && (
-        <p className="checkout-page__methods-note">
+        <p className="mt-0 mb-6.5 text-[13px] leading-[1.6] text-body-text mx-0">
           The price is set while a payment is open.
         </p>
       )}
 
-      <div className="checkout-extras__question">
+      <div className="flex flex-col mb-4.5 gap-1.5 [&>label]:inline-flex [&>label]:items-center [&>label]:text-[14px] [&>label]:font-semibold
+        [&>label]:text-heading [&>label]:gap-1.75 [&_small]:text-[13px] [&_small]:text-body-text">
         <label htmlFor="checkout-guests">
           <Users size={16} aria-hidden="true" /> How many guests?
         </label>
         <select
-          className="checkout-extras__field"
+          className="min-h-11.5 bg-background text-[15px]
+          text-text [transition:border-color_160ms_ease,box-shadow_160ms_ease] px-3.5 py-0 rounded-lg border
+            border-solid border-input [select&]:appearance-none [select&]:pr-10
+            [select&]:bg-[url('/icons/chevron-down.svg')]
+            [select&]:bg-no-repeat [select&]:[background-position:right_14px_center] [select&]:cursor-pointer
+            placeholder:text-[rgba(15,23,39,0.32)] [&::placeholder]:tracking-[0.5px] focus:[outline:none]
+            focus:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.18)] focus:border-link focus-visible:[outline:none]
+            focus-visible:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.18)] focus-visible:border-link"
           id="checkout-guests"
           value={guests}
           onChange={(event) => change({ guests: Number(event.target.value) })}
@@ -257,18 +255,21 @@ export default function CheckoutExtras({
       </div>
 
       {data?.petsAllowed && (
-        <div className="checkout-extras__question">
-          <span className="checkout-extras__legend">
+        <div className="flex flex-col mb-4.5 gap-1.5 [&>label]:inline-flex [&>label]:items-center [&>label]:text-[14px] [&>label]:font-semibold
+          [&>label]:text-heading [&>label]:gap-1.75 [&_small]:text-[13px] [&_small]:text-body-text">
+          <span className="inline-flex items-center text-[14px] font-semibold text-heading gap-1.75">
             <PawPrint size={16} aria-hidden="true" /> Bringing a pet?
           </span>
-          <div className="checkout-extras__choices">
+          <div className="flex gap-2">
             {[
               { value: false, label: "No pets" },
               { value: true, label: "Yes, one pet" },
             ].map((option) => (
               <label
                 key={String(option.value)}
-                className={`checkout-extras__choice${withPet === option.value ? " checkout-extras__choice--on" : ""}`}
+                className={`relative inline-flex items-center min-h-11 text-[14px] font-medium text-body-text cursor-pointer px-4 py-0 rounded-full
+                  border border-solid border-border [&_input]:absolute [&_input]:top-0 [&_input]:right-0 [&_input]:bottom-0
+                  [&_input]:left-0 [&_input]:opacity-0 [&_input]:cursor-pointer ${withPet === option.value ? " [&&]:bg-heading [&&]:text-white [&&]:border-heading" : ""}`}
               >
                 <input
                   type="radio"
@@ -285,7 +286,9 @@ export default function CheckoutExtras({
         </div>
       )}
 
-      <div className="checkout-extras__question checkout-extras__coupon-block">
+      <div className="flex flex-col mb-4.5 gap-1.5 [&>label]:inline-flex [&>label]:items-center [&>label]:text-[14px] [&>label]:font-semibold
+        [&>label]:text-heading [&>label]:gap-1.75 [&_small]:text-[13px] [&_small]:text-body-text pt-4 pb-4.5 bg-[rgba(15,_23,_39,_0.02)]
+        px-4 gap-2 rounded-[10px] border border-solid border-border">
         <label htmlFor="checkout-coupon">
           <Tag size={16} aria-hidden="true" /> Coupon code
         </label>
@@ -295,13 +298,17 @@ export default function CheckoutExtras({
             spent reads as "not applied yet", and the discount is on the bill
             below either way. */}
         {appliedCode && !data?.couponError ? (
-          <p className="checkout-extras__coupon-applied">
+          <p className="flex items-center min-h-11.5 bg-[rgba(28,_107,_63,_0.07)] text-[14px] text-[#1c6b3f] m-0 px-3.5 py-0 gap-2 rounded-[8px] border
+            border-solid border-[rgba(28,_107,_63,_0.28)] [&_svg]:flex-none [&_strong]:font-heading [&_strong]:font-bold
+            [&_strong]:tracking-[1px]">
             <BadgeCheck size={17} aria-hidden="true" />
             <strong>{appliedCode}</strong>
             <span>applied</span>
             <button
               type="button"
-              className="checkout-extras__coupon-remove"
+              className="ml-auto bg-transparent [font-family:inherit] text-[13px] [font-weight:inherit] [font-style:inherit] leading-[inherit]
+                [font-variant:inherit] text-body-text underline underline-offset-[3px] cursor-pointer px-0.5 py-1 border-0
+                [&:hover:not(:disabled)]:text-text disabled:opacity-50 disabled:cursor-progress"
               onClick={() => {
                 setCode("");
                 void apply({ guests, withPet, couponCode: "" });
@@ -312,9 +319,17 @@ export default function CheckoutExtras({
             </button>
           </p>
         ) : (
-          <div className="checkout-extras__coupon">
+          <div className="grid grid-cols-[minmax(0,_1fr)_auto] gap-2 max-[560.001px]:grid-cols-1">
             <input
-              className="checkout-extras__field checkout-extras__field--code"
+              className="min-h-11.5 bg-background [font-family:inherit] text-[15px] [font-weight:inherit] [font-style:inherit] leading-[inherit]
+                [font-variant:inherit] text-text [transition:border-color_160ms_ease,_box-shadow_160ms_ease] px-3.5 py-0 rounded-[8px] border
+                border-solid border-[rgba(15,_23,_39,_0.14)] [select&]:appearance-none [select&]:pr-10
+                [select&]:bg-[url('/icons/chevron-down.svg')]
+                [select&]:bg-no-repeat [select&]:[background-position:right_14px_center] [select&]:cursor-pointer
+                [&::placeholder]:text-[rgba(15,_23,_39,_0.32)] [&::placeholder]:tracking-[0.5px] focus:[outline:none]
+                focus:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.18)] focus:border-link focus-visible:[outline:none]
+                focus-visible:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.18)] focus-visible:border-link [&&]:font-heading [&&]:text-[14px]
+                [&&]:font-semibold [&&]:tracking-[1.2px] [&&]:uppercase"
               id="checkout-coupon"
               value={code}
               onChange={(event) => setCode(event.target.value.toUpperCase())}
@@ -333,7 +348,10 @@ export default function CheckoutExtras({
             />
             <button
               type="button"
-              className="checkout-extras__apply"
+              className="min-h-11.5 bg-button-bg text-button-text font-heading text-[14px] font-bold cursor-pointer
+                [transition:background-color_200ms_ease,_opacity_200ms_ease] px-5.5 py-0 rounded-[8px] border-0
+                [&:hover:not(:disabled)]:bg-[#2b3433] disabled:bg-transparent disabled:text-muted-text disabled:cursor-not-allowed disabled:border
+                disabled:border-solid disabled:border-border focus-visible:[outline:none] focus-visible:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.3)]"
               onClick={() => {
                 void apply({ guests, withPet, couponCode: code });
               }}
@@ -345,7 +363,8 @@ export default function CheckoutExtras({
         )}
 
         {data?.couponError && (
-          <small className="checkout-extras__coupon-error">
+          <small className="[small&]:flex [small&]:items-start [small&]:text-[13px] [small&]:leading-[1.45] [small&]:text-[#8a1c2b] [small&]:gap-1.5
+            [&_svg]:flex-none [&_svg]:mt-0.75">
             <AlertCircle size={14} aria-hidden="true" />
             <span>{data.couponError}</span>
           </small>
@@ -353,19 +372,21 @@ export default function CheckoutExtras({
       </div>
 
       {quote && (
-        <dl className="checkout-extras__bill">
+        <dl className="pt-4 pb-0 border-t border-solid border-t-border text-[15px] mx-0 my-5.5 px-0 [&>div]:flex [&>div]:items-baseline
+          [&>div]:justify-between [&>div]:px-0 [&>div]:py-1.75 [&>div]:gap-4 [&_dt]:text-body-text [&_dd]:tabular-nums [&_dd]:text-heading
+          [&_dd]:m-0">
           {quote.lines.map((line) => (
             <div key={line.label}>
               <dt>{line.label}</dt>
               <dd>{money(line.amountCents)}</dd>
             </div>
           ))}
-          <div className="checkout-extras__bill-subtotal">
+          <div className="border-t border-solid border-t-border mt-1.75">
             <dt>Subtotal</dt>
             <dd>{money(quote.subtotalCents)}</dd>
           </div>
           {quote.discountCents > 0 && (
-            <div className="checkout-extras__bill-discount">
+            <div className="[&_dt]:text-[#1c6b3f] [&_dd]:text-[#1c6b3f]">
               <dt>Discount{appliedCode ? ` (${appliedCode})` : ""}</dt>
               <dd>−{money(quote.discountCents)}</dd>
             </div>
@@ -388,7 +409,7 @@ export default function CheckoutExtras({
               <dd>{money(quote.tourismCents)}</dd>
             </div>
           )}
-          <div className="checkout-extras__bill-total">
+          <div className="border-t border-solid border-t-border mt-1.75 text-[18px] font-bold [&_dt]:text-heading [&_dd]:text-heading">
             <dt>Total</dt>
             <dd>{money(quote.totalCents)}</dd>
           </div>
@@ -396,7 +417,7 @@ export default function CheckoutExtras({
       )}
 
       {error && (
-        <p className="checkout-page__error" role="alert">
+        <p className="flex items-start mt-3 mb-0 text-[13px] leading-[1.5] text-[#8a1c2b] mx-0 gap-2 [&_svg]:flex-none [&_svg]:mt-0.5" role="alert">
           <AlertCircle size={15} aria-hidden="true" />
           <span>{error}</span>
         </p>
@@ -406,7 +427,10 @@ export default function CheckoutExtras({
           one did and the old bill was dropped. There is no figure to pay, so
           the only way forward is to ask again. */}
       {!quote && !loading && (
-        <button type="button" className="checkout-extras__apply" onClick={() => void apply(sent.current)}>
+        <button type="button" className="min-h-11.5 bg-button-bg text-button-text font-heading text-[14px] font-bold cursor-pointer
+          [transition:background-color_200ms_ease,_opacity_200ms_ease] px-5.5 py-0 rounded-[8px] border-0
+          [&:hover:not(:disabled)]:bg-[#2b3433] disabled:bg-transparent disabled:text-muted-text disabled:cursor-not-allowed disabled:border
+          disabled:border-solid disabled:border-border focus-visible:[outline:none] focus-visible:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.3)]" onClick={() => void apply(sent.current)}>
           Try again
         </button>
       )}
@@ -414,12 +438,26 @@ export default function CheckoutExtras({
       {!confirmed && (loading || quote) && (
         <button
           type="button"
-          className="checkout-page__button checkout-extras__confirm"
+          className="checkout-page__button [&[aria-busy=true]]:cursor-progress [&[aria-busy=true]]:opacity-75 [&[aria-busy=true]:hover]:[transform:none]
+            [.checkout-page_[data-slot=button]&]:flex [.checkout-page_[data-slot=button]&]:items-center
+            [.checkout-page_[data-slot=button]&]:justify-center [.checkout-page_[data-slot=button]&]:w-full
+            [.checkout-page_[data-slot=button]&]:min-h-13 [.checkout-page_[data-slot=button]&]:bg-button-bg
+            [.checkout-page_[data-slot=button]&]:text-button-text [.checkout-page_[data-slot=button]&]:font-heading
+            [.checkout-page_[data-slot=button]&]:text-[15px] [.checkout-page_[data-slot=button]&]:font-bold
+            [.checkout-page_[data-slot=button]&]:no-underline [.checkout-page_[data-slot=button]&]:cursor-pointer
+            [.checkout-page_[data-slot=button]&]:[transition:background-color_200ms_ease] [.checkout-page_[data-slot=button]&]:px-5
+            [.checkout-page_[data-slot=button]&]:py-0 [.checkout-page_[data-slot=button]&]:gap-2.5
+            [.checkout-page_[data-slot=button]&]:rounded-[8px] [.checkout-page_[data-slot=button]&]:border-0 flex items-center justify-center
+            w-full min-h-13 bg-button-bg text-button-text font-heading text-[15px] font-bold no-underline cursor-pointer
+            [transition:background-color_200ms_ease] px-5 py-0 gap-2.5 rounded-[8px] border-0
+            [.checkout-page_[data-slot=button]&:hover:not(:disabled)]:bg-[#2b3433] hover:bg-[#2b3433] disabled:opacity-75
+            disabled:cursor-progress checkout-extras__confirm [.checkout-extras\_\_confirm&]:min-h-13.5
+            [.checkout-extras\_\_confirm&]:text-[16px]"
           onClick={() => setConfirmed(true)}
           disabled={loading || !quote}
           aria-busy={loading}
         >
-          {loading ? <Loader2 size={16} className="booking-widget__spin" aria-hidden="true" /> : null}
+          {loading ? <Loader2 size={16} className="grow-0 shrink-0 basis-5.5 w-5.5 [animation:booking-spin_0.9s_linear_infinite] motion-reduce:[animation-duration:2.4s]" aria-hidden="true" /> : null}
           {loading || !quote ? "Working out the price" : `Confirm ${money(quote.totalCents)} and choose payment`}
         </button>
       )}
@@ -428,7 +466,7 @@ export default function CheckoutExtras({
           to, and handed that quote's total. The amount a panel shows is the
           amount on the booking, because the booking was just written with it. */}
       {confirmed && !loading && quote && (
-        <div className="checkout-extras__payment">
+        <div className="mt-2">
           <CheckoutMethods
             sessionId={sessionId}
             methods={methods}

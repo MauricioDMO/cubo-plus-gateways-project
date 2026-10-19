@@ -25,14 +25,13 @@ export default function Error({
   }, [error]);
 
   return (
-    <div style={{ textAlign: "center", padding: "40px 0" }}>
+    <div className="py-10 text-center">
       <h2>Something went wrong</h2>
       <p>We hit a problem loading this page. Please try again.</p>
       <button
         type="button"
-        className="btn-cta"
+        className="inline-flex cursor-pointer items-center justify-center rounded-full border-0 bg-button-bg px-7 py-2.25 font-body text-[16px] font-medium whitespace-nowrap text-button-text"
         onClick={() => (retry ?? reset)()}
-        style={{ border: "none", cursor: "pointer" }}
       >
         Try again
       </button>

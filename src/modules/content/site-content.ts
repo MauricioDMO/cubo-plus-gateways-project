@@ -711,8 +711,7 @@ export type LookProps = { className?: string; style?: Record<string, string> };
 /**
  * The class and CSS variables that apply a slot's alignment and size, merged
  * with the element's own class. Rendered for visitors too -- this is how it
- * looks, not an editing aid. The rules live in globals.css (.gx-align-d etc.),
- * each inside the breakpoint it belongs to.
+ * looks, not an editing aid. Each Tailwind variant applies at its own breakpoint.
  */
 export function lookProps(content: SiteContent, slotId: string, baseClass?: string): LookProps {
   const classes = baseClass ? [baseClass] : [];
@@ -725,10 +724,10 @@ export function lookProps(content: SiteContent, slotId: string, baseClass?: stri
     classes.push(className);
     style[variable] = value;
   };
-  if (isAlignValue(align)) add("gx-align-d", "--gx-align", align);
-  if (isAlignValue(alignMobile)) add("gx-align-m", "--gx-align-m", alignMobile);
-  if (isSizeValue(size)) add("gx-size-d", "--gx-size", size);
-  if (isSizeValue(sizeMobile)) add("gx-size-m", "--gx-size-m", sizeMobile);
+  if (isAlignValue(align)) add("min-[641px]:[text-align:var(--gx-align)]!", "--gx-align", align);
+  if (isAlignValue(alignMobile)) add("max-[640.001px]:[text-align:var(--gx-align-m)]!", "--gx-align-m", alignMobile);
+  if (isSizeValue(size)) add("min-[641px]:[zoom:var(--gx-size)]", "--gx-size", size);
+  if (isSizeValue(sizeMobile)) add("max-[640.001px]:[zoom:var(--gx-size-m)]", "--gx-size-m", sizeMobile);
   return {
     className: classes.length > 0 ? classes.join(" ") : undefined,
     style: Object.keys(style).length > 0 ? style : undefined,
@@ -747,13 +746,12 @@ export function focusProps(
 ): LookProps {
   const classes = baseClass ? [baseClass] : [];
   const style: Record<string, string> = {};
-  const prefix = background ? "gx-bg-focus" : "gx-focus";
   if (isFocusValue(desktop)) {
-    classes.push(`${prefix}-d`);
+    classes.push(background ? "min-[641px]:[background-position:var(--gx-focus)]!" : "min-[641px]:object-[var(--gx-focus)]!");
     style["--gx-focus"] = desktop;
   }
   if (isFocusValue(mobile)) {
-    classes.push(`${prefix}-m`);
+    classes.push(background ? "max-[640.001px]:[background-position:var(--gx-focus-m)]!" : "max-[640.001px]:object-[var(--gx-focus-m)]!");
     style["--gx-focus-m"] = mobile;
   }
   return {

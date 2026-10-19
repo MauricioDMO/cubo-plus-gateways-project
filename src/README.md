@@ -70,6 +70,13 @@ npx next build          # production build
 - Tests live in an area's `_test_/` folder. `vitest.config.mts` explicitly discovers those folders; `_test_/organization.test.ts` prevents misplaced tests and obsolete imports. Run `npm test`, `npx tsc --noEmit --incremental false` and `npm run lint` from this directory.
 - Data stays in `data/`, images in `public/`, and tool/Docker/environment configuration remains at the project root. The Bitcoin provider and panel remain student stubs.
 
+### Styling
+
+Tailwind CSS 4 is loaded by `app/globals.css` through `@tailwindcss/postcss`.
+Use complete utility classes in pages and components, including responsive and interaction variants; do not construct utility names from runtime values.
+The global entry contains only design tokens, element defaults and animation keyframes.
+Stored Gutenberg blocks receive static utilities in `shared/security/server/sanitize-html.ts`; dynamic images and editor preferences keep their runtime values.
+
 ## How data works
 
 - The site does not connect to a database. `data/*.json` holds everything a visitor can see on the public site: pages, blog posts, listings with their prices, terms and the media index.

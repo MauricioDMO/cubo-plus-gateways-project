@@ -12,6 +12,14 @@ import { formatStayDate } from "@/shared/utils/time";
 
 type ReceiptState = "confirmed" | "pending" | "cancelled" | "refunded" | "missing";
 
+const receiptAccent: Record<ReceiptState, string> = {
+  confirmed: "[--receipt-accent:var(--color-success)]",
+  pending: "[--receipt-accent:#b26a00]",
+  cancelled: "[--receipt-accent:rgb(143,30,24)]",
+  refunded: "[--receipt-accent:var(--color-heading)]",
+  missing: "[--receipt-accent:rgb(90,98,112)]",
+};
+
 /* One shell for all six outcomes of this page, so a guest who lands here after
    a failed or half-finished payment gets the same hierarchy -- status, facts,
    next action -- as one whose booking went through. */
@@ -35,18 +43,24 @@ function ReceiptShell({
   footnote?: ReactNode;
 }) {
   return (
-    <article className={`booking-receipt booking-receipt--${state}`}>
-      <div className="booking-receipt__status">
-        <span className="booking-receipt__icon" aria-hidden="true">
+    <article className={`w-[min(100%_-_32px,_640px)] mt-[clamp(32px,_5vw,_64px)] mb-[clamp(56px,_7vw,_88px)] mx-auto ${receiptAccent[state]}`}>
+      <div className="grid justify-items-center text-center mb-7 gap-3 [&_h1]:text-[clamp(28px,_4.4vw,_40px)] [&_h1]:leading-[1.16] [&_h1]:m-0">
+        <span className="grid place-items-center w-14 h-14 bg-[color-mix(in_oklch,_var(--receipt-accent)_14%,_var(--color-background))]
+          text-[var(--receipt-accent)] rounded-full" aria-hidden="true">
           {icon}
         </span>
-        <p className="booking-receipt__eyebrow">{eyebrow}</p>
+        <p className="text-[var(--receipt-accent)] text-[11px] font-extrabold tracking-[0.09em] leading-none uppercase m-0">{eyebrow}</p>
         <h1>{title}</h1>
-        <p className="booking-receipt__lede">{lede}</p>
+        <p className="max-w-[46ch] text-body-text text-[16px] leading-[26px] m-0">{lede}</p>
       </div>
       {children}
-      <div className="booking-receipt__actions">{actions}</div>
-      {footnote ? <p className="booking-receipt__footnote">{footnote}</p> : null}
+      <div className="flex flex-wrap mt-6 gap-3 [&_a]:inline-flex [&_a]:items-center [&_a]:justify-center [&_a]:grow [&_a]:shrink [&_a]:basis-50
+        [&_a]:min-h-11.5 [&_a]:text-[15px] [&_a]:font-bold [&_a]:no-underline
+        [&_a]:[transition:background_0.16s,_color_0.16s,_transform_0.16s,_box-shadow_0.16s] [&_a]:px-5.5 [&_a]:py-0 [&_a]:gap-2
+        [&_a]:rounded-full [&_a:hover]:[transform:translateY(-1px)] [&_a:active]:[transform:translateY(0)]
+        [&_a:focus-visible]:[outline:none] [&_a:focus-visible]:shadow-[0_0_0_3px_rgba(3,_155,_229,_0.35)] [&_a]:max-[420.001px]:grow
+        [&_a]:max-[420.001px]:shrink [&_a]:max-[420.001px]:basis-full">{actions}</div>
+      {footnote ? <p className="mt-5 mb-0 text-muted-text text-[13px] leading-[20px] text-center [overflow-wrap:anywhere] mx-0">{footnote}</p> : null}
     </article>
   );
 }
@@ -54,8 +68,10 @@ function ReceiptShell({
 function Row({ label, value }: { label: string; value: ReactNode }) {
   return (
     <li>
-      <span className="booking-receipt__label">{label}</span>
-      <span className="booking-receipt__value">{value}</span>
+      <span className="grow-0 shrink-0 basis-[auto] text-muted-text text-[13px] font-semibold leading-[22px] [.booking-receipt\_\_total_&]:text-heading">{label}</span>
+      <span className="min-w-0 text-heading text-[15px] font-semibold tabular-nums leading-[22px] text-right [overflow-wrap:anywhere]
+        [.booking-receipt\_\_total_&]:font-heading [.booking-receipt\_\_total_&]:text-[24px] [.booking-receipt\_\_total_&]:font-bold
+        [.booking-receipt\_\_total_&]:leading-[1.15] max-[420.001px]:text-left">{value}</span>
     </li>
   );
 }
@@ -99,11 +115,12 @@ function ConciergeInvitation({
   checkOut: string;
 }) {
   return (
-    <section className="receipt-concierge" aria-labelledby="receipt-concierge-title">
-      <h2 className="receipt-concierge__title" id="receipt-concierge-title">
+    <section className="mt-[clamp(34px,_5vw,_52px)] mb-0 mx-0" aria-labelledby="receipt-concierge-title">
+      <h2 className="text-[24px] leading-[1.25] m-0 [&::before]:content-[''] [&::before]:block [&::before]:w-6 [&::before]:mb-3.5
+        [&::before]:border-t-[2px] [&::before]:border-solid [&::before]:border-t-heading" id="receipt-concierge-title">
         Now the rest of the trip
       </h2>
-      <p className="receipt-concierge__lede">
+      <p className="mt-2.5 mb-0 max-w-[56ch] text-body-text text-[15px] leading-[1.55] mx-0">
         Your dates are held. Tell us what you want around them and we arrange it before you land
         &mdash; the same people we use ourselves on this coast.
       </p>
@@ -111,15 +128,18 @@ function ConciergeInvitation({
       {/* An index, not a row of cards: the thing on the left, what it means
           on the right, hairlines between. The same treatment the home page
           gives the concierge. */}
-      <ul className="receipt-concierge__list">
+      <ul className="mt-5.5 mb-0 list-none border-t border-solid border-t-border mx-0 p-0 [&_li]:border-b [&_li]:border-solid [&_li]:border-b-border">
         {AFTER_BOOKING_SERVICES.map((service) => (
           <li key={service}>
             <Link
-              className="receipt-concierge__service"
+              className="grid grid-cols-[minmax(0,_200px)_minmax(0,_1fr)_16px] items-center gap-y-1.5 gap-x-4.5 text-inherit no-underline px-0.5 py-3.5
+                [&>svg]:text-muted-text [&>svg]:[transition:transform_180ms_ease] [&:hover>svg]:[transform:translateX(3px)]
+                focus-visible:[outline:2px_solid_var(--color-heading)] focus-visible:outline-offset-[3px] [&>svg]:motion-reduce:transition-none
+                max-[560.001px]:grid-cols-1 max-[560.001px]:gap-1 [&>svg]:max-[560.001px]:hidden"
               href={buildConciergeHref({ service, listingSlug, checkIn, checkOut })}
             >
-              <span className="receipt-concierge__label">{CONCIERGE_SERVICE_LABELS[service]}</span>
-              <span className="receipt-concierge__detail">
+              <span className="font-heading text-[16px] font-medium text-heading">{CONCIERGE_SERVICE_LABELS[service]}</span>
+              <span className="text-body-text text-[14px] leading-[1.5]">
                 {CONCIERGE_SERVICE_DETAILS[service].description}
               </span>
               <ArrowRight size={16} aria-hidden="true" />
@@ -129,7 +149,8 @@ function ConciergeInvitation({
       </ul>
 
       <Link
-        className="receipt-concierge__cta"
+        className="inline-flex items-center justify-center min-h-11.5 mt-6 mb-0 bg-button-bg text-button-text text-[14px] font-semibold
+          tracking-[0.02em] no-underline mx-0 px-6.5 py-0 rounded-[6px] hover:bg-[rgb(28,_36,_35)]"
         href={buildConciergeHref({ service: "plan_everything", listingSlug, checkIn, checkOut })}
       >
         Plan the whole stay with us
@@ -143,10 +164,10 @@ export default function BookingConfirmationTemplate({ data }: { data: BookingCon
 
   const browseActions = (
     <>
-      <Link className="booking-receipt__action--primary" href="/properties">
+      <Link className="[&&]:bg-button-bg [&&]:text-button-text hover:bg-[rgb(28,_36,_35)]" href="/properties">
         Browse properties
       </Link>
-      <Link className="booking-receipt__action--secondary" href="/contact-us">
+      <Link className="[&&]:bg-[rgba(15,_23,_39,_0.05)] [&&]:text-heading hover:bg-[rgba(15,_23,_39,_0.09)]" href="/contact-us">
         Contact our team
       </Link>
     </>
@@ -190,12 +211,12 @@ export default function BookingConfirmationTemplate({ data }: { data: BookingCon
         actions={
           <>
             <Link
-              className="booking-receipt__action--primary"
+              className="[&&]:bg-button-bg [&&]:text-button-text hover:bg-[rgb(28,_36,_35)]"
               href={`/booking-confirmation?session_id=${encodeURIComponent(sessionId)}`}
             >
               Refresh status
             </Link>
-            <Link className="booking-receipt__action--secondary" href="/contact-us">
+            <Link className="[&&]:bg-[rgba(15,_23,_39,_0.05)] [&&]:text-heading hover:bg-[rgba(15,_23,_39,_0.09)]" href="/contact-us">
               Contact our team
             </Link>
           </>
@@ -249,32 +270,37 @@ export default function BookingConfirmationTemplate({ data }: { data: BookingCon
       actions={
         <>
           <Link
-            className="booking-receipt__action--primary"
+            className="[&&]:bg-button-bg [&&]:text-button-text hover:bg-[rgb(28,_36,_35)]"
             href={listing?.slug ? `/listing/${listing.slug}` : "/properties"}
           >
             View your property
           </Link>
-          <Link className="booking-receipt__action--secondary" href="/contact-us">
+          <Link className="[&&]:bg-[rgba(15,_23,_39,_0.05)] [&&]:text-heading hover:bg-[rgba(15,_23,_39,_0.09)]" href="/contact-us">
             Contact our team
           </Link>
         </>
       }
       footnote={<>Payment reference: {sessionId}. Confirmation email: {booking.guest_email}.</>}
     >
-      <section className="booking-receipt__card" aria-label="Booking details">
-        <div className="booking-receipt__card-head">
+      <section className="bg-background shadow-[0_5px_30px_rgba(7,_36,_86,_0.075)] overflow-hidden rounded-[10px]" aria-label="Booking details">
+        <div className="flex items-baseline justify-between border-b border-solid border-b-border px-5 py-4 gap-3 [&_h2]:text-[15px] [&_h2]:font-semibold
+          [&_h2]:leading-[22px] [&_h2]:m-0">
           <h2>Your reservation</h2>
-          <span className="booking-receipt__reference">{sessionId}</span>
+          <span className="text-muted-text text-[12px] tabular-nums leading-[22px] [overflow-wrap:anywhere]">{sessionId}</span>
         </div>
-        <ul className="booking-receipt__rows">
+        <ul className="booking-receipt__rows list-none m-0 p-0 [&_li]:flex [&_li]:items-baseline [&_li]:justify-between [&_li]:px-5 [&_li]:py-3
+          [&_li]:gap-4 [&_li:not(:last-child)]:border-b [&_li:not(:last-child)]:border-solid [&_li:not(:last-child)]:border-b-border
+          [&_li]:max-[420.001px]:items-start [&_li]:max-[420.001px]:flex-col [&_li]:max-[420.001px]:gap-0.5">
           <Row label="Property" value={listing?.title ?? "Your listing"} />
           <Row label="Guest" value={booking.guest_name} />
           <Row label="Check-in" value={formatDate(booking.check_in)} />
           <Row label="Check-out" value={formatDate(booking.check_out)} />
           <Row label="Nights" value={booking.nights} />
-          <li className="booking-receipt__total">
-            <span className="booking-receipt__label">Total paid</span>
-            <span className="booking-receipt__value">{money(booking.total_amount_cents)}</span>
+          <li className="booking-receipt__total [.booking-receipt\_\_rows_li&]:bg-[rgba(15,_23,_39,_0.035)] [.booking-receipt\_\_rows_li&]:py-4">
+            <span className="grow-0 shrink-0 basis-[auto] text-muted-text text-[13px] font-semibold leading-[22px] [.booking-receipt\_\_total_&]:text-heading">Total paid</span>
+            <span className="min-w-0 text-heading text-[15px] font-semibold tabular-nums leading-[22px] text-right [overflow-wrap:anywhere]
+              [.booking-receipt\_\_total_&]:font-heading [.booking-receipt\_\_total_&]:text-[24px] [.booking-receipt\_\_total_&]:font-bold
+              [.booking-receipt\_\_total_&]:leading-[1.15] max-[420.001px]:text-left">{money(booking.total_amount_cents)}</span>
           </li>
         </ul>
       </section>

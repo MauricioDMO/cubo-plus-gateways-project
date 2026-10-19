@@ -42,7 +42,22 @@ export default function NavLink({
   return (
     <Link
       href={href}
-      className={[className, isActive ? "is-active" : null].filter(Boolean).join(" ") || undefined}
+      className={[className, isActive ? String.raw`[.site-nav\_\_list>li>a&]:text-[rgb(57,_67,_66)] [.site-nav\_\_list>li>a&::before]:content-['']
+        [.site-nav\_\_list>li>a&::before]:absolute [.site-nav\_\_list>li>a&::before]:top-0
+        [.site-nav\_\_list>li>a&::before]:left-0 [.site-nav\_\_list>li>a&::before]:right-0
+        [.site-nav\_\_list>li>a&::before]:h-0.75 [.site-nav\_\_list>li>a&::before]:bg-accent
+        [.site-nav\_\_submenu_a&]:text-[rgb(57,_67,_66)] [.mobile-nav\_\_list>li>.mobile-nav\_\_link&]:text-[rgb(57,_67,_66)]
+        [.mobile-nav\_\_list>li>.mobile-nav\_\_link&::before]:content-['']
+        [.mobile-nav\_\_list>li>.mobile-nav\_\_link&::before]:absolute
+        [.mobile-nav\_\_list>li>.mobile-nav\_\_link&::before]:top-0
+        [.mobile-nav\_\_list>li>.mobile-nav\_\_link&::before]:bottom-0
+        [.mobile-nav\_\_list>li>.mobile-nav\_\_link&::before]:left-[-32px]
+        [.mobile-nav\_\_list>li>.mobile-nav\_\_link&::before]:w-1
+        [.mobile-nav\_\_list>li>.mobile-nav\_\_link&::before]:rounded-tr-[9999px]
+        [.mobile-nav\_\_list>li>.mobile-nav\_\_link&::before]:rounded-br-[9999px]
+        [.mobile-nav\_\_list>li>.mobile-nav\_\_link&::before]:bg-accent
+        [.mobile-nav\_\_submenu_.mobile-nav\_\_link&]:text-[rgb(57,_67,_66)]
+        [.mobile-nav\_\_list>li>.mobile-nav\_\_link&::before]:max-[767.981px]:left-[-24px]` : null].filter(Boolean).join(" ") || undefined}
       aria-current={isActive ? "page" : undefined}
       onClick={onNavigate}
     >

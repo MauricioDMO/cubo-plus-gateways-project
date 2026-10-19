@@ -94,6 +94,29 @@ const ALLOWED_STYLES: sanitizeHtml.IOptions["allowedStyles"] = {
 
 const STYLE_BLOCK = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
 
+// Stored Gutenberg HTML cannot supply build-time utilities itself. Map its
+// supported blocks here so pages, posts and listing descriptions share Tailwind.
+const BLOCK_CLASSES: Record<string, string> = {
+  "gx-block": "[&_h2]:m-0 [&_h2]:mb-3.5 [&_h2]:text-[34px] [&_h2]:leading-[1.12] [&_p]:m-0 [&_p]:mb-4 [&_p]:text-base [&_p]:leading-[1.72]",
+  "gx-figure": "[&_img]:block [&_img]:w-full [&_img]:h-auto [&_img]:rounded-[10px] [&_figcaption]:mt-2 [&_figcaption]:text-[#667085] [&_figcaption]:text-[13px] [&_figcaption]:leading-[1.5]",
+  "wp-block-separator": "border-0 border-t-2 border-border w-25 mx-auto my-8 [&.is-style-wide]:w-full [&.is-style-wide]:mx-0 [&.is-style-wide]:my-10",
+  "wp-block-image": "mb-6 [&.aligncenter]:text-center [&_figcaption]:text-sm [&_figcaption]:leading-[22px] [&_figcaption]:italic [&_figcaption]:text-body-text [&_figcaption]:mt-2",
+  "wp-element-caption": "text-sm leading-[22px] italic text-body-text mt-2",
+  "wp-block-buttons": "flex flex-wrap mb-6 gap-3",
+  "wp-block-button__link": "wp-block-button__link inline-flex items-center justify-center bg-button-bg text-button-text font-body font-medium text-base no-underline whitespace-nowrap cursor-pointer px-7 py-2.25 rounded-full border-0",
+  "wp-block-button": String.raw`[&.is-style-secondary_.wp-block-button\_\_link]:bg-transparent [&.is-style-secondary_.wp-block-button\_\_link]:text-button-bg [&.is-style-secondary_.wp-block-button\_\_link]:px-6.5 [&.is-style-secondary_.wp-block-button\_\_link]:py-1.75 [&.is-style-secondary_.wp-block-button\_\_link]:border-2 [&.is-style-secondary_.wp-block-button\_\_link]:border-button-bg`,
+  "wp-block-spacer": "block w-full",
+  "wp-block-list": "list-outside",
+  "wp-block-columns": "flex flex-wrap mb-6 gap-8 max-[768.001px]:flex-col",
+  "wp-block-column": "flex-1 min-w-0 max-[768.001px]:flex-auto",
+  "wp-block-cover": "relative flex items-center min-h-105 mb-6 overflow-hidden text-white text-center [&.is-light]:text-heading",
+  "wp-block-cover__image-background": "absolute inset-0 z-0 w-full h-full object-cover",
+  "wp-block-cover__background": "absolute inset-0 z-1 bg-black [&.has-background-dim]:opacity-50 [&.has-background-dim-0]:opacity-0",
+  "wp-block-cover__inner-container": "relative z-2 w-full p-8 [&_h1]:text-inherit [&_h2]:text-inherit [&_h3]:text-inherit [&_h4]:text-inherit [&_p]:text-inherit",
+  "wp-block-jetpack-contact-form": "hidden",
+  "has-text-align-center": "text-center",
+};
+
 /*
  * What gets stripped from a builder stylesheet, and why:
  *
@@ -217,6 +240,12 @@ export function sanitizeContentHtml(html: string): string {
     exclusiveFilter: (frame) =>
       frame.tag === "iframe" && (!frame.attribs.src || !hasEmbedVideoId(frame.attribs.src)),
     transformTags: {
+      "*": (tagName, attribs) => ({
+        tagName,
+        attribs: attribs.class
+          ? { ...attribs, class: attribs.class.split(/\s+/).map((name) => BLOCK_CLASSES[name] ?? name).join(" ") }
+          : attribs,
+      }),
       // A target="_blank" link an admin left in place shouldn't give the
       // linked page a handle back to this one via window.opener.
       a: sanitizeHtml.simpleTransform("a", { rel: "noopener noreferrer" }, true),

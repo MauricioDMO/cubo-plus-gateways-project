@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Lexend, Montserrat } from "next/font/google";
-import "react-phone-number-input/style.css";
 import "./globals.css";
 import { mediaPublicUrl } from "@/shared/media/media";
 
@@ -94,8 +93,8 @@ export const metadata: Metadata = {
  */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${lexend.variable} ${montserrat.variable}`}>
-      <body>{children}</body>
+    <html lang="en" className={` ${inter.variable} ${lexend.variable} ${montserrat.variable} h-full max-w-screen overflow-x-hidden`}>
+      <body className="flex min-h-full max-w-screen flex-col overflow-x-hidden bg-background font-body text-[16px] leading-[30px] text-body-text antialiased">{children}</body>
     </html>
   );
 }

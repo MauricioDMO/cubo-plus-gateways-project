@@ -31,12 +31,12 @@ describe("PhotoTour", () => {
   it("renders every room and photograph in one continuous inline tour", () => {
     const html = renderToStaticMarkup(<PhotoTour groups={groups} title="Casa Brisa" />);
 
-    expect(html).toContain('class="photo-tour-section" id="photos"');
+    expect(html).toContain('id="photos"');
     /* Named twice on purpose: the visible heading is what a phone needs above
        the room links, and the aria-label is what a screen reader announces for
        the region itself. */
     expect(html).toContain('aria-label="Photo tour"');
-    expect(html).toContain('<h2 class="photo-tour-section__title">Photo tour</h2>');
+    expect(html).toMatch(/<h2[^>]*>Photo tour<\/h2>/);
     // The photo count stays gone -- it was taken off the mobile opener too.
     expect(html).not.toContain("photos, room by room");
     expect(html).toContain('id="tour-living-area"');
@@ -50,7 +50,7 @@ describe("PhotoTour", () => {
   it("keeps the room links as anchors that need no JavaScript", () => {
     const html = renderToStaticMarkup(<PhotoTour groups={groups} title="Casa Brisa" />);
 
-    expect(html).toContain('<nav class="photo-tour-section__rooms" aria-label="Jump to a room">');
+    expect(html).toMatch(/<nav[^>]*aria-label="Jump to a room">/);
     expect(html).toContain('href="#tour-living-area"');
     expect(html).toContain('href="#tour-bedrooms"');
   });
@@ -66,7 +66,7 @@ describe("PhotoTour", () => {
     // The href, not the filename in it: with no Supabase URL configured --
     // which is the case in this suite -- mediaPublicUrl returns a placeholder,
     // and a test that asserted the path would be testing the environment.
-    expect(html.match(/class="photo-tour__open" href="/g)).toHaveLength(3);
+    expect(html.match(/<a[^>]*href="[^#][^"]*"[^>]*aria-haspopup="dialog"/g)).toHaveLength(3);
     expect(html.match(/aria-haspopup="dialog"/g)).toHaveLength(3);
     expect(html).toContain('aria-label="View larger: Sunlit living room facing the ocean"');
     // The photograph with no alt text of its own falls back to the property
@@ -98,11 +98,11 @@ describe("PhotoTour", () => {
       <PhotoTour groups={[groups[1]]} title="Casa Brisa" />
     );
 
-    expect(html.match(/class="photo-tour__open"/g)).toHaveLength(1);
+    expect(html.match(/<a[^>]*aria-haspopup="dialog"/g)).toHaveLength(1);
     expect(html).toContain('width="600" height="900"');
     expect(html).toContain("/_next/image?");
     // One room is not a table of contents.
-    expect(html).not.toContain("photo-tour-section__rooms");
+    expect(html).not.toContain('aria-label="Jump to a room"');
   });
 
   it("renders nothing when the listing has no tour photos", () => {

@@ -56,6 +56,6 @@ export const SUBMIT_LISTING_HREF = "/contact-us";
 
 // The live breakpoint between the full nav and the burger menu:
 // `@media only screen and (max-width: 74.99em)` in the RentalHive stylesheet,
-// i.e. 1199.84px. Mirrored in globals.css; restated here as documentation for
+// i.e. 1199.84px. Mirrored in the navigation's Tailwind variants; restated here for
 // why MobileNav renders on every page even though it is invisible on desktop.
 export const NAV_BURGER_MAX_WIDTH_PX = 1199.84;

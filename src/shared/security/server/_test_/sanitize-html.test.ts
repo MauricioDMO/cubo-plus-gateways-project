@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { sanitizeContentHtml, sanitizeInlineHtml } from "@/shared/security/server/sanitize-html";
 import { ALL_SLOTS } from "@/modules/content/site-content";
+import pages from "@/data/pages.json";
+import posts from "@/data/posts.json";
+import listings from "@/data/listings.json";
 
 describe("sanitizeInlineHtml", () => {
   it("keeps paragraphs, bold, italic and safe links", () => {
@@ -38,6 +41,12 @@ describe("sanitizeInlineHtml", () => {
 });
 
 describe("sanitizeContentHtml", () => {
+  it("keeps every seeded page, post and listing free of embedded CSS", () => {
+    for (const item of [...pages, ...posts, ...listings]) {
+      expect(item.content_html, item.slug).not.toMatch(/<style\b|\bstyle\s*=/i);
+    }
+  });
+
   it("strips script tags entirely", () => {
     expect(sanitizeContentHtml('<p>hi</p><script>alert(1)</script>')).toBe("<p>hi</p>");
   });
@@ -51,13 +60,27 @@ describe("sanitizeContentHtml", () => {
     expect(out).not.toContain("javascript:");
   });
 
-  it("keeps ordinary WP-style markup untouched", () => {
+  it("keeps ordinary WP-style content", () => {
     const html =
       '<div class="wp-block-buttons"><figure class="wp-block-image"><img src="https://x.co/a.jpg" alt="a"></figure>' +
       '<p><strong>Bold</strong> text with a <a href="https://example.com">link</a>.</p></div>';
     expect(sanitizeContentHtml(html)).toContain('<img src="https://x.co/a.jpg" alt="a"');
     expect(sanitizeContentHtml(html)).toContain("<strong>Bold</strong>");
     expect(sanitizeContentHtml(html)).toContain('href="https://example.com"');
+  });
+
+  it("converts stored block styles to static Tailwind utilities without weakening sanitization", () => {
+    const out = sanitizeContentHtml(
+      '<div class="wp-block-columns"><figure class="wp-block-image aligncenter"><img src="/photo.jpg" onerror="alert(1)"></figure>' +
+      '<div class="wp-block-button is-style-secondary"><a class="wp-block-button__link" href="/about" target="_blank">Read more</a></div></div>'
+    );
+    expect(out).toContain("flex flex-wrap mb-6 gap-8 max-[768.001px]:flex-col");
+    expect(out).toContain("[&amp;.aligncenter]:text-center");
+    expect(out).toContain("bg-button-bg text-button-text");
+    expect(out).toContain("is-style-secondary");
+    expect(out).toContain('rel="noopener noreferrer"');
+    expect(out).not.toContain("onerror");
+    expect(out).not.toContain("<style>");
   });
 
   it("drops object and embed tags", () => {

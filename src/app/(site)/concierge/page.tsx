@@ -58,7 +58,8 @@ export default async function ConciergePage({
   const [hero] = heroId ? await getMediaByIds([heroId]) : [];
 
   return (
-    <article className="concierge">
+    <article className="w-[min(100%_-_48px,_1100px)] mt-0 mb-[clamp(56px,_7vw,_92px)] mx-auto
+      [@media_(min-width:_641px)_and_(max-width:_760px)]:w-[min(100%_-_28px,_1100px)] max-[640.001px]:w-full">
       <JsonLd
         data={breadcrumbSchema([
           { name: "Home", path: "/" },
@@ -66,10 +67,13 @@ export default async function ConciergePage({
         ])}
       />
 
-      <header className="concierge__hero">
+      <header className="relative flex items-end min-h-[clamp(340px,_44vw,_520px)] mt-[clamp(24px,_3vw,_40px)] mb-[clamp(40px,_5vw,_64px)] overflow-hidden
+        bg-[#101822] mx-0 p-[clamp(26px,_4vw,_52px)] rounded-[12px] [&::after]:content-[''] [&::after]:absolute [&::after]:top-0
+        [&::after]:right-0 [&::after]:bottom-0 [&::after]:left-0
+        [&::after]:[background:linear-gradient(180deg,_rgba(9,_14,_22,_0.15)_0%,_rgba(9,_14,_22,_0.72)_100%)]">
         {hero && (
           <Image
-            className="concierge__hero-photo"
+            className="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover"
             src={mediaPublicUrl(hero.storage_path)}
             fill
             sizes="(max-width: 1148px) calc(100vw - 48px), 1100px"
@@ -78,10 +82,11 @@ export default async function ConciergePage({
             aria-hidden="true"
           />
         )}
-        <div className="concierge__hero-text">
-          <p className="concierge__eyebrow" {...edit("concierge.eyebrow", "Eyebrow")}>{text("concierge.eyebrow")}</p>
+        <div className="relative z-[1] max-w-[44ch] text-white [&_h1]:mt-0 [&_h1]:mb-3.5 [&_h1]:text-[clamp(30px,_4.2vw,_50px)] [&_h1]:leading-[1.08]
+          [&_h1]:text-white [&_h1]:mx-0">
+          <p className="mt-0 mb-3 text-[11px] font-extrabold tracking-[1.4px] uppercase text-[rgba(255,_255,_255,_0.75)] mx-0" {...edit("concierge.eyebrow", "Eyebrow")}>{text("concierge.eyebrow")}</p>
           <h1 {...edit("concierge.title", "Page heading")}>{text("concierge.title")}</h1>
-          <p className="concierge__lead" {...edit("concierge.lead", "Opening line")}>
+          <p className="text-[clamp(16px,_1.6vw,_18px)] leading-[1.6] text-[rgba(255,_255,_255,_0.88)] m-0" {...edit("concierge.lead", "Opening line")}>
             {text("concierge.lead")}
           </p>
         </div>
@@ -94,20 +99,29 @@ export default async function ConciergePage({
         them as tabs and tried to press one. A statement with a sentence under
         it cannot be mistaken for a control, and it also says more.
       */}
-      <section className="concierge__reassurance" aria-label="How concierge planning works">
-        <p className="concierge__reassurance-item">
+      <section className="grid grid-cols-3 mt-0 mb-[clamp(48px,_6vw,_72px)] mx-0 gap-[clamp(26px,_4vw,_52px)] max-[760.001px]:hidden" aria-label="How concierge planning works">
+        <p className="grid text-left m-0 gap-1.75 [&::before]:content-[''] [&::before]:block [&::before]:w-6 [&::before]:mb-3.5
+          [&::before]:border-t-[2px] [&::before]:border-solid [&::before]:border-t-heading [&_strong]:font-heading [&_strong]:text-[16px]
+          [&_strong]:font-medium [&_strong]:leading-[1.35] [&_strong]:text-heading [&_span]:text-[14px] [&_span]:leading-[1.55]
+          [&_span]:text-body-text">
           <strong>Local people we know</strong>
           <span>
             Drivers, chefs and guides we have used ourselves on this coast. Not a directory.
           </span>
         </p>
-        <p className="concierge__reassurance-item">
+        <p className="grid text-left m-0 gap-1.75 [&::before]:content-[''] [&::before]:block [&::before]:w-6 [&::before]:mb-3.5
+          [&::before]:border-t-[2px] [&::before]:border-solid [&::before]:border-t-heading [&_strong]:font-heading [&_strong]:text-[16px]
+          [&_strong]:font-medium [&_strong]:leading-[1.35] [&_strong]:text-heading [&_span]:text-[14px] [&_span]:leading-[1.55]
+          [&_span]:text-body-text">
           <strong>One request, one point of contact</strong>
           <span>
             You write once. The same person answers until everything is arranged.
           </span>
         </p>
-        <p className="concierge__reassurance-item">
+        <p className="grid text-left m-0 gap-1.75 [&::before]:content-[''] [&::before]:block [&::before]:w-6 [&::before]:mb-3.5
+          [&::before]:border-t-[2px] [&::before]:border-solid [&::before]:border-t-heading [&_strong]:font-heading [&_strong]:text-[16px]
+          [&_strong]:font-medium [&_strong]:leading-[1.35] [&_strong]:text-heading [&_span]:text-[14px] [&_span]:leading-[1.55]
+          [&_span]:text-body-text">
           <strong>Clear options before anything is booked</strong>
           <span>
             We come back with what is available and what it costs. Nothing is confirmed until
@@ -116,9 +130,9 @@ export default async function ConciergePage({
         </p>
       </section>
 
-      <section className="concierge__request" id="request">
-        <div className="concierge__request-intro">
-          <h2 className="concierge__section-title">
+      <section className="scroll-mt-22.5" id="request">
+        <div className="[&_p]:mt-0 [&_p]:mb-6.5 [&_p]:text-body-text [&_p]:mx-0">
+          <h2 className="mt-0 mb-5 text-[clamp(24px,_2.6vw,_32px)] leading-[1.2] text-heading mx-0">
             {listing ? `What should we arrange for ${listing.title}?` : "Start with what you need"}
           </h2>
           <p>

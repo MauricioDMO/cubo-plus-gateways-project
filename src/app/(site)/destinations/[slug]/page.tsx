@@ -103,7 +103,10 @@ export default async function DestinationPage({
   const town = destination.label.split(",")[0]?.trim() ?? destination.label;
 
   return (
-    <div className="properties-page">
+    <div className="[.listing-category-page_&]:mt-0 w-[min(100%_-_48px,_1240px)] mt-[clamp(36px,_5vw,_70px)] mb-20 mx-auto [&>h1]:mt-0 [&>h1]:mb-7
+      [&>h1]:text-[clamp(40px,_5vw,_58px)] [&>h1]:leading-[1.02] [&>h1]:tracking-[0] [&>h1]:text-heading [&>h1]:mx-0
+      max-[860.001px]:w-[min(100%_-_32px,_720px)] max-[860.001px]:mt-4.5
+      [&>h1]:max-[860.001px]:text-[clamp(26px,_7.5vw,_34px)] [&>h1]:max-[860.001px]:mb-3.5 max-[640.001px]:w-full">
       <JsonLd data={destinationSchema(destination.label, destination.slug, destination.count)} />
       <JsonLd
         data={breadcrumbSchema([
@@ -114,7 +117,7 @@ export default async function DestinationPage({
       />
 
       <h1>Vacation rentals in {town}</h1>
-      <p className="destination-intro">
+      <p className="mt-[-6px] mb-4.5 text-[15px] leading-[1.6] text-body-text mx-0">
         {destination.count} {destination.count === 1 ? "property" : "properties"} in{" "}
         {destination.label}, booked direct with our team on the coast.
       </p>
@@ -127,7 +130,7 @@ export default async function DestinationPage({
         unavailableListingIds={unavailable}
       />
 
-      <p className="destination-back">
+      <p className="mt-6 mb-0 text-[14px] mx-0">
         <Link href="/properties">See every property</Link>
       </p>
     </div>

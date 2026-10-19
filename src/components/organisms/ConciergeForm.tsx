@@ -230,7 +230,8 @@ export default function ConciergeForm({
 
   if (sent === "stored") {
     return (
-      <div className="concierge-form concierge-form--done" role="status">
+      <div className="grid gap-[clamp(26px,_4vw,_42px)] [&&]:grid [&&]:justify-items-start [&&]:max-w-[62ch] [&&]:gap-2 [&_h3]:text-[22px] [&_h3]:m-0
+        [&_p]:text-body-text [&_p]:m-0" role="status">
         <CheckCircle2 size={22} aria-hidden="true" />
         <h3>Got it, {name.split(" ")[0] || "thanks"}.</h3>
         <p>
@@ -243,7 +244,8 @@ export default function ConciergeForm({
 
   if (sent === "email") {
     return (
-      <div className="concierge-form concierge-form--done" role="status">
+      <div className="grid gap-[clamp(26px,_4vw,_42px)] [&&]:grid [&&]:justify-items-start [&&]:max-w-[62ch] [&&]:gap-2 [&_h3]:text-[22px] [&_h3]:m-0
+        [&_p]:text-body-text [&_p]:m-0" role="status">
         <CheckCircle2 size={22} aria-hidden="true" />
         <h3>Almost there</h3>
         <p>
@@ -256,10 +258,10 @@ export default function ConciergeForm({
   }
 
   return (
-    <form className="concierge-form" onSubmit={submit}>
-      <fieldset className="concierge-services">
-        <legend className="concierge-services__legend">What would make your stay easier?</legend>
-        <p className="concierge-services__intro">Two ways to start. Both reach the same team.</p>
+    <form className="grid gap-[clamp(26px,_4vw,_42px)]" onSubmit={submit}>
+      <fieldset className="min-w-0 m-0 p-0 border-0">
+        <legend className="text-[clamp(20px,_2.2vw,_27px)] font-[650] leading-[1.2] text-heading p-0">What would make your stay easier?</legend>
+        <p className="mt-2 mb-6.5 text-body-text mx-0">Two ways to start. Both reach the same team.</p>
 
         {/* Option 1 first.
 
@@ -269,9 +271,30 @@ export default function ConciergeForm({
             are already mutually exclusive in the state below: choosing this
             clears the rest, and choosing any service clears this. So they are
             two options, and they are labelled as two options. */}
-        <div className="concierge-services__paths">
-          <p className="concierge-services__option">Option 1</p>
-          <label className={`concierge-services__path concierge-services__path--everything${services.includes("plan_everything") ? " concierge-services__path--on" : ""}`}>
+        <div className="grid grid-cols-1 mt-0 gap-3 max-[760.001px]:grid-cols-1">
+          <p className="mt-0 mb-2 text-[11px] font-extrabold tracking-[0.1em] uppercase text-muted-text mx-0">Option 1</p>
+          <label className={`relative grid grid-cols-[26px_minmax(0,_1fr)] items-start min-h-19 pr-11 pl-4 text-body-text cursor-pointer
+            [transition:background-color_0.16s_ease,_color_0.16s_ease] py-3.5 gap-2.5 rounded-[8px] border border-solid
+            border-border [&_input]:absolute [&_input]:w-0.25 [&_input]:h-0.25 [&_input]:overflow-hidden
+            [&_input]:[clip:rect(0,_0,_0,_0)] [&_input]:m-[-1px] [&>svg]:mt-0.5 [&>svg]:text-[#566560] [&_strong]:block
+            [&_strong]:text-heading [&_strong]:font-semibold [&_small]:block [&_small]:mt-0.75 [&_small]:text-[12px]
+            [&_small]:leading-[1.4] [&_small]:text-muted-text hover:bg-[rgba(57,_67,_66,_0.06)] [&:has(input:checked)]:bg-[#e6eeea]
+            [&:has(input:checked)]:shadow-[inset_0_0_0_1px_#394342] focus-within:[outline:2px_solid_var(--color-heading)]
+            focus-within:outline-offset-[2px] [&::after]:content-[''] [&::after]:absolute [&::after]:top-3.5 [&::after]:right-3.75
+            [&::after]:grid [&::after]:w-5.5 [&::after]:h-5.5 [&::after]:place-items-center [&::after]:text-[#26312f]
+            [&::after]:text-[14px] [&::after]:font-extrabold [&::after]:leading-none [&::after]:rounded-[50%] [&::after]:border
+            [&::after]:border-solid [&::after]:border-[#71807b] [&:has(input:checked)::after]:content-['✓']
+            [&:has(input:checked)::after]:border-[2px] [&:has(input:checked)::after]:border-[#394342]
+            forced-colors:[forced-color-adjust:auto] forced-colors:border forced-colors:border-solid
+            forced-colors:border-[ButtonText] [&_input]:forced-colors:absolute [&_input]:forced-colors:top-3.5
+            [&_input]:forced-colors:right-3.5 [&_input]:forced-colors:w-5 [&_input]:forced-colors:h-5
+            [&_input]:forced-colors:overflow-visible [&_input]:forced-colors:[clip:auto] [&_input]:forced-colors:m-0
+            [&::after]:forced-colors:hidden [&:has(input:checked)]:forced-colors:[outline:2px_solid_Highlight]
+            [&:has(input:checked)]:forced-colors:outline-offset-[2px] [&:has(input:checked)]:forced-colors:shadow-none
+            forced-colors:focus-within:[outline:3px_double_Highlight] forced-colors:focus-within:outline-offset-[3px]
+            motion-reduce:transition-none [&&]:bg-[#f2eee6] ${services.includes("plan_everything") ? ` [&&]:bg-[#e6eeea] [&&]:shadow-[inset_0_0_0_1px_#394342] [&_strong]:text-[#26312f] [&::after]:content-['✓']
+            [&::after]:border-[2px] [&::after]:border-[#394342] [&&]:forced-colors:[outline:2px_solid_Highlight]
+            [&&]:forced-colors:outline-offset-[2px] [&&]:forced-colors:shadow-none` : ""}`}>
             <input
               type="checkbox"
               name="services"
@@ -306,15 +329,16 @@ export default function ConciergeForm({
           Unticking the card brings the list straight back.
         */}
         {planEverything ? (
-          <p className="concierge-services__swap">
+          <p className="mt-6.5 mb-0 text-muted-text text-[13.5px] mx-0">
             Option 2 is the other way round: untick the card above to pick services one by one.
           </p>
         ) : (
         <>
-        <p className="concierge-services__option concierge-services__option--second">Option 2</p>
-        <h3 className="concierge-services__pick-title">Choose a few of your interests</h3>
-        <p className="concierge-services__pick-note">One or as many as you need. We arrange those and leave the rest of the week alone.</p>
-        <div className="concierge-services__groups">
+        <p className="mt-0 mb-2 text-[11px] font-extrabold tracking-[0.1em] uppercase text-muted-text mx-0 [&&]:mt-8.5">Option 2</p>
+        <h3 className="text-[clamp(17px,_1.6vw,_20px)] font-[650] leading-[1.25] text-heading m-0">Choose a few of your interests</h3>
+        <p className="mt-1.5 mb-4.5 text-body-text mx-0">One or as many as you need. We arrange those and leave the rest of the week alone.</p>
+        <div className="grid grid-cols-[0.9fr_0.9fr_1.2fr_1fr] border-t border-solid border-t-border border-b border-b-border
+          max-[900.001px]:grid-cols-[1fr_1fr] max-[760.001px]:grid-cols-1">
           {/* Both ends of the labelling below read `group.id`. They used to
               disagree: the heading carried an id built from the group's own
               identifier while the section pointed at one built by lowercasing
@@ -322,18 +346,41 @@ export default function ConciergeForm({
               and labelled nothing at all. */}
           {CONCIERGE_SERVICE_GROUPS.map((group) => (
             <section
-              className="concierge-services__group"
+              className="concierge-services__group min-w-0 px-[clamp(12px,_1.8vw,_24px)] py-5.5 [.concierge-services\_\_group+&]:border-l
+                [.concierge-services\_\_group+&]:border-solid [.concierge-services\_\_group+&]:border-l-border [&_h4]:mt-0 [&_h4]:mb-3
+                [&_h4]:text-[12px] [&_h4]:font-extrabold [&_h4]:tracking-[0.08em] [&_h4]:uppercase [&_h4]:text-muted-text [&_h4]:mx-0
+                [&:nth-child(3)]:max-[900.001px]:border-t [&:nth-child(3)]:max-[900.001px]:border-solid
+                [&:nth-child(3)]:max-[900.001px]:border-t-border [&:nth-child(3)]:max-[900.001px]:border-l-0
+                [&:nth-child(4)]:max-[900.001px]:border-t [&:nth-child(4)]:max-[900.001px]:border-solid
+                [&:nth-child(4)]:max-[900.001px]:border-t-border max-[760.001px]:px-0 max-[760.001px]:py-4.5
+                [.concierge-services\_\_group+&]:max-[760.001px]:border-t [.concierge-services\_\_group+&]:max-[760.001px]:border-solid
+                [.concierge-services\_\_group+&]:max-[760.001px]:border-t-border [.concierge-services\_\_group+&]:max-[760.001px]:border-l-0"
               key={group.id}
               aria-labelledby={`services-${group.id}`}
             >
               <h4 id={`services-${group.id}`}>{group.label}</h4>
-              <div className="concierge-services__list">
+              <div className="grid gap-1">
                 {group.services.map((service) => {
                   const Icon = SERVICE_ICONS[CONCIERGE_SERVICE_DETAILS[service].icon];
                   return (
                     <label
                       key={service}
-                      className={`concierge-services__choice${services.includes(service) ? " concierge-services__choice--on" : ""}`}
+                      className={`concierge-services__choice relative grid grid-cols-[24px_minmax(0,_1fr)_20px] items-start min-h-14 text-body-text
+                        cursor-pointer [transition:background-color_0.16s_ease,_color_0.16s_ease] px-2 py-2.75 gap-2.5 rounded-[8px]
+                        [&_input]:absolute [&_input]:w-0.25 [&_input]:h-0.25 [&_input]:overflow-hidden [&_input]:[clip:rect(0,_0,_0,_0)]
+                        [&_input]:m-[-1px] [&>svg]:mt-0.5 [&>svg]:text-[#566560] [&_strong]:block [&_strong]:text-heading
+                        [&_strong]:font-semibold [&_small]:block [&_small]:mt-0.75 [&_small]:text-[12px] [&_small]:leading-[1.4]
+                        [&_small]:text-muted-text hover:bg-[rgba(57,_67,_66,_0.06)] [&:has(input:checked)]:bg-[#e6eeea]
+                        [&:has(input:checked)]:shadow-[inset_0_0_0_1px_#394342] focus-within:[outline:2px_solid_var(--color-heading)]
+                        focus-within:outline-offset-[2px] forced-colors:[forced-color-adjust:auto] forced-colors:border
+                        forced-colors:border-solid forced-colors:border-[ButtonText] [&_input]:forced-colors:absolute
+                        [&_input]:forced-colors:top-3.5 [&_input]:forced-colors:right-3.5 [&_input]:forced-colors:w-5
+                        [&_input]:forced-colors:h-5 [&_input]:forced-colors:overflow-visible [&_input]:forced-colors:[clip:auto]
+                        [&_input]:forced-colors:m-0 [&:has(input:checked)]:forced-colors:[outline:2px_solid_Highlight]
+                        [&:has(input:checked)]:forced-colors:outline-offset-[2px] [&:has(input:checked)]:forced-colors:shadow-none
+                        forced-colors:focus-within:[outline:3px_double_Highlight] forced-colors:focus-within:outline-offset-[3px]
+                        motion-reduce:transition-none max-[760.001px]:px-2.5 ${services.includes(service) ? ` concierge-services__choice--on [&&]:bg-[#e6eeea] [&&]:shadow-[inset_0_0_0_1px_#394342] [&_strong]:text-[#26312f]
+                        [&&]:forced-colors:[outline:2px_solid_Highlight] [&&]:forced-colors:outline-offset-[2px] [&&]:forced-colors:shadow-none` : ""}`}
                     >
                       <input
                         type="checkbox"
@@ -347,7 +394,8 @@ export default function ConciergeForm({
                         <strong>{CONCIERGE_SERVICE_LABELS[service]}</strong>
                         <small>{CONCIERGE_SERVICE_DETAILS[service].description}</small>
                       </span>
-                      <CheckCircle2 className="concierge-services__check" size={19} aria-hidden="true" />
+                      <CheckCircle2 className="opacity-0 text-[#394342]! [.concierge-services\_\_choice--on_&]:opacity-100
+                        [.concierge-services\_\_choice:has(input:checked)_&]:opacity-100 forced-colors:hidden" size={19} aria-hidden="true" />
                     </label>
                   );
                 })}
@@ -369,7 +417,8 @@ export default function ConciergeForm({
         anyone who would rather write than choose from a list.
       */}
       {services.length === 0 && (
-        <div className="concierge-form__nudge">
+        <div className="w-[min(100%,_820px)] pt-1 text-body-text text-[14px] leading-[1.55] text-center mx-auto [&_p]:m-0 [&_p+p]:mt-1.5
+          [&_strong]:font-heading [&_strong]:text-[16px] [&_strong]:font-medium [&_strong]:text-heading">
           <p>
             <strong>Pick anything above and we take it from there.</strong>
           </p>
@@ -382,13 +431,61 @@ export default function ConciergeForm({
       )}
 
       {services.length > 0 && (
-        <div className="concierge-form__details" ref={details}>
-          <div className="concierge-form__selection" aria-live="polite">
+        <div className="concierge-form__details grid w-[min(100%,_820px)] bg-[#f7f4ed] mx-auto p-[clamp(24px,_4vw,_44px)] gap-5.5 rounded-[14px] border
+          border-solid border-[rgba(57,_67,_66,_0.12)] [&_[data-slot=input]]:w-full [&_[data-slot=input]]:min-w-0
+          [&_[data-slot=input]]:min-h-13 [&_[data-slot=input]]:bg-[rgba(255,_255,_255,_0.68)] [&_[data-slot=input]]:shadow-none
+          [&_[data-slot=input]]:text-[#26312f] [&_[data-slot=input]]:[font-family:inherit] [&_[data-slot=input]]:text-[15px]
+          [&_[data-slot=input]]:[font-weight:inherit] [&_[data-slot=input]]:[font-style:inherit] [&_[data-slot=input]]:leading-[inherit]
+          [&_[data-slot=input]]:[font-variant:inherit]
+          [&_[data-slot=input]]:[transition:border-color_0.16s_ease,_box-shadow_0.16s_ease,_background-color_0.16s_ease]
+          [&_[data-slot=input]]:px-3.75 [&_[data-slot=input]]:py-3.25 [&_[data-slot=input]]:rounded-[8px] [&_[data-slot=input]]:border
+          [&_[data-slot=input]]:border-solid [&_[data-slot=input]]:border-[rgba(57,_67,_66,_0.28)] [&_[data-slot=select-trigger]]:w-full
+          [&_[data-slot=select-trigger]]:min-w-0 [&_[data-slot=select-trigger]]:min-h-13
+          [&_[data-slot=select-trigger]]:bg-[rgba(255,_255,_255,_0.68)] [&_[data-slot=select-trigger]]:shadow-none
+          [&_[data-slot=select-trigger]]:text-[#26312f] [&_[data-slot=select-trigger]]:[font-family:inherit]
+          [&_[data-slot=select-trigger]]:text-[15px] [&_[data-slot=select-trigger]]:[font-weight:inherit]
+          [&_[data-slot=select-trigger]]:[font-style:inherit] [&_[data-slot=select-trigger]]:leading-[inherit]
+          [&_[data-slot=select-trigger]]:[font-variant:inherit]
+          [&_[data-slot=select-trigger]]:[transition:border-color_0.16s_ease,_box-shadow_0.16s_ease,_background-color_0.16s_ease]
+          [&_[data-slot=select-trigger]]:inline-flex [&_[data-slot=select-trigger]]:items-center
+          [&_[data-slot=select-trigger]]:justify-between [&_[data-slot=select-trigger]]:text-left [&_[data-slot=select-trigger]]:px-3.75
+          [&_[data-slot=select-trigger]]:py-3.25 [&_[data-slot=select-trigger]]:gap-3 [&_[data-slot=select-trigger]]:rounded-[8px]
+          [&_[data-slot=select-trigger]]:border [&_[data-slot=select-trigger]]:border-solid
+          [&_[data-slot=select-trigger]]:border-[rgba(57,_67,_66,_0.28)] [&_[data-slot=textarea]]:w-full [&_[data-slot=textarea]]:min-w-0
+          [&_[data-slot=textarea]]:min-h-28 [&_[data-slot=textarea]]:bg-[rgba(255,_255,_255,_0.68)] [&_[data-slot=textarea]]:shadow-none
+          [&_[data-slot=textarea]]:text-[#26312f] [&_[data-slot=textarea]]:[font-family:inherit] [&_[data-slot=textarea]]:text-[15px]
+          [&_[data-slot=textarea]]:[font-weight:inherit] [&_[data-slot=textarea]]:[font-style:inherit] [&_[data-slot=textarea]]:leading-[inherit]
+          [&_[data-slot=textarea]]:[font-variant:inherit]
+          [&_[data-slot=textarea]]:[transition:border-color_0.16s_ease,_box-shadow_0.16s_ease,_background-color_0.16s_ease]
+          [&_[data-slot=textarea]]:resize-y [&_[data-slot=textarea]]:px-3.75 [&_[data-slot=textarea]]:py-3.25
+          [&_[data-slot=textarea]]:rounded-[8px] [&_[data-slot=textarea]]:border [&_[data-slot=textarea]]:border-solid
+          [&_[data-slot=textarea]]:border-[rgba(57,_67,_66,_0.28)] [&_[data-slot=input]::placeholder]:text-[rgba(38,_49,_47,_0.5)]
+          [&_[data-slot=input]::placeholder]:opacity-100 [&_[data-slot=textarea]::placeholder]:text-[rgba(38,_49,_47,_0.5)]
+          [&_[data-slot=textarea]::placeholder]:opacity-100 [&_[data-slot=input]:hover:not(:disabled)]:bg-[rgba(255,_255,_255,_0.9)]
+          [&_[data-slot=input]:hover:not(:disabled)]:border-[rgba(57,_67,_66,_0.52)]
+          [&_[data-slot=select-trigger]:hover:not(:disabled)]:bg-[rgba(255,_255,_255,_0.9)]
+          [&_[data-slot=select-trigger]:hover:not(:disabled)]:border-[rgba(57,_67,_66,_0.52)]
+          [&_[data-slot=textarea]:hover:not(:disabled)]:bg-[rgba(255,_255,_255,_0.9)]
+          [&_[data-slot=textarea]:hover:not(:disabled)]:border-[rgba(57,_67,_66,_0.52)]
+          [&_[data-slot=input]:focus-visible]:bg-[rgba(255,_255,_255,_0.96)]
+          [&_[data-slot=input]:focus-visible]:shadow-[0_0_0_3px_rgba(57,_67,_66,_0.13)] [&_[data-slot=input]:focus-visible]:[outline:none]
+          [&_[data-slot=input]:focus-visible]:border-[#394342] [&_[data-slot=select-trigger]:focus-visible]:bg-[rgba(255,_255,_255,_0.96)]
+          [&_[data-slot=select-trigger]:focus-visible]:shadow-[0_0_0_3px_rgba(57,_67,_66,_0.13)]
+          [&_[data-slot=select-trigger]:focus-visible]:[outline:none] [&_[data-slot=select-trigger]:focus-visible]:border-[#394342]
+          [&_[data-slot=textarea]:focus-visible]:bg-[rgba(255,_255,_255,_0.96)]
+          [&_[data-slot=textarea]:focus-visible]:shadow-[0_0_0_3px_rgba(57,_67,_66,_0.13)]
+          [&_[data-slot=textarea]:focus-visible]:[outline:none] [&_[data-slot=textarea]:focus-visible]:border-[#394342]
+          max-[760.001px]:mx-[-4px] max-[760.001px]:px-4.5 max-[760.001px]:py-6 max-[760.001px]:gap-5 max-[760.001px]:rounded-[10px]
+          [&_[data-slot=input]]:motion-reduce:transition-none [&_[data-slot=select-trigger]]:motion-reduce:transition-none
+          [&_[data-slot=textarea]]:motion-reduce:transition-none" ref={details}>
+          <div className="flex flex-wrap justify-between gap-y-2.5 gap-x-6 pb-3.5 border-b border-solid border-b-border [&_p]:inline-flex [&_p]:items-center
+            [&_p]:font-[650] [&_p]:text-heading [&_p]:m-0 [&_p]:gap-2.25 [&_p_svg]:text-[#566560]" aria-live="polite">
             <p>
               <Waves size={18} aria-hidden="true" />
               <span>Selected: {services.map((service) => CONCIERGE_SERVICE_LABELS[service]).join(", ")}</span>
             </p>
-            <div className="concierge-form__context">
+            <div className="concierge-form__context flex flex-wrap gap-2 [&_span]:inline-flex [&_span]:items-center [&_span]:bg-[#f2eee6] [&_span]:text-[12px]
+              [&_span]:text-body-text [&_span]:px-2.25 [&_span]:py-1 [&_span]:gap-1.25 [&_span]:rounded-full">
               <span>
                 <MapPin size={13} aria-hidden="true" />
                 El Salvador
@@ -398,13 +495,15 @@ export default function ConciergeForm({
             </div>
           </div>
 
-          <div className="concierge-form__details-intro">
+          <div className="grid mt-0.5 mb-1 mx-0 gap-1.75 [&_h3]:[font-family:Georgia,_'Times_New_Roman',_serif] [&_h3]:text-[clamp(30px,_4vw,_42px)]
+            [&_h3]:font-medium [&_h3]:leading-[1.08] [&_h3]:tracking-[-0.025em] [&_h3]:text-[#26312f] [&_h3]:m-0 [&_p]:text-[15px]
+            [&_p]:leading-[1.55] [&_p]:text-body-text [&_p]:m-0 [&_h3]:max-[760.001px]:text-[clamp(30px,_10vw,_38px)]">
             <h3>Your trip details</h3>
             <p>A few details help us arrange the right people and timing.</p>
           </div>
 
-          <div className="concierge-form__row">
-            <div className="concierge-form__field">
+          <div className="grid grid-cols-[1fr_1fr] gap-y-4.5 gap-x-5.5 max-[760.001px]:grid-cols-1 max-[960.001px]:grid-cols-1">
+            <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
               <Label htmlFor="concierge-name">Name</Label>
               <Input
                 id="concierge-name"
@@ -416,7 +515,7 @@ export default function ConciergeForm({
                 required
               />
             </div>
-            <div className="concierge-form__field">
+            <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
               <Label htmlFor="concierge-email">Email</Label>
               <Input
                 id="concierge-email"
@@ -431,12 +530,12 @@ export default function ConciergeForm({
             </div>
           </div>
 
-          <div className="concierge-form__row">
-            <div className="concierge-form__field">
+          <div className="grid grid-cols-[1fr_1fr] gap-y-4.5 gap-x-5.5 max-[760.001px]:grid-cols-1 max-[960.001px]:grid-cols-1">
+            <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
               <Label htmlFor="concierge-phone">Phone (optional)</Label>
               <PhoneNumberField id="concierge-phone" value={phone} onChange={setPhone} />
             </div>
-            <div className="concierge-form__field">
+            <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
               <Label htmlFor="concierge-guests">Guests (optional)</Label>
               <Select value={guests} onValueChange={setGuests}>
                 <SelectTrigger id="concierge-guests">
@@ -453,8 +552,8 @@ export default function ConciergeForm({
             </div>
           </div>
 
-          <div className="concierge-form__row">
-            <div className="concierge-form__field">
+          <div className="grid grid-cols-[1fr_1fr] gap-y-4.5 gap-x-5.5 max-[760.001px]:grid-cols-1 max-[960.001px]:grid-cols-1">
+            <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
               <Label htmlFor="concierge-check-in">Arriving (optional)</Label>
               <BookingDatePicker
                 id="concierge-check-in"
@@ -464,7 +563,7 @@ export default function ConciergeForm({
                 placeholder="Add a date"
               />
             </div>
-            <div className="concierge-form__field">
+            <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
               <Label htmlFor="concierge-check-out">Leaving (optional)</Label>
               <BookingDatePicker
                 id="concierge-check-out"
@@ -476,7 +575,7 @@ export default function ConciergeForm({
             </div>
           </div>
 
-          <div className="concierge-form__field">
+          <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
             <Label htmlFor="concierge-message">Notes (optional)</Label>
             <Textarea
               id="concierge-message"
@@ -488,15 +587,21 @@ export default function ConciergeForm({
             />
           </div>
 
-          <div className="concierge-form__call">
+          <div className="grid gap-4">
             <button
               type="button"
-              className="concierge-form__call-toggle"
+              className="flex items-center justify-between min-h-15.5 bg-[rgba(255,_255,_255,_0.44)] text-heading [font-family:inherit] [font-size:inherit]
+                [font-weight:inherit] [font-style:inherit] leading-[inherit] [font-variant:inherit] text-left cursor-pointer
+                [transition:border-color_0.16s_ease,_background-color_0.16s_ease] px-3.5 py-2.75 gap-4.5 rounded-[8px] border border-solid
+                border-[rgba(57,_67,_66,_0.18)] hover:bg-[rgba(255,_255,_255,_0.72)] hover:border-[rgba(57,_67,_66,_0.42)]
+                focus-visible:shadow-[0_0_0_3px_rgba(57,_67,_66,_0.13)] focus-visible:[outline:none] focus-visible:border-[#394342]
+                motion-reduce:transition-none"
               aria-expanded={wantsCall}
               aria-controls="concierge-call-fields"
               onClick={() => setWantsCall((current) => !current)}
             >
-              <span className="concierge-form__call-copy">
+              <span className="flex items-center gap-3 [&>svg]:flex-none [&>svg]:text-[#566560] [&>span]:grid [&>span]:gap-0.5 [&_strong]:text-[15px]
+                [&_strong]:font-[650] [&_strong]:text-[#26312f] [&_small]:text-muted-text [&_small]:text-[13px] [&_small]:font-medium">
                 <PhoneCall size={19} aria-hidden="true" />
                 <span>
                   <strong>Prefer a call?</strong>
@@ -504,14 +609,14 @@ export default function ConciergeForm({
                 </span>
               </span>
               <ChevronDown
-                className={wantsCall ? "concierge-form__call-chevron concierge-form__call-chevron--open" : "concierge-form__call-chevron"}
+                className={wantsCall ? "flex-none [transition:transform_0.2s_ease] motion-reduce:transition-none [&&]:[transform:rotate(180deg)]" : "flex-none [transition:transform_0.2s_ease] motion-reduce:transition-none"}
                 size={18}
                 aria-hidden="true"
               />
             </button>
             {wantsCall && (
-              <div className="concierge-form__row" id="concierge-call-fields">
-                <div className="concierge-form__field">
+              <div className="grid grid-cols-[1fr_1fr] gap-y-4.5 gap-x-5.5 max-[760.001px]:grid-cols-1 max-[960.001px]:grid-cols-1" id="concierge-call-fields">
+                <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
                   <Label htmlFor="concierge-call-day">Preferred call day</Label>
                   <BookingDatePicker
                     id="concierge-call-day"
@@ -521,7 +626,7 @@ export default function ConciergeForm({
                     placeholder="Any day"
                   />
                 </div>
-                <div className="concierge-form__field">
+                <div className="grid min-w-0 gap-2 [&>label]:text-[14px] [&>label]:font-[650] [&>label]:leading-[1.3] [&>label]:text-[#26312f]">
                   <Label htmlFor="concierge-call-window">Preferred call time</Label>
                   <Select value={callWindow} onValueChange={setCallWindow}>
                     <SelectTrigger id="concierge-call-window">
@@ -540,21 +645,25 @@ export default function ConciergeForm({
             )}
           </div>
 
-          <div className="concierge-form__status" aria-live="polite">
+          <div className="grid min-h-0 gap-3" aria-live="polite">
             {error && (
-              <p className="concierge-form__error" role="alert">
+              <p className="flex items-center bg-[rgba(186,_26,_26,_0.08)] text-[rgb(143,_30,_24)] text-[13px] m-0 px-3 py-2.5 gap-2 rounded-[8px]
+                [&_svg]:flex-none" role="alert">
                 <AlertCircle size={15} aria-hidden="true" />
                 <span>{error}</span>
               </p>
             )}
           </div>
 
-          <div className="concierge-form__footer">
-            <Button type="submit" className="concierge-form__submit">
+          <div className="flex items-center gap-y-4.5 gap-x-7 max-[760.001px]:grid max-[760.001px]:gap-3">
+            <Button type="submit" className="inline-flex justify-between min-w-[min(100%,_286px)] min-h-13.5 bg-[#263f38] text-[#f8f5ee] text-[16px] font-semibold shadow-none
+              px-5 py-3.5 gap-7 rounded-[7px] border border-solid border-[#26312f] [&:hover:not(:disabled)]:bg-[#1e332d]
+              focus-visible:[outline:2px_solid_#26312f] focus-visible:outline-offset-[3px] max-[760.001px]:w-full">
               Send my request
               <ArrowRight size={18} aria-hidden="true" />
             </Button>
-            <p className="concierge-form__reassurance">
+            <p className="inline-flex items-center text-muted-text text-[13px] m-0 gap-2 [&_svg]:flex-none [&_svg]:text-[#566560]
+              max-[760.001px]:[justify-self:center] max-[760.001px]:text-center">
               <ShieldCheck size={17} aria-hidden="true" />
               No commitment. We’ll reply personally.
             </p>
@@ -563,7 +672,7 @@ export default function ConciergeForm({
       )}
 
       {/* The honeypot. Hidden from people, filled in by bots. */}
-      <div className="concierge-form__trap" aria-hidden="true">
+      <div className="absolute left-[-9999px] w-0.25 h-0.25 overflow-hidden" aria-hidden="true">
         <label htmlFor="concierge-website">Website</label>
         <input
           id="concierge-website"

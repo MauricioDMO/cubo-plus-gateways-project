@@ -18,7 +18,10 @@ export default function ContactDetails() {
   const tel = telHref();
 
   return (
-    <aside className="contact-details" aria-label="Contact details">
+    <aside className="mt-7 mb-0 bg-[rgba(15,_23,_39,_0.02)] mx-0 p-5 rounded-[10px] border border-solid border-border [&_h2]:mt-0 [&_h2]:mb-3
+      [&_h2]:font-heading [&_h2]:text-[18px] [&_h2]:mx-0 [&_ul]:list-none [&_ul]:flex [&_ul]:flex-col [&_ul]:m-0 [&_ul]:p-0
+      [&_ul]:gap-2.25 [&_li]:flex [&_li]:items-start [&_li]:text-[15px] [&_li]:leading-[1.5] [&_li]:gap-2.5 [&_li_svg]:flex-none
+      [&_li_svg]:mt-0.5 [&_li_svg]:text-heading [&_a]:text-inherit" aria-label="Contact details">
       <h2>Getaways El Salvador</h2>
 
       <ul>
@@ -41,7 +44,7 @@ export default function ContactDetails() {
         </li>
       </ul>
 
-      <p className="contact-details__area">
+      <p className="mt-3.5 mb-0 text-[14px] text-body-text mx-0">
         We rent in {BUSINESS.serviceArea.map((area) => area.split(",")[0]?.trim()).join(", ")}.
       </p>
     </aside>

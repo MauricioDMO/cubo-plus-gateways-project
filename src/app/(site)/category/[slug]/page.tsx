@@ -45,19 +45,21 @@ export default async function JournalCategoryPage({ params }: { params: Promise<
   if (!result || result.posts.length === 0) notFound();
 
   return (
-    <div className="journal">
-      <header className="journal__header">
+    <div className="w-[min(100%_-_48px,_1100px)] mt-[clamp(30px,_4vw,_52px)] mb-[clamp(56px,_7vw,_90px)] mx-auto max-[640.001px]:w-full">
+      <header className="mt-0 mb-5.5 mx-0 [&_h1]:text-[clamp(32px,_4vw,_46px)] [&_h1]:leading-[1.12] [&_h1]:m-0">
         {/* The section, then the category. Landing here from a search result
             otherwise gives no clue what site you are on the journal of. */}
-        <p className="journal__eyebrow">
+        <p className="mt-0 mb-2.5 text-[11px] font-extrabold tracking-[0.08em] uppercase mx-0 [&_a]:text-muted-text [&_a]:no-underline
+          [&_a]:[transition:color_0.15s_ease] [&_a:hover]:text-heading [&_a:focus-visible]:text-heading">
           <Link href="/blog">Getaways Journal</Link>
         </p>
         <h1>{result.term.name}</h1>
       </header>
 
       {categories.length > 1 && (
-        <nav className="journal__categories" aria-label="Journal categories">
-          <Link href="/blog" className="journal__pill">
+        <nav className="flex flex-wrap mt-0 mb-7 mx-0 gap-2" aria-label="Journal categories">
+          <Link href="/blog" className="inline-flex items-center min-h-10 bg-transparent text-body-text text-[14px] no-underline px-4 py-2 gap-1.75 rounded-full border
+            border-solid border-border hover:border-[rgba(15,_23,_39,_0.45)]">
             All
           </Link>
           {categories.map((category) => {
@@ -66,11 +68,12 @@ export default async function JournalCategoryPage({ params }: { params: Promise<
               <Link
                 key={category.slug}
                 href={`/category/${category.slug}`}
-                className={`journal__pill${active ? " journal__pill--active" : ""}`}
+                className={`inline-flex items-center min-h-10 bg-transparent text-body-text text-[14px] no-underline px-4 py-2 gap-1.75
+                  rounded-full border border-solid border-border hover:border-[rgba(15,_23,_39,_0.45)] ${active ? " [&&]:text-heading [&&]:font-semibold [&&]:border-[rgba(15,_23,_39,_0.85)]" : ""}`}
                 aria-current={active ? "page" : undefined}
               >
                 {category.name}
-                <span className="journal__pill-count">{category.count}</span>
+                <span className="text-[12px] text-[rgba(15,_23,_39,_0.45)] tabular-nums">{category.count}</span>
               </Link>
             );
           })}
@@ -79,7 +82,7 @@ export default async function JournalCategoryPage({ params }: { params: Promise<
 
       {/* No empty state: an empty category never reaches this point, it 404s
           above. */}
-      <div className="post-grid">
+      <div className="grid grid-cols-3 mx-0 my-6 gap-6 max-[960.001px]:grid-cols-2 max-[640.001px]:grid-cols-1">
         {result.posts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}

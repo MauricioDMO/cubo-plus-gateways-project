@@ -6,9 +6,11 @@ import {
   categoryImageSlotId,
   cleanPlainText,
   CONTENT_GROUPS,
+  focusProps,
   isAutoSlot,
   isCompleteItem,
   isSafeHref,
+  lookProps,
   mediaInUse,
   parseList,
   parseSiteContent,
@@ -27,6 +29,20 @@ const slot = (id: string): ContentSlot => {
   if (!found) throw new Error(`no slot ${id}`);
   return found;
 };
+
+it("uses complete responsive Tailwind classes for editable text and image preferences", () => {
+  const look = lookProps({ "home.hero.title@align": "right", "home.hero.title@sizeMobile": "1.3" }, "home.hero.title", "font-heading");
+  expect(look.className).toBe("font-heading min-[641px]:[text-align:var(--gx-align)]! max-[640.001px]:[zoom:var(--gx-size-m)]");
+  expect(look.style).toEqual({ "--gx-align": "right", "--gx-size-m": "1.3" });
+  for (const background of [false, true]) {
+    const focus = focusProps("30% 40%", "50% 60%", background);
+    expect(focus.className).toBe(background
+      ? "min-[641px]:[background-position:var(--gx-focus)]! max-[640.001px]:[background-position:var(--gx-focus-m)]!"
+      : "min-[641px]:object-[var(--gx-focus)]! max-[640.001px]:object-[var(--gx-focus-m)]!");
+    expect(focus.style).toEqual({ "--gx-focus": "30% 40%", "--gx-focus-m": "50% 60%" });
+  }
+  expect(focusProps("101% 0%", "invalid")).toEqual({ className: undefined, style: undefined });
+});
 
 describe("the round-trip", () => {
   it("gives back what was stored", () => {
