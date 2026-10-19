@@ -6,19 +6,40 @@ Resumen en español: este repositorio es la versión pública de la web de Getaw
 
 ## Requirements
 
-- Node.js 20 or newer
-- npm
+- Node.js 24 or newer
+- pnpm 12
 
-No `.env` file, API key or account is needed.
+No API key or account is needed. The public site still uses local JSON; Prisma's development database runs in Docker.
 
 ## Run it
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 Open http://localhost:3000.
+
+### Prisma 8 and the local development database
+
+From this directory, with Docker running:
+
+```bash
+cp .env.local.example .env.local  # only if .env.local does not exist
+docker compose -f compose.dev.yaml up -d --wait db
+pnpm db:generate
+pnpm db:init
+pnpm db:check
+pnpm test:db
+```
+
+`.env.local` contains the development `DATABASE_URL` for `127.0.0.1:5432`. Prisma CLI loads the same `.env*` files as Next.js. If you override the Compose PostgreSQL credentials or port in `.env`, update `.env.local` to match. Inside the Compose app container, `DATABASE_URL` already points to `db:5432` and takes precedence.
+
+The contract is `infrastructure/prisma/contract.prisma`; the server-only client is exported as `db` from `@/infrastructure/prisma/db`. Prisma 8 uses `@prisma/orm-postgres`, not `@prisma/client`. Commit the emitted `contract.json` and `contract.d.ts` alongside the contract. The contract starts empty: no application data or booking storage has been migrated.
+
+After editing the contract, run `pnpm db:generate` and `pnpm db:update` for local development. For versioned migrations, use `pnpm exec prisma migration plan --name <name>`, review the files under `infrastructure/prisma/migrations/`, then run `pnpm db:migrate`. Builds emit the contract automatically. After a contract change, restart the dev server to refresh the cached client.
+
+`pnpm test:db` checks a real SQL query and client reuse across module reloads. The normal test suite skips this check so it does not require PostgreSQL.
 
 Other useful commands:
 
@@ -79,7 +100,7 @@ Stored Gutenberg blocks receive static utilities in `shared/security/server/sani
 
 ## How data works
 
-- The site does not connect to a database. `data/*.json` holds everything a visitor can see on the public site: pages, blog posts, listings with their prices, terms and the media index.
+- Public pages still read `data/*.json`: pages, blog posts, listings with their prices, terms and the media index. The Prisma connection is ready for future PostgreSQL-backed features, without replacing the existing readers.
 - `infrastructure/data/local-client.ts` gives the rest of the code a small query interface over those JSON files. It is read-only. Edits to the JSON files show up after a reload.
 - Photos are in `public/media/`. A path such as `listings/casa-x/01.jpg` in the data is served at `/media/listings/casa-x/01.jpg`.
 - Bookings are different: they are created while you use the site. They are kept in memory and saved to `.data/bookings.json`, so a dev restart keeps them. Delete that folder to reset all bookings.
@@ -87,7 +108,7 @@ Stored Gutenberg blocks receive static utilities in `shared/security/server/sani
 
 ## Secrets
 
-Nothing in this repo is secret. You do not need to create `.env.local`. Do not add real API keys, wallet seeds or private data to this repo. If you need configuration, put it in `.env.local` (already gitignored) and never commit it.
+The example database URL contains local development credentials only. Put real configuration in `.env.local` (already gitignored), never in source control. Do not add real API keys, wallet seeds or private data to this repo.
 
 ## Notes
 
