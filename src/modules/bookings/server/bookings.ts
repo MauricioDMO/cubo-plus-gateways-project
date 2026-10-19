@@ -1,6 +1,7 @@
 import "server-only";
 
 import listingRows from "@/data/listings.json";
+import type { ListingRow as StoredListingRow } from "@/data/types";
 import { DatesUnavailableError, NotFoundError, ValidationError } from "@/modules/bookings/booking-errors";
 import {
   createBooking,
@@ -39,14 +40,9 @@ export type BookingInput = {
   guest_notes?: string;
 };
 
-export type ListingRow = {
-  id: number;
-  slug: string;
-  title: string;
-  attributes: Record<string, string> | null;
-};
+export type ListingRow = Pick<StoredListingRow, "id" | "slug" | "title" | "attributes">;
 
-const LISTINGS = listingRows as unknown as ListingRow[];
+const LISTINGS: ListingRow[] = listingRows;
 
 /** The listing with this id, or null. Public data only. */
 export function getListing(id: number): ListingRow | null {

@@ -1,3 +1,5 @@
+import type { MediaRow } from "@/data/types";
+
 /**
  * Public URL for a media file. Files live in public/media/<storage_path>
  * (downloaded once from the live site's storage bucket), so the URL is a
@@ -13,7 +15,7 @@ export function mediaPublicUrl(storagePath: string): string {
   return `/media/${path}`;
 }
 
-export type MediaRef = { storage_path: string; alt_text: string | null };
+export type MediaRef = Pick<MediaRow, "storage_path" | "alt_text">;
 
 export const LISTING_FALLBACK_MEDIA_BY_SLUG: Record<string, MediaRef> = {
   "salty-soul": {

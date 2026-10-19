@@ -112,7 +112,7 @@ export async function getHomeData() {
   const placePhotos = await getMediaByIds(placeCards.map((card) => card.photoId).filter((id): id is number => id != null));
   const placePhotoById = new Map(placePhotos.map((media) => [media.id, media]));
   const maxGuests = allListings.reduce((max, listing) => {
-    const attrs = (listing.attributes as Record<string, string>) ?? {};
+    const attrs = listing.attributes;
     const guests = Number.parseInt(attrs.guests ?? "", 10);
     return Number.isFinite(guests) && guests > max ? guests : max;
   }, 0);

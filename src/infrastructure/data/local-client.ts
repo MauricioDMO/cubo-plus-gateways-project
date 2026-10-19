@@ -23,20 +23,27 @@ import media from "@/data/media.json";
 import terms from "@/data/terms.json";
 import postTerms from "@/data/post_terms.json";
 import listingTerms from "@/data/listing_terms.json";
+import type { DataTables, PageRow, PostRow, TermRow } from "@/data/types";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Row = any;
-type Tables = Record<string, Row[]>;
+type Row = Record<string, unknown>;
+type TableName = Exclude<keyof DataTables, "coupons">;
 type QueryError = { code?: string; message: string };
-type QueryResult = { data: Row; error: QueryError | null };
-type ListResult = { data: Row[] | null; error: QueryError | null };
+type QueryResult<T> = { data: T; error: null } | { data: null; error: QueryError };
 
-const TABLES: Tables = {
-  pages,
-  posts,
+type Trim<S extends string> = S extends ` ${infer Rest}` ? Trim<Rest>
+  : S extends `${infer Rest} ` ? Trim<Rest> : S;
+type SelectedColumns<S extends string> = S extends `${infer Head},${infer Tail}`
+  ? Trim<Head> | SelectedColumns<Tail> : Trim<S>;
+type Projection<T, S extends string> = Trim<S> extends "*" | "" ? T
+  : Pick<T, Extract<SelectedColumns<S>, keyof T>>;
+
+// JSON imports widen literal strings; snapshot tests check these vocabularies.
+const TABLES: { [K in TableName]: DataTables[K][] } = {
+  pages: pages as PageRow[],
+  posts: posts as PostRow[],
   listings,
   media,
-  terms,
+  terms: terms as TermRow[],
   post_terms: postTerms,
   listing_terms: listingTerms,
 };
@@ -129,7 +136,7 @@ function parseColumns(select: string | undefined): string[] | null {
     .filter(Boolean);
 }
 
-class LocalQuery implements PromiseLike<QueryResult> {
+class LocalQuery<T extends Row, Selected = T> implements PromiseLike<QueryResult<Selected[]>> {
   private filters: Filter[] = [];
   private orderBy: { column: string; ascending: boolean }[] = [];
   private columns: string[] | null = null;
@@ -138,19 +145,19 @@ class LocalQuery implements PromiseLike<QueryResult> {
   private error: QueryError | null;
   private readonly rowsOfTable: Row[];
 
-  constructor(table: string) {
+  constructor(table: TableName) {
     const known = Object.prototype.hasOwnProperty.call(TABLES, table);
     this.error = known ? null : { message: `Unknown table "${table}" in the local data client` };
     this.rowsOfTable = known ? TABLES[table] : [];
   }
 
-  select(columns?: string) {
+  select<S extends string = "*">(columns?: S): LocalQuery<T, Projection<T, S>> {
     try {
       this.columns = parseColumns(columns);
     } catch (error) {
       this.error ??= { message: (error as Error).message };
     }
-    return this;
+    return this as LocalQuery<T, Projection<T, S>>;
   }
 
   eq(column: string, value: unknown) {
@@ -215,7 +222,7 @@ class LocalQuery implements PromiseLike<QueryResult> {
     return this;
   }
 
-  private run(): { rows: Row[]; error: QueryError | null } {
+  private run(): { rows: Selected[]; error: QueryError | null } {
     if (this.error) return { rows: [], error: this.error };
     let matched = this.rowsOfTable.filter((row) => this.filters.every((filter) => matches(row, filter)));
     // Multi-column sort: apply the least significant key first, stable sort keeps earlier keys.
@@ -226,10 +233,10 @@ class LocalQuery implements PromiseLike<QueryResult> {
       });
     }
     const end = Number.isFinite(this.rangeTo) ? this.rangeTo + 1 : undefined;
-    return { rows: matched.slice(this.rangeFrom, end).map((row) => project(row, this.columns)), error: null };
+    return { rows: matched.slice(this.rangeFrom, end).map((row) => project(row, this.columns) as Selected), error: null };
   }
 
-  async single(): Promise<QueryResult> {
+  async single(): Promise<QueryResult<Selected>> {
     const { rows, error } = this.run();
     if (error) return { data: null, error };
     if (rows.length === 0) return { data: null, error: { code: NO_ROWS_CODE, message: "The result contains 0 rows" } };
@@ -239,7 +246,7 @@ class LocalQuery implements PromiseLike<QueryResult> {
     return { data: rows[0], error: null };
   }
 
-  async maybeSingle(): Promise<QueryResult> {
+  async maybeSingle(): Promise<QueryResult<Selected | null>> {
     const { rows, error } = this.run();
     if (error) return { data: null, error };
     if (rows.length > 1) {
@@ -248,17 +255,18 @@ class LocalQuery implements PromiseLike<QueryResult> {
     return { data: rows[0] ?? null, error: null };
   }
 
-  then<A = ListResult, B = never>(
-    onfulfilled?: ((value: ListResult) => A | PromiseLike<A>) | null,
+  then<A = QueryResult<Selected[]>, B = never>(
+    onfulfilled?: ((value: QueryResult<Selected[]>) => A | PromiseLike<A>) | null,
     onrejected?: ((reason: unknown) => B | PromiseLike<B>) | null
   ): PromiseLike<A | B> {
     const { rows, error } = this.run();
-    return Promise.resolve({ data: error ? null : rows, error }).then(onfulfilled, onrejected);
+    const result: QueryResult<Selected[]> = error ? { data: null, error } : { data: rows, error: null };
+    return Promise.resolve(result).then(onfulfilled, onrejected);
   }
 }
 
 export type LocalSupabaseClient = {
-  from(table: string): LocalQuery;
+  from<K extends TableName>(table: K): LocalQuery<DataTables[K]>;
 };
 
 /**
@@ -275,7 +283,7 @@ let _publicClient: LocalSupabaseClient | null = null;
 /** Read-only client over data/*.json. No network, no environment variables. */
 export function publicSupabaseClient(): LocalSupabaseClient {
   if (!_publicClient) {
-    _publicClient = { from: (table: string) => new LocalQuery(table) };
+    _publicClient = { from: <K extends TableName>(table: K) => new LocalQuery<DataTables[K]>(table) };
   }
   return _publicClient;
 }

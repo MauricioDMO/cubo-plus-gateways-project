@@ -43,7 +43,6 @@ export async function getEditorialData(segments: string[]) {
         slug: post.slug,
         path,
         published_at: post.published_at ?? null,
-        updated_at: post.updated_at ?? null,
         description: post.seo_description || post.excerpt || descriptionFromHtml(post.content_html),
         imagePath: coverPath,
       }),

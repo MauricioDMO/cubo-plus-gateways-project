@@ -23,7 +23,7 @@ const nightlyRateFormatter = new Intl.NumberFormat("en-US", {
 export async function getListingDetailData(slug: string) {
   const listing = await getListingBySlug(slug);
   if (!listing) return null;
-  const attrs = listing.attributes as Record<string, string>;
+  const attrs = listing.attributes;
   const galleryIds = resolveGalleryIds(listing.featured_media_id, listing.gallery_media_ids);
   const fetchedMedia = await getMediaByIds(galleryIds);
   const mediaById = new Map(fetchedMedia.map((m) => [m.id, m]));

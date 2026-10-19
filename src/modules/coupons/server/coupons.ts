@@ -8,7 +8,7 @@ import {
   evaluatePublicCoupon,
   type PublicCouponView,
 } from "@/modules/coupons/coupon-rules";
-import type { CouponQuote } from "@/modules/coupons/pricing";
+import type { CouponRow } from "@/data/types";
 
 /*
  * Coupons come from data/coupons.json, read-only. The class build ships one
@@ -19,17 +19,9 @@ import type { CouponQuote } from "@/modules/coupons/pricing";
  * modules/bookings/server/booking-store.ts).
  */
 
-export type Coupon = CouponQuote & {
-  code: string;
-  listing_id: number | null;
-  expires_at: string | null;
-  max_uses: number | null;
-  use_count: number;
-  active: boolean;
-  note: string | null;
-};
+export type Coupon = CouponRow;
 
-const COUPONS = couponRows as unknown as Coupon[];
+const COUPONS = couponRows as Coupon[];
 
 function normalizeCode(code: string): string {
   return code.trim().toUpperCase().replace(/\s+/g, "");
