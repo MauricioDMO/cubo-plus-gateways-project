@@ -4,7 +4,7 @@ import { getFeaturedListings, getAllListings, getListingCategoriesWithCounts } f
 import { getRecentPosts } from "@/modules/content/server/content";
 import { getMediaByIds, getMediaByWpIds } from "@/shared/media/server/media";
 import { visibleListingCategories } from "@/modules/listings/categories";
-import { mediaPublicUrl } from "@/shared/media/media";
+import { mediaPublicUrl, type MediaRef } from "@/shared/media/media";
 import { collectDestinations, matchesDestination } from "@/modules/listings/locations";
 import { pickPhotoIdByRoom } from "@/modules/listings/listing-gallery-groups";
 import { groupByBuilding } from "@/modules/listings/listing-buildings";
@@ -67,7 +67,7 @@ export async function getHomeData() {
   const showCategories = orderedCategories.length >= 2;
   const PLACE_PHOTO_ROOMS = ["Views", "Neighbourhood", "Pool", "Terrace"];
   const pickPlacePhotoId = (inPlace: typeof allListings) => pickPhotoIdByRoom(inPlace, PLACE_PHOTO_ROOMS);
-  type PlaceCard = { key: string; name: string; count: number; href: string; photoId: number | null; cover?: { storage_path: string; alt_text: string | null } | null };
+  type PlaceCard = { key: string; name: string; count: number; href: string; photoId: number | null; cover?: MediaRef | null };
   const townCards: PlaceCard[] = destinations.map((destination) => {
     const inTown = allListings.filter((listing) => matchesDestination(listing.attributes, destination.label));
     return {

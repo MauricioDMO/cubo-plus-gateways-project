@@ -1,8 +1,19 @@
 # Fuentes y tipos de datos
 
-Los contratos de los ocho snapshots están en [`types.ts`](./types.ts).
+Los contratos de los ocho snapshots se organizan por dominio en [`types/`](./types/).
+[`types.ts`](./types.ts) los reexporta y define `DataTables`, manteniendo compatibles
+las importaciones desde `@/data/types`.
 Representan las filas almacenadas, no los modelos enriquecidos con imágenes,
 categorías o precios calculados que devuelven los módulos.
+
+| Definiciones | Archivo |
+| --- | --- |
+| Identificadores y contenido compartido | [`types/common.ts`](./types/common.ts) |
+| Propiedades y atributos nativos/almacenados | [`types/listings.ts`](./types/listings.ts) |
+| Páginas, posts y SEO compartido | [`types/content.ts`](./types/content.ts) |
+| Medios | [`types/media.ts`](./types/media.ts) |
+| Términos, relaciones y `TermSummary` reutilizable | [`types/taxonomies.ts`](./types/taxonomies.ts) |
+| Cupones, reutilizando reglas y precios existentes | [`types/coupons.ts`](./types/coupons.ts) |
 
 | Archivo | Tipo | Registros actuales |
 | --- | --- | ---: |
@@ -22,7 +33,7 @@ para servicios y los tipos existentes para galerías y reseñas. Todos sus campo
 son opcionales: un dato desconocido no se confunde con cero o `false`.
 
 ```ts
-import type { PropertyAttributes } from "@/data/types";
+import type { PropertyAttributes } from "@/data/types/listings";
 
 const attributes: PropertyAttributes = {
   bedrooms: 3,

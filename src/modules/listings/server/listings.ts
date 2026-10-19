@@ -1,5 +1,6 @@
 import "server-only";
 
+import type { TermRow, TermSummary } from "@/data/types/taxonomies";
 import { hasPublicSupabaseConfig, publicSupabaseClient } from "@/infrastructure/data/local-client";
 import { getMediaByIds } from "@/shared/media/server/media";
 import { listingFallbackMedia, type MediaRef } from "@/shared/media/media";
@@ -185,7 +186,7 @@ export async function getPetsTerms() {
 }
 
 type ListingTaxonomies = {
-  categories: Array<{ id: number; name: string; slug: string }>;
+  categories: TermSummary[];
   pets: string | null;
   petsSlug: string | null;
 };
@@ -207,7 +208,7 @@ async function attachListingTaxonomies<T extends { id: number }>(
     throw new Error(`Failed to fetch listing categories: ${relationsError.message}`, { cause: relationsError });
   }
   const termIds = [...new Set((relations ?? []).map((r) => r.term_id))];
-  let termsById = new Map<number, { id: number; name: string; slug: string; taxonomy: string }>();
+  let termsById = new Map<number, TermSummary & Pick<TermRow, "taxonomy">>();
   if (termIds.length > 0) {
     const { data: terms, error: termsError } = await supabase
       .from("terms")
@@ -218,8 +219,8 @@ async function attachListingTaxonomies<T extends { id: number }>(
     }
     termsById = new Map((terms ?? []).map((t) => [t.id, t]));
   }
-  const categoriesByListingId = new Map<number, Array<{ id: number; name: string; slug: string }>>();
-  const petsByListingId = new Map<number, { name: string; slug: string }>();
+  const categoriesByListingId = new Map<number, TermSummary[]>();
+  const petsByListingId = new Map<number, Pick<TermSummary, "name" | "slug">>();
   for (const { listing_id, term_id } of relations ?? []) {
     const term = termsById.get(term_id);
     if (!term) continue;

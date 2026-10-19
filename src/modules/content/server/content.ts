@@ -1,5 +1,6 @@
 import "server-only";
 
+import type { TermSummary } from "@/data/types/taxonomies";
 import { hasPublicSupabaseConfig, publicSupabaseClient } from "@/infrastructure/data/local-client";
 import { getMediaByIds } from "@/shared/media/server/media";
 import { isBlogDatePath } from "@/modules/content/paths";
@@ -60,7 +61,7 @@ async function attachPostCardData<T extends { id: number; featured_media_id: num
     throw new Error(`Failed to fetch post categories: ${relationsError.message}`, { cause: relationsError });
   }
   const termIds = [...new Set((relations ?? []).map((r) => r.term_id))];
-  let categoryTermsById = new Map<number, { id: number; name: string; slug: string }>();
+  let categoryTermsById = new Map<number, TermSummary>();
   if (termIds.length > 0) {
     const { data: terms, error: termsError } = await supabase
       .from("terms")
@@ -72,7 +73,7 @@ async function attachPostCardData<T extends { id: number; featured_media_id: num
     }
     categoryTermsById = new Map((terms ?? []).map((t) => [t.id, t]));
   }
-  const categoriesByPostId = new Map<number, Array<{ id: number; name: string; slug: string }>>();
+  const categoriesByPostId = new Map<number, TermSummary[]>();
   for (const { post_id, term_id } of relations ?? []) {
     const term = categoryTermsById.get(term_id);
     if (!term) continue;
