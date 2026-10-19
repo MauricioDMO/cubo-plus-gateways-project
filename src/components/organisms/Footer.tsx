@@ -1,6 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
-import { mediaPublicUrl } from "@/shared/media/media";
+import GetawaysLogo from "@/components/atoms/GetawaysLogo";
 import { BUSINESS } from "@/modules/site/business";
 import { getListingCategoriesWithCounts } from "@/modules/listings/server/listings";
 import { getPostCategoriesWithCounts } from "@/modules/content/server/content";
@@ -29,10 +28,6 @@ import { siteText } from "@/modules/site/server/site-text";
  * rgba(15,23,39,.45) (--color-muted-text).
  */
 
-const LOGO_STORAGE_PATH = "2026/02/cropped-logo-gw-web.png";
-const LOGO_INTRINSIC_WIDTH = 1340;
-const LOGO_INTRINSIC_HEIGHT = 281;
-
 export default async function Footer() {
   const { text, edit } = await siteText();
   /* The contact details: whatever the admin has set, else what modules/site/business.ts
@@ -55,14 +50,11 @@ export default async function Footer() {
             {/* Not a link: the live footer logo sits in a text
                 widget and is not wrapped in an anchor (unlike the header's
                 custom-logo-link). */}
-            <Image
-              className="block w-65.25 max-w-full h-auto mb-4"
-              src={mediaPublicUrl(LOGO_STORAGE_PATH)}
-              alt="Getaways El Salvador"
-              width={LOGO_INTRINSIC_WIDTH}
-              height={LOGO_INTRINSIC_HEIGHT}
-              sizes="261px"
-              loading="lazy"
+            <GetawaysLogo
+              className="block w-65.25 max-w-full h-auto mb-4 text-primary"
+              role="img"
+              aria-label="Getaways El Salvador"
+              focusable="false"
             />
             <p className="m-0" {...edit("footer.tagline", "Footer tagline")}>
               {text("footer.tagline")}

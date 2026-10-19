@@ -7,12 +7,12 @@
  * copies of a phone number is how they drift, and a drifted NAP is Google
  * failing to connect this site to that listing.
  *
- * What is NOT here is as deliberate as what is. `telephone` and `streetAddress`
- * are empty because nobody has supplied them, and a plausible-looking invented
+ * What is NOT here is as deliberate as what is. `streetAddress`
+ * is empty because nobody has supplied it, and a plausible-looking invented
  * address is far worse than a missing one: it would be published, crawled,
  * copied into aggregators, and then contradict the real Google listing
  * forever. Everything that reads this treats an empty string as "omit", so the
- * site is correct-but-incomplete today and complete the moment the two values
+ * site is correct-but-incomplete today and complete the moment the missing values
  * below are filled in.
  */
 
@@ -22,11 +22,13 @@ export const BUSINESS = {
   legalName: "Getaways El Salvador",
   email: "getaways@goodlifeelsalvador.com",
 
+  // Phone supplied by the site owner before the base synchronization.
+  telephone: "+503 6062 7813",
+
   // ---- FILL THESE IN -----------------------------------------------------
-  // Both must match the Google Business Profile exactly, including format
+  // These must match the Google Business Profile exactly, including format
   // ("Calle" vs "C.", suite present or absent). Until then they render as
   // nothing rather than as a guess.
-  telephone: "",
   streetAddress: "",
   postalCode: "",
   // ------------------------------------------------------------------------

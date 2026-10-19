@@ -1,4 +1,4 @@
-import ContactDetails from "@/components/molecules/ContactDetails";
+import ContactSection from "@/components/organisms/ContactSection";
 import JsonLd from "@/components/seo/JsonLd";
 import type { EditorialData } from "@/modules/content/server/editorial";
 import { breadcrumbSchema, contactPageSchema } from "@/shared/seo/structured-data";
@@ -14,9 +14,10 @@ export default function EditorialTemplate({ data }: { data: EditorialData }) {
         { name: title, path },
       ])} />
       {isContact && <JsonLd data={contactPageSchema()} />}
-      <h1>{title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: html }} />
-      {isContact && <ContactDetails />}
+      {isContact ? <ContactSection title={title} /> : <>
+        <h1>{title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      </>}
     </article>
   );
 }

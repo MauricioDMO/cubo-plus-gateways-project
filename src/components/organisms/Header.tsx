@@ -1,6 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
-import { mediaPublicUrl } from "@/shared/media/media";
+import GetawaysLogo from "@/components/atoms/GetawaysLogo";
 import MobileNav from "@/components/organisms/MobileNav";
 import NavLink from "@/components/atoms/NavLink";
 import { PlusIcon } from "@/components/atoms/icons";
@@ -36,16 +35,6 @@ import { siteText } from "@/modules/site/server/site-text";
  * (burger toggle state).
  */
 
-// The live custom-logo is WordPress attachment 488,
-// 2026/02/cropped-logo-gw-web.png (1340x281, the "GETAWAYS" palm-tree
-// wordmark), which was migrated into Storage as media row 55. NOT
-// 2021/09/logo.png (wp_id 23) -- that one also lives in the bucket but it is
-// the RentalHive *theme demo* logo left over from the 2021 install, and the
-// live site does not reference it anywhere.
-const LOGO_STORAGE_PATH = "2026/02/cropped-logo-gw-web.png";
-const LOGO_INTRINSIC_WIDTH = 1340;
-const LOGO_INTRINSIC_HEIGHT = 281;
-
 export default async function Header() {
   // Reads the live categories so the Properties submenu cannot outlive them --
   // see navItemsWithCategories in ./nav.
@@ -56,14 +45,10 @@ export default async function Header() {
     <header className="border-b border-solid border-b-border bg-background">
       <div className="flex items-center justify-between px-8 py-4 gap-6 max-[767.981px]:px-5 max-[767.981px]:py-3.5">
         <Link href="/" className="block min-w-0 leading-[0]" aria-label="Getaways El Salvador — Home">
-          <Image
-            className="block h-auto w-69.75 max-w-full max-[767.981px]:w-[clamp(150px,_50vw,_220px)]"
-            src={mediaPublicUrl(LOGO_STORAGE_PATH)}
-            alt="Getaways El Salvador"
-            width={LOGO_INTRINSIC_WIDTH}
-            height={LOGO_INTRINSIC_HEIGHT}
-            sizes="279px"
-            loading="eager"
+          <GetawaysLogo
+            className="block h-auto w-69.75 max-w-full text-primary max-[767.981px]:w-[clamp(150px,_50vw,_220px)]"
+            aria-hidden="true"
+            focusable="false"
           />
         </Link>
 

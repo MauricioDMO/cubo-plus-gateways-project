@@ -1,49 +1,29 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 
 import { BUSINESS, formattedAddress, telHref } from "@/modules/site/business";
 
-/*
- * The NAP block on the contact page.
- *
- * The contact page is the one page a local business is expected to state
- * plainly where it is and how to reach it, and it is the page Google most
- * often reads to reconcile a site against a Business Profile. This one said
- * only "Email: ..." in a paragraph of prose.
- *
- * Each row renders only if modules/site/business.ts knows the value, so the phone and
- * street appear the moment they are supplied and nothing is invented in the
- * meantime.
- */
 export default function ContactDetails() {
   const tel = telHref();
+  const methods = [
+    ...(tel ? [{ label: "Call us", value: BUSINESS.telephone, href: tel, Icon: Phone }] : []),
+    { label: "Email us", value: BUSINESS.email, href: `mailto:${BUSINESS.email}`, Icon: Mail },
+  ];
 
   return (
-    <aside className="mt-7 mb-0 bg-[rgba(15,_23,_39,_0.02)] mx-0 p-5 rounded-[10px] border border-solid border-border" aria-label="Contact details">
-      <h2 className="mt-0 mb-3 mx-0 font-heading text-[18px]">Getaways El Salvador</h2>
-
-      <ul className="list-none flex flex-col m-0 p-0 gap-2.25">
-        <li className="flex items-start text-[15px] leading-[1.5] gap-2.5">
-          <MapPin className="flex-none mt-0.5 text-heading" size={17} aria-hidden="true" />
-          <span>{formattedAddress()}</span>
-        </li>
-
-        {tel && (
-          <li className="flex items-start text-[15px] leading-[1.5] gap-2.5">
-            <Phone className="flex-none mt-0.5 text-heading" size={17} aria-hidden="true" />
-            {/* A tel: link, because most of this traffic is a phone. */}
-            <a className="text-inherit" href={tel}>{BUSINESS.telephone}</a>
-          </li>
-        )}
-
-        <li className="flex items-start text-[15px] leading-[1.5] gap-2.5">
-          <Mail className="flex-none mt-0.5 text-heading" size={17} aria-hidden="true" />
-          <a className="text-inherit" href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
-        </li>
-      </ul>
-
-      <p className="mt-3.5 mb-0 text-[14px] text-body-text mx-0">
-        We rent in {BUSINESS.serviceArea.map((area) => area.split(",")[0]?.trim()).join(", ")}.
+    <address className="mt-5 not-italic" aria-label="Contact details">
+      {methods.map(({ label, value, href, Icon }) => (
+        <a key={label} className="group flex min-w-0 items-center gap-4 border-b border-[rgba(7,36,86,.075)] py-5 text-body-text leading-[1.65] hover:text-button-bg focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-[#648d79]" href={href}>
+          <span className="grid size-12 shrink-0 place-items-center rounded-[10px] bg-button-bg/5"><Icon size={20} strokeWidth={1.5} aria-hidden="true" /></span>
+          <span className="min-w-0">
+            <span className="block text-[10px] font-semibold tracking-[1.5px] text-muted-text uppercase">{label}</span>
+            <span className="mt-1 block text-base font-medium text-heading [overflow-wrap:anywhere] max-[600px]:text-sm">{value}</span>
+          </span>
+          <ArrowUpRight className="ml-auto size-4 shrink-0 text-[rgba(7,36,86,.35)] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none" strokeWidth={1.5} aria-hidden="true" />
+        </a>
+      ))}
+      <p className="mt-6 mb-0 flex items-center gap-2 text-xs leading-[1.65]">
+        <MapPin className="size-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />{formattedAddress()}
       </p>
-    </aside>
+    </address>
   );
 }

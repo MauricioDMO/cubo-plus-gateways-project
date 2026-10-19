@@ -163,22 +163,26 @@ export default function HomeTemplate({ data }: { data: HomeData }) {
 
       {/* 1. Hero */}
       <section
-        className={focus("home.hero.image", true, `relative grid grid-cols-1 items-end min-h-[clamp(470px,_54dvh,_560px)] w-[calc(100vw_-_48px)]
+        className={`relative grid grid-cols-1 items-end min-h-[clamp(470px,_54dvh,_560px)] w-[calc(100vw_-_48px)]
           pt-[clamp(40px,_7vw,_72px)] pr-[clamp(40px,_5vw,_72px)] pb-[clamp(52px,_7vw,_86px)] pl-[clamp(96px,_25vw,_520px)] mt-0
           mb-10 bg-button-bg overflow-hidden shadow-[0_28px_70px_rgba(15,_23,_39,_0.16)] isolate
           mx-[calc(50%_-_50vw_+_24px)] rounded-lg before:content-[''] before:absolute before:inset-0 before:-z-1
-          before:bg-[radial-gradient(circle_at_72%_28%,_rgba(255,_193,_7,_0.12),_transparent_32%),_linear-gradient(90deg,_rgba(15,_23,_39,_0.8),_rgba(15,_23,_39,_0.38)_48%,_rgba(15,_23,_39,_0.2)),_linear-gradient(0deg,_rgba(15,_23,_39,_0.68),_rgba(15,_23,_39,_0.02)_58%)]
+          before:bg-[image:radial-gradient(circle_at_72%_28%,_rgba(255,_193,_7,_0.12),_transparent_32%),_linear-gradient(90deg,_rgba(15,_23,_39,_0.8),_rgba(15,_23,_39,_0.38)_48%,_rgba(15,_23,_39,_0.2)),_linear-gradient(0deg,_rgba(15,_23,_39,_0.68),_rgba(15,_23,_39,_0.02)_58%)]
           max-[1024.001px]:min-h-135
           max-[1024.001px]:pl-[clamp(48px,_14vw,_140px)] max-[768.001px]:min-h-115 max-[768.001px]:w-[calc(100vw_-_32px)]
           max-[768.001px]:pt-7 max-[768.001px]:pb-7.5 max-[768.001px]:items-end max-[768.001px]:mx-[calc(50%_-_50vw_+_16px)]
           max-[768.001px]:px-5.5
           max-[768.001px]:before:bg-[linear-gradient(0deg,_rgba(15,_23,_39,_0.86),_rgba(15,_23,_39,_0.5)_42%,_rgba(15,_23,_39,_0.12)_74%)]
-          ${heroUrl ? `bg-center bg-cover bg-no-repeat
-          motion-safe:animate-[hero-rise_900ms_cubic-bezier(0.16,_1,_0.3,_1)_both,_hero-drift_18s_cubic-bezier(0.16,_1,_0.3,_1)_700ms_both]
-          max-[768.001px]:motion-safe:animate-[hero-rise_900ms_cubic-bezier(0.16,_1,_0.3,_1)_both]` : "motion-safe:animate-[hero-rise_900ms_cubic-bezier(0.16,_1,_0.3,_1)_both]"}`).className}
-        style={heroUrl ? { backgroundImage: `url(${heroUrl})`, ...focus("home.hero.image", true).style } : undefined}
+          motion-safe:animate-[hero-rise_900ms_cubic-bezier(0.16,_1,_0.3,_1)_both]`}
         {...edit("home.hero.image", "Hero photograph", "image", { background: true })}
       >
+        {heroUrl && (
+          <span
+            aria-hidden="true"
+            {...focus("home.hero.image", true, "absolute inset-0 -z-2 bg-center bg-cover bg-no-repeat motion-safe:animate-[hero-zoom-out_1800ms_cubic-bezier(0.16,_1,_0.3,_1)_both]")}
+            style={{ backgroundImage: `url(${heroUrl})`, ...focus("home.hero.image", true).style }}
+          />
+        )}
         {/* The hero used to read "Getaways Concierge / Book a complimentary
             call, and we'll build your stay" -- a lead-capture framing from
             when the site could not take a payment, so the only thing it could
@@ -257,7 +261,7 @@ export default function HomeTemplate({ data }: { data: HomeData }) {
                   href={`/listing-category/${category.slug}`}
                   className={
                     focus(categoryImageSlotId(category.slug), true, `relative flex items-end aspect-square overflow-hidden bg-button-bg p-5 rounded-lg ${imageUrl ? `bg-center bg-cover bg-no-repeat after:content-[''] after:absolute after:inset-0
-                      after:bg-[linear-gradient(to_top,_rgba(15,_23,_39,_0.75),_rgba(15,_23,_39,_0)_60%),_linear-gradient(to_bottom,_rgba(15,_23,_39,_0.45),_rgba(15,_23,_39,_0)_34%)]` : ""}`)
+                      after:bg-[image:linear-gradient(to_top,_rgba(15,_23,_39,_0.75),_rgba(15,_23,_39,_0)_60%),_linear-gradient(to_bottom,_rgba(15,_23,_39,_0.45),_rgba(15,_23,_39,_0)_34%)]` : ""}`)
                       .className
                   }
                   style={
@@ -305,7 +309,7 @@ export default function HomeTemplate({ data }: { data: HomeData }) {
                   key={card.key}
                   href={card.href}
                   className={focus(placeImageSlotId(card.key), true, `relative flex items-end aspect-square overflow-hidden bg-button-bg p-5 rounded-lg ${photoUrl ? `bg-center bg-cover bg-no-repeat after:content-[''] after:absolute after:inset-0
-                    after:bg-[linear-gradient(to_top,_rgba(15,_23,_39,_0.75),_rgba(15,_23,_39,_0)_60%),_linear-gradient(to_bottom,_rgba(15,_23,_39,_0.45),_rgba(15,_23,_39,_0)_34%)]` : ""}`).className}
+                    after:bg-[image:linear-gradient(to_top,_rgba(15,_23,_39,_0.75),_rgba(15,_23,_39,_0)_60%),_linear-gradient(to_bottom,_rgba(15,_23,_39,_0.45),_rgba(15,_23,_39,_0)_34%)]` : ""}`).className}
                   style={photoUrl ? { backgroundImage: `url(${photoUrl})`, ...focus(placeImageSlotId(card.key), true).style } : undefined}
                   {...edit(placeImageSlotId(card.key), card.name + " photo", "image", { background: true })}
                   // Same reason as the category cards: without this the link
