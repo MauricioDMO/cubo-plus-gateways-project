@@ -1,0 +1,83 @@
+[
+  {
+    "id": "table.ReferralAttribution",
+    "label": "Create table \"ReferralAttribution\"",
+    "summary": "Creates table \"ReferralAttribution\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "ReferralAttribution"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"ReferralAttribution\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"ReferralAttribution\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"ReferralAttribution\"",
+        "sql": "CREATE TABLE \"public\".\"ReferralAttribution\" (\n  \"bookingId\" int4 NOT NULL,\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"referralCode\" text NOT NULL,\n  \"status\" text DEFAULT 'pending' NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"ReferralAttribution\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"ReferralAttribution\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.ReferralAttribution.ReferralAttribution_bookingId_key",
+    "label": "Add unique constraint on \"ReferralAttribution\" (bookingId)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "ReferralAttribution_bookingId_key",
+        "table": "ReferralAttribution"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"ReferralAttribution_bookingId_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "ReferralAttribution_bookingId_key",
+          "public",
+          "\"public\".\"ReferralAttribution\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"ReferralAttribution_bookingId_key\"",
+        "sql": "ALTER TABLE \"public\".\"ReferralAttribution\" ADD CONSTRAINT \"ReferralAttribution_bookingId_key\" UNIQUE (\"bookingId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"ReferralAttribution_bookingId_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "ReferralAttribution_bookingId_key",
+          "public",
+          "\"public\".\"ReferralAttribution\""
+        ]
+      }
+    ]
+  }
+]

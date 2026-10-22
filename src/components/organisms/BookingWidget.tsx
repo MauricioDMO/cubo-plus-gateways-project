@@ -62,6 +62,22 @@ function money(value: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
 }
 
+function getReferralCode(): string | undefined {
+  const params = new URLSearchParams(window.location.search);
+
+  // Prioritize the referral code in the current URL.
+  if (params.has("ref")) {
+    return params.get("ref") ?? undefined;
+  }
+
+  // Otherwise, use the code saved during navigation.
+  try {
+    return sessionStorage.getItem("gateways_referral_code") ?? undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export default function BookingWidget({ listingId, listingTitle, listingSlug, price, cleaningFee, minNights, checkoutMode }: BookingWidgetProps) {
   const router = useRouter();
   const checkoutEnabled = checkoutMode !== "contact";
@@ -161,6 +177,7 @@ export default function BookingWidget({ listingId, listingTitle, listingSlug, pr
           guest_name: guestName,
           guest_email: guestEmail,
           guest_phone: guestPhone,
+          referral_code: getReferralCode(),
         }),
       });
       const json = await response.json();

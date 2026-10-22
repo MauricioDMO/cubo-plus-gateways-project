@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { attachCheckoutSession, createPendingBooking, DatesUnavailableError, NotFoundError, ValidationError, type BookingInput } from "@/modules/bookings/server/bookings";
 import { newCheckoutSessionId } from "@/modules/checkout/checkout-session";
-
+import { recordReferralForBooking } from "@/modules/referrals/referral-store";
 /*
  * Starts a booking. Writes a pending booking to the local store and sends the
  * guest to the checkout page, where they see the price and pay.
@@ -33,6 +33,32 @@ export async function POST(request: Request) {
     const booking = await createPendingBooking(input);
     const sessionId = newCheckoutSessionId(booking.id);
     await attachCheckoutSession(booking.id, sessionId);
+
+    // Register the referral if the visitor provided one.
+
+    const referralCode =
+    typeof body.referral_code === "string"
+    ? body.referral_code.trim()
+    : "";
+
+    if (referralCode) {
+      try {
+    const result = await recordReferralForBooking(
+      booking.id,
+      referralCode
+    );
+
+    if (!result.ok) {
+      console.warn(
+        "Referral not recorded:",
+        result.reason
+      );
+    }
+  } catch (error) {
+    // A referral failure must not cancel the booking.
+    console.error("Referral recording failed:", error);
+  }
+}
     return NextResponse.json({
       ok: true,
       data: { url: `/checkout?session_id=${encodeURIComponent(sessionId)}`, mode: "checkout" },

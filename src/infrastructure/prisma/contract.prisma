@@ -1,3 +1,16 @@
 // use prisma-8
 
-// Add models here when moving application data to PostgreSQL.
+model ReferralCode {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model ReferralAttribution {
+  id           Int      @id @default(autoincrement())
+  bookingId    Int      @unique
+  referralCode String
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+}

@@ -1,15 +1,25 @@
+import { Suspense } from "react";
 import Header from "@/components/organisms/Header";
 import Footer from "@/components/organisms/Footer";
+import ReferralTracker from "@/modules/referrals/ReferralTracker";
 
-/*
- * Public site layout: the Header and Footer around every public page.
- * Route groups don't change URLs, so every public path is unchanged.
- */
-export default function SiteLayout({ children }: { children: React.ReactNode }) {
+export default function SiteLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
+      <Suspense fallback={null}>
+        <ReferralTracker />
+      </Suspense>
+
       <Header />
-      <main className="flex-1 w-full max-w-301 mx-auto my-0 px-6 py-10">{children}</main>
+
+      <main className="flex-1 w-full max-w-301 mx-auto my-0 px-6 py-10">
+        {children}
+      </main>
+
       <Footer />
     </>
   );
