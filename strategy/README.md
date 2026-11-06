@@ -8,6 +8,8 @@ El caso alterna los nombres «Gateways» y «Getaways»: se usa **Gateways El Sa
 
 **Contacto del caso:** Maureen Montano, Content Design Creator; Discord: `maureenm`. La URL del sitio aparece como un enlace sin destino en el texto recibido: está pendiente de solicitar.
 
+**Actualización del 6 de noviembre:** [entrega de Roger y fuentes verificadas](roger/README.md). La revisión pública del WordPress, el código actual, el protocolo de investigación y los resultados de pruebas se documentan allí.
+
 ## Lectura del desafío
 
 No se trata solamente de rediseñar una página. Gateways necesita conectar descubrimiento, planificación, consulta, reserva, pago y fidelización, y medir qué canales generan resultados. El primer entregable es una auditoría que permita decidir entre optimizar WordPress, reconstruir o usar un enfoque híbrido; no asumir una reconstrucción por preferencia tecnológica.

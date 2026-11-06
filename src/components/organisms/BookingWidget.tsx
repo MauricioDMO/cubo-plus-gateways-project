@@ -12,6 +12,9 @@ import PhoneNumberField from "@/components/molecules/PhoneNumberField";
 import { Button } from "@/components/atoms/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/atoms/ui/card";
 import { Input } from "@/components/atoms/ui/input";
+import ReferralCodeField from "@/modules/referrals/ReferralCodeField";
+import { normalizeReferralCode } from "@/modules/referrals/referral-rules";
+import { setReferralParam } from "@/modules/referrals/referral-session";
 import { Label } from "@/components/atoms/ui/label";
 
 type BlockedRange = { start_date: string; end_date: string };
@@ -60,22 +63,6 @@ async function fetchBlockedRanges(listingId: number): Promise<BlockedRange[] | n
 
 function money(value: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
-}
-
-function getReferralCode(): string | undefined {
-  const params = new URLSearchParams(window.location.search);
-
-  // Prioritize the referral code in the current URL.
-  if (params.has("ref")) {
-    return params.get("ref") ?? undefined;
-  }
-
-  // Otherwise, use the code saved during navigation.
-  try {
-    return sessionStorage.getItem("gateways_referral_code") ?? undefined;
-  } catch {
-    return undefined;
-  }
 }
 
 export default function BookingWidget({ listingId, listingTitle, listingSlug, price, cleaningFee, minNights, checkoutMode }: BookingWidgetProps) {
@@ -176,6 +163,7 @@ export default function BookingWidget({ listingId, listingTitle, listingSlug, pr
       return;
     }
 
+    const referralCode = normalizeReferralCode(String(new FormData(event.currentTarget).get("referral_code") ?? ""));
     setSubmitting(true);
     try {
       const response = await fetch("/api/bookings", {
@@ -188,13 +176,14 @@ export default function BookingWidget({ listingId, listingTitle, listingSlug, pr
           guest_name: guestName,
           guest_email: guestEmail,
           guest_phone: guestPhone,
-          referral_code: getReferralCode(),
+          referral_code: referralCode ?? undefined,
         }),
       });
       const json = await response.json();
       if (!response.ok || !json?.ok) {
         if (response.status === 401) {
           const params = new URLSearchParams(window.location.search);
+          setReferralParam(params, referralCode ?? "");
           params.set("check_in", checkIn);
           params.set("check_out", checkOut);
           const returnTo = `/listing/${encodeURIComponent(listingSlug)}?${params}`;
@@ -272,6 +261,8 @@ export default function BookingWidget({ listingId, listingTitle, listingSlug, pr
             <Label htmlFor={`guest-phone-${listingId}`}>Phone</Label>
             <PhoneNumberField className="text-[14px]" id={`guest-phone-${listingId}`} value={guestPhone} onChange={setGuestPhone} />
           </div>
+
+          {checkoutEnabled && <ReferralCodeField id={`referral-${listingId}`} />}
 
           <p className="text-muted-text text-[12px] leading-[18px] m-0">Our concierge will follow up by email for arrival details and any special requests.</p>
 

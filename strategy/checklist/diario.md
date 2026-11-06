@@ -38,4 +38,4 @@ Objetivo del próximo día:
 
 ## Registros reales
 
-Pendientes. No se incluyen avances ficticios ni se presupone trabajo de fechas anteriores.
+**2026-11-06.** Revisión solicitada por Roger y ejecutada con asistencia de Codex sobre la nueva base PostgreSQL. Se adaptó la captura de referidos al login, se añadieron invitaciones posteriores a la estadía y se actualizaron las pruebas con reservas reales de prueba. Se revisaron la portada y tres alternativas de El Zonte. [Resultados y límites](../roger/04-verificacion.md). Google Docs e historial del programa siguen pendientes.

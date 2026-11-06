@@ -2,6 +2,7 @@
 import "temporal-polyfill/full/global";
 import nextEnv from "@next/env";
 const { loadEnvConfig } = nextEnv;
+import { isParticipantCode, participantCode } from "../modules/referrals/participant-code.ts";
 import postgres from "@prisma/orm-postgres/runtime";
 import contractJson from "../infrastructure/prisma/contract.json" with { type: "json" };
 
@@ -17,13 +18,38 @@ const codeOrNull = (input) => {
   const code = String(input ?? "").trim().toUpperCase();
   return /^[A-Z0-9-]{4,24}$/.test(code) ? code : null;
 };
-const [action = "help", rawCode] = process.argv.slice(2);
+const [action = "help", rawCode, proof] = process.argv.slice(2);
 const db = postgres({ contractJson, url });
 
 try {
-  if (action === "seed" || action === "create") {
+  if (action === "invite") {
+    const bookingId = Number(rawCode);
+    if (!Number.isSafeInteger(bookingId) || bookingId < 1 || proof !== "--stay-verified") {
+      throw new Error("Usage: invite BOOKING_ID --stay-verified (operator has verified departure and no unresolved refund)");
+    }
+    const stay = await db.orm.public.Booking.where({ id: bookingId }).first();
+    const today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/El_Salvador" }).format(new Date());
+    if (!stay?.guestAccountId || stay.status !== "confirmed" || stay.paymentReviewRequired || String(stay.checkOut) > today) {
+      throw new Error("A past confirmed stay linked to a guest account and cleared for payment review is required.");
+    }
+    const code = participantCode(stay.guestAccountId, process.env.REFERRAL_ID_SECRET);
+    if (!code) throw new Error("Configure a stable REFERRAL_ID_SECRET of at least 32 characters.");
+    let record = await db.orm.public.ReferralCode.where({ code }).first();
+    if (!record) {
+      try { record = await db.orm.public.ReferralCode.create({ code, active: true }); }
+      catch (error) {
+        record = await db.orm.public.ReferralCode.where({ code }).first();
+        if (!record) throw error;
+      }
+    }
+    if (!record.active) throw new Error("Participant code is disabled.");
+    const link = new URL("/", process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000");
+    link.searchParams.set("ref", code);
+    console.log(link.href);
+  } else if (action === "seed" || action === "create") {
     const code = action === "seed" ? "GETAWAYSDEMO" : codeOrNull(rawCode);
     if (!code) throw new Error("Usage: node scripts/referrals-cli.mjs create <CODE>");
+    if (isParticipantCode(code)) throw new Error("Participant codes are issued with invite.");
     const existing = await db.orm.public.ReferralCode.where({ code }).first();
     if (existing) {
       if (action === "create") throw new Error(`Code already exists: ${code}`);
@@ -64,7 +90,7 @@ try {
       };
     }));
   } else {
-    console.log("Usage: node scripts/referrals-cli.mjs seed | create CODE | enable CODE | disable CODE | list | report");
+    console.log("Usage: node scripts/referrals-cli.mjs seed | create CODE | enable CODE | disable CODE | list | report | invite BOOKING_ID --stay-verified");
   }
 } finally {
   await db.close();

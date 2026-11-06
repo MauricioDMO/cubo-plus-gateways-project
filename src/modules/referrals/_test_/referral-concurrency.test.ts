@@ -1,10 +1,7 @@
-import { randomBytes, randomInt } from "node:crypto";
+import { randomBytes } from "node:crypto";
 import { loadEnvConfig } from "@next/env";
-import { expect, it, vi } from "vitest";
+import { expect, it } from "vitest";
 
-vi.mock("@/modules/bookings/server/bookings", () => ({
-  getBookingById: vi.fn(async (id: number) => ({ id, status: "pending_payment" })),
-}));
 
 loadEnvConfig(process.cwd(), true);
 
@@ -13,7 +10,9 @@ it.skipIf(process.env.PRISMA_TEST_DATABASE !== "1")(
   async () => {
     const { db } = await import("@/infrastructure/prisma/db");
     const { recordReferralForBooking } = await import("../referral-store");
-    const bookingId = randomInt(1_000_000_000, 2_000_000_000);
+    const { createReferralBooking } = await import("./booking-fixture");
+    const fixture = await createReferralBooking();
+    const bookingId = fixture.id;
     const code = `T${randomBytes(7).toString("hex").toUpperCase()}`;
     let created = false;
 
@@ -33,6 +32,7 @@ it.skipIf(process.env.PRISMA_TEST_DATABASE !== "1")(
     } finally {
       await db.orm.public.ReferralAttribution.where({ bookingId }).delete();
       if (created) await db.orm.public.ReferralCode.where({ code }).delete();
+      await fixture.remove();
       await db.close();
     }
   },

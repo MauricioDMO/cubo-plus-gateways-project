@@ -1,6 +1,7 @@
 import "server-only";
 
 import { db } from "@/infrastructure/prisma/db";
+import { isParticipantCode } from "./participant-code";
 import { normalizeReferralCode } from "./referral-rules";
 
 /** Server-only helpers. Do not expose them through unauthenticated HTTP routes. */
@@ -8,6 +9,7 @@ export async function createReferralCode(input: string) {
   const code = normalizeReferralCode(input);
   if (!code) throw new Error("Invalid referral code. Use 4–24 letters, digits or hyphens.");
 
+  if (isParticipantCode(code)) throw new Error("Use verified stay invitation for participant codes.");
   const existing = await db.orm.public.ReferralCode.where({ code }).first();
   if (existing) return { created: false, code: existing.code, active: existing.active };
 

@@ -71,6 +71,6 @@ run("pnpm", ["db:migrate"]);
 run("pnpm", ["db:check"]);
 run("node", ["scripts/referrals-cli.mjs", "seed"]);
 run("node", ["scripts/referrals-cli.mjs", "list"]);
-console.log("\nReferral demo ready. Next: pnpm dev");
+console.log("\nReferral tables and campaign ready. Configure local guest login and import the catalogue per README before starting pnpm dev.");
 console.log("Visit: http://localhost:3000/?ref=GETAWAYSDEMO");
 console.log("Report: node scripts/referrals-cli.mjs report");

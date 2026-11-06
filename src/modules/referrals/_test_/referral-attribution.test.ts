@@ -1,10 +1,7 @@
-import { randomBytes, randomInt } from "node:crypto";
+import { randomBytes } from "node:crypto";
 import { loadEnvConfig } from "@next/env";
-import { expect, it, vi } from "vitest";
+import { expect, it } from "vitest";
 
-vi.mock("@/modules/bookings/server/bookings", () => ({
-  getBookingById: vi.fn(async (id: number) => ({ id, status: "pending_payment" })),
-}));
 
 loadEnvConfig(process.cwd(), true);
 
@@ -14,7 +11,9 @@ it.skipIf(process.env.PRISMA_TEST_DATABASE !== "1")(
     const { db } = await import("@/infrastructure/prisma/db");
     const { recordReferralForBooking } = await import("../referral-store");
     const { syncReferralStatusForBooking } = await import("../referral-lifecycle");
-    const bookingId = randomInt(1_000_000_000, 2_000_000_000);
+    const { createReferralBooking } = await import("./booking-fixture");
+    const fixture = await createReferralBooking();
+    const bookingId = fixture.id;
     const code = `T${randomBytes(7).toString("hex").toUpperCase()}`;
     const unknownCode = `U${randomBytes(7).toString("hex").toUpperCase()}`;
     let created = false;
@@ -37,16 +36,19 @@ it.skipIf(process.env.PRISMA_TEST_DATABASE !== "1")(
       expect(records[0]?.referralCode).toBe(code);
       expect(records[0]?.status).toBe("pending");
 
+      await db.orm.public.Booking.where({ id: bookingId }).update({ status: "confirmed" });
       expect(await syncReferralStatusForBooking(bookingId, "confirmed")).toBe(true);
       expect(await syncReferralStatusForBooking(bookingId, "confirmed")).toBe(true);
       expect((await db.orm.public.ReferralAttribution.where({ bookingId }).first())?.status)
         .toBe("confirmed");
+      await db.orm.public.Booking.where({ id: bookingId }).update({ status: "cancelled" });
       expect(await syncReferralStatusForBooking(bookingId, "cancelled")).toBe(true);
       expect((await db.orm.public.ReferralAttribution.where({ bookingId }).first())?.status)
         .toBe("cancelled");
     } finally {
       await db.orm.public.ReferralAttribution.where({ bookingId }).delete();
       if (created) await db.orm.public.ReferralCode.where({ code }).delete();
+      await fixture.remove();
       await db.close();
     }
   },

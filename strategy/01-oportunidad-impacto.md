@@ -24,7 +24,7 @@ Meta inicial sugerida: entrevistar al operador y a cinco viajeros potenciales. E
 
 | Fecha | Fuente / enlace autorizado | Hallazgo observado | Implicación | Validado por |
 | --- | --- | --- | --- | --- |
-| Pendiente | Pendiente | Sin investigación ejecutada | No cerrar decisiones todavía | Pendiente |
+| 2026-11-06 | [Fuentes y notas diferenciadas](roger/01-evidencia-y-recorrido.md) | La portada promueve nueve apartamentos y muestra datos discrepantes de baños en Sun & Salt. Roger reportó uso de Hostfully e IBEX. | Validar por propiedad y reconfirmar condiciones con el operador. | Inspección pública y notas previas de Roger; aprobación del negocio pendiente |
 
 ## Recorrido actual y futuro
 

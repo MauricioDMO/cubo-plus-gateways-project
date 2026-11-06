@@ -1,6 +1,6 @@
 # 02 — Auditoría y decisión de arquitectura
 
-**Estado:** pendiente. No se recibió la URL ni acceso al WordPress. No hay hallazgos medidos ni recomendación definitiva.
+**Estado al 6 de noviembre:** [revisión pública, competencia y recomendación provisional](roger/01-evidencia-y-recorrido.md). Inventario interno de WordPress, mediciones técnicas y decisión definitiva siguen pendientes.
 
 ## Auditoría conjunta
 
