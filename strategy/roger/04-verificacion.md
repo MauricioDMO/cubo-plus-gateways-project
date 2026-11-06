@@ -8,7 +8,14 @@
 | Suite ordinaria | 478 pruebas pasaron y 24 quedaron omitidas por sus condiciones de entorno. |
 | Referidos con base de datos | 13 de 13 pasaron con las diez migraciones del repo aplicadas a PGlite desechable. Incluye solicitudes simultáneas, registro idempotente y sincronización desde el estado de reserva. PGlite multiplexa conexiones. El ensayo de bloqueo entre procesos en PostgreSQL nativo queda pendiente. |
 | Lint | Cero errores y dos advertencias previas, en plan1-bcrypt.mts y referral-lifecycle.ts. |
+| Compilación | Next.js compiló correctamente con las diez migraciones aplicadas a una base local desechable. La generación de páginas consulta PostgreSQL y necesita DATABASE_URL. |
 | Política | Diez ejemplos ejecutables con datos sintéticos: primer referido, huésped recurrente, cancelación, devolución, política pendiente, propietario desconocido, autorreferido, duplicado, estadía pendiente y primera visita orgánica. Ningún caso emite saldo. |
+
+## Recorrido ejecutado en Chromium
+
+Se probó Next.js en desarrollo con datos sintéticos y PGlite. Una cuenta de prueba abrió la ficha con código prellenado, comprobó que estaba activo y lo quitó y volvió a ingresar a 390 px de ancho. La ficha no desbordó horizontalmente. Desde el formulario se creó una reserva y se observó exactamente una atribución pendiente. Con la misma sesión se consultó la cotización y se completó el pago simulado por las rutas locales. Esa fila pasó a confirmada.
+
+Para la posestadía se cargó una reserva histórica sintética. Dos emisiones verificadas devolvieron el mismo enlace. Al reservar desde la cuenta del promotor se observaron cero atribuciones con ese código. Al reservar desde otra cuenta se observó una. Esta prueba verifica el formulario, autenticación, persistencia y sincronización del prototipo. Costos, pago IBEX real, salida efectiva del huésped y entrega de incentivos requieren validación aparte.
 
 ## Demo de tres minutos
 1. Mauricio prepara PostgreSQL local, catálogo y login según el README técnico. Roger muestra la invitación de campaña /?ref=GETAWAYSDEMO y sigue hasta una ficha con una cuenta de prueba.
